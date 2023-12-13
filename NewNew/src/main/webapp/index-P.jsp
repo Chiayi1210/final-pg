@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%><%@page import="java.sql.*"%>
- 
+   <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 
 <!DOCTYPE html>
 <html>
@@ -134,8 +134,24 @@ function gaOptout() {document.cookie = disableStr + '=true; expires=Thu, 31 Dec 
         </div>
 
       </header>
+      
+      <%
+	Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+	Connection con=DriverManager.getConnection("jdbc:ucanaccess://"+objDBConfig.FilePath()+";");
+	//out.println("Con= "+con);
+	Statement smt= con.createStatement();
+	String sql = "SELECT * FROM indexIM ";
+	ResultSet IM = smt.executeQuery(sql);
+	
+	IM.next();
+	  
+	%>
+      
+      
+      
+      
   <form method="post" action="logout.jsp" >
-  <%if (session.getAttribute("access") == "y"){%>
+ 
 
 <!-- 登出頁 -->
   
@@ -176,52 +192,10 @@ function gaOptout() {document.cookie = disableStr + '=true; expires=Thu, 31 Dec 
     </form>
     <!-- end slider section -->
     
-    <%}else{%>
-    
-    
- <!-- 登入頁 -->
-
-    <!-- end header section -->
-    <!-- slider section -->
-  <div class="hero_area">
-   <section class="slider_section ">
-      <div class="dot_design">
-        <img src="images/dots.png" alt="">
-      </div>
-      <div id="customCarousel1" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="container ">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="detail-box">
-                    
-                    <h1>
-                     北護智慧藥局線上預約平台 <br>
-                       <span>
-                        NTUNHS Pharmacy
-                        </span>
-                    </h1>  
-                    <a href="index2.jsp#3456">
-                      聯絡我們
-                    </a>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="img-box">
-                    <img src="images/Pharmacy.jpg" alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>
-   </section>
+   
  
     <!-- end 登入頁 -->
-<%}%>
+
   <!-- book section -->
  <div class="hero_area">
   <section class="book_section layout_padding">
@@ -256,7 +230,10 @@ function gaOptout() {document.cookie = disableStr + '=true; expires=Thu, 31 Dec 
               </h2>
             </div>
             <p id="P1">
-              本藥局受復康活力藥局及其他贊助廠商捐贈「智能身體成分分析儀」、「智慧感測墊」、「輪椅、助行推車及四腳枴」、「智慧健康手錶」、「保健品」、「藥局申報系統」、「智慧膝力環及足速適客製化鞋墊」等，提供學生良好的學習環境和資源， 讓學生更了解實務操作及有助於推動藥局服務教育和研究發展。此外，還可以使學生們了解門市的營運方式及管理，為未來就業提早做準備，增加學生們的信心，提高競爭力。
+            <%=IM.getString("P1")%>
+            <input type="text" name="P1" value=" " >
+            <button type="submit">修改</button>
+              <!-- 本藥局受復康活力藥局及其他贊助廠商捐贈「智能身體成分分析儀」、「智慧感測墊」、「輪椅、助行推車及四腳枴」、「智慧健康手錶」、「保健品」、「藥局申報系統」、「智慧膝力環及足速適客製化鞋墊」等，提供學生良好的學習環境和資源， 讓學生更了解實務操作及有助於推動藥局服務教育和研究發展。此外，還可以使學生們了解門市的營運方式及管理，為未來就業提早做準備，增加學生們的信心，提高競爭力。 -->
             </p><!-- 改成關於藥局的資料 -->
           </div>
         </div>
