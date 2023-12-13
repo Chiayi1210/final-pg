@@ -101,7 +101,7 @@ function gaOptout() {document.cookie = disableStr + '=true; expires=Thu, 31 Dec 
                     <a class="nav-link" href="index-P.jsp#3456">聯絡我們</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="prescription-P.jsp">慢箋預約</a>
+                    <a class="nav-link" href="P-prescription.jsp">慢箋預約</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="P-Information.jsp">預約資料</a>
