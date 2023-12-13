@@ -1,4 +1,4 @@
-package histd.group.tool.database;
+package hitstd.group.tool.database;
 
 public class DBConfig {
 	public DBConfig(){		

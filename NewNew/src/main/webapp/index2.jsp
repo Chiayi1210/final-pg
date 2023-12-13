@@ -413,7 +413,7 @@
       <div class="row">
         <div class="col-md-7">
           <div class="form_container">
-            <form action="">
+            <form action="#">
               <div>
                 <input type="text" placeholder="姓名" />
               </div>
