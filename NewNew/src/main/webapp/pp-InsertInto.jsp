@@ -29,9 +29,17 @@
 	//sql="INSERT INTO member VALUES('"+memberid+"','"+memberpwd+"')";
 	
 	if(request.getParameter("cnumber1")!=null ){
-		
-	smt.execute("INSERT INTO prescription (name, id, phone, email,date,time, cnumber1) VALUES('"+name+"','"+session.getAttribute("numberid")+"','"+phone+"','"+memberid+"','"+date+"','"+time+"','"+cnumber2+"')");
+		smt.execute("INSERT INTO prescription (name, id, phone, email,date,time, cnumber1) VALUES('"+name+"','"+session.getAttribute("numberid")+"','"+phone+"','"+memberid+"','"+date+"','"+time+"','"+cnumber1+"')");
+		con.close();
+		response.sendRedirect("success.jsp");
+	}else if(request.getParameter("cnumber1")!=null && request.getParameter("cnumber2")!=null){
 	smt.execute("INSERT INTO prescription (name, id, phone, email,date,time, cnumber1) VALUES('"+name+"','"+session.getAttribute("numberid")+"','"+phone+"','"+memberid+"','"+date+"','"+time+"','"+cnumber1+"')");
+	smt.execute("INSERT INTO prescription (name, id, phone, email,date,time, cnumber1) VALUES('"+name+"','"+session.getAttribute("numberid")+"','"+phone+"','"+memberid+"','"+date+"','"+time+"','"+cnumber2+"')");
+	con.close();
+	response.sendRedirect("success.jsp");
+	}else if (request.getParameter("cnumber1")!=null && request.getParameter("cnumber2")!=null &&  request.getParameter("cnumber3")!=null){
+		smt.execute("INSERT INTO prescription (name, id, phone, email,date,time, cnumber1) VALUES('"+name+"','"+session.getAttribute("numberid")+"','"+phone+"','"+memberid+"','"+date+"','"+time+"','"+cnumber1+"')");
+		smt.execute("INSERT INTO prescription (name, id, phone, email,date,time, cnumber1) VALUES('"+name+"','"+session.getAttribute("numberid")+"','"+phone+"','"+memberid+"','"+date+"','"+time+"','"+cnumber2+"')");
 	smt.execute("INSERT INTO prescription (name, id, phone, email,date,time, cnumber1) VALUES('"+name+"','"+session.getAttribute("numberid")+"','"+phone+"','"+memberid+"','"+date+"','"+time+"','"+cnumber3+"')");
 	//smt.execute("INSERT INTO prescription (name, id, phone, email,date,time, cnumber1) VALUES('"+name+"','"+session.getAttribute("numberid")+"','"+phone+"','"+memberid+"','"+date+"','"+time+"','"+cnumber1+"'),('"+name+"','"+session.getAttribute("numberid")+"','"+phone+"','"+memberid+"','"+date+"','"+time+"','"+cnumber2+"'),('"+name+"','"+session.getAttribute("numberid")+"','"+phone+"','"+memberid+"','"+date+"','"+time+"','"+cnumber3+"')");
 	//,'"+cnumber2+"','"+cnumber3+"'	
