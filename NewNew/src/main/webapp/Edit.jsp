@@ -41,8 +41,8 @@ button {
   margin: 0px 0px 10px;
   border: 1px solid #00c6a9;
   cursor: pointer;
-  width: 50%;
-  font-size: 16px;
+  width: 15%;
+  font-size: 18px;
   font-weight: 300;
    -webkit-box-pack: center;
     justify-content: center;
@@ -51,7 +51,7 @@ button {
   display: flex;    
   align-items: center;
   box-sizing: border-box;
-     height: 45px;
+     height: 50px;
     
 }
  
@@ -189,7 +189,7 @@ background-color:#fff;
 </style>
 <center>
 <header >
-  <h1><br>更改預約</h1>
+  <h1>更改預約</h1>
   </header>
    <%
 	Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
@@ -199,8 +199,6 @@ background-color:#fff;
 	String date =request.getParameter("date");
 	String time =request.getParameter("time");
 	String cnumber1 =request.getParameter("cnumber1");
-	String cnumber2 =request.getParameter("cnumber2");
-	String cnumber3 =request.getParameter("cnumber3");
 	String sql1 = "SELECT * FROM prescription WHERE id='"+session.getAttribute("numberid")+"'";
 	
     ResultSet rs = smt.executeQuery(sql1);
@@ -209,16 +207,23 @@ background-color:#fff;
 	%>
 <form action="Edit-Update.jsp?id=<%=session.getAttribute("numberid")%>" method="post" name="form" >
 
-
-<table style="border:2px #111 solid;" width="20%" >
-        <td align="center"><br><p><%out.print(session.getAttribute("membername"));%>，您好!<br>
-        您預約的時間如下：<br>
-   <%=rs.getString("date")%><br><%=rs.getString("time")%><br>慢箋號碼：<br>
-<%=rs.getString("cnumber1")%><br><%=rs.getString("cnumber2")%><br><%=rs.getString("cnumber3")%>
-</p></td></table>
-
-
-<br>
+<%if (rs.next()){ 
+      int count=0 ;
+      while (rs.next()){ 
+    	count =count+1;  
+     
+        if (count == 1 ){%>
+           <br><br><table style="padding:30px;"><tr align="center"><th>慢箋號碼</th><th>日期</th><th>時間</th></tr>
+           <tr>        
+      <%}else{ %>
+          </tr><tr>
+      <%}%>
+     
+       <td><%=rs.getString("cnumber1")%></td><td><%=rs.getString("date")%></td><td><%=rs.getString("time")%></td>
+       
+     <%}%>
+        </tr></table>
+        <br>
         
         <label for='massage'>選擇預約日期：</label><input type="date" name="date" value="<%=rs.getString("date")%>" required>
 				<script>
@@ -280,7 +285,14 @@ background-color:#fff;
 			<br>
 	 <button type="submit"  onclick="document.location='Homepage-e.jsp'">上一步</button>
 	 <button type="submit"  onclick="document.location='index2.jsp'">確認修改</button>
-</center>
+</center>    
+  <%}else{out.println("查無預約資料，請先預約!!"); %>
+   <button type="button" onclick="window.location='prescription.jsp'">預約</button>
+<%} %>
+
+
+
+
 </form>
 </div>
 </body>
