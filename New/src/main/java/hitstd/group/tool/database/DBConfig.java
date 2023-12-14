@@ -6,7 +6,7 @@ public class DBConfig {
 	
 	public String FilePath(){
 	   //DB FilePath
-		 String DBPath="C:\\Users\\鄭嘉儀\\OneDrive\\桌面\\作業\\程式\\report\\Final\\src\\main\\webapp\\member.accdb";
+		 String DBPath="//Users/chenzujun/Desktop/final-pg/NewNew/src/main/webapp/member.accdb";
 	   return DBPath;		
 	}
 }
@@ -14,3 +14,4 @@ public class DBConfig {
 //C:\\Users\\user\\Desktop\\均\\report\\Final\\src\\main\\webapp\\member.accdb
 //Users/chenzujun/Desktop/report/Final/src/main/webapp/member.accdb
 //Users/chenzujun/Desktop/report/未命名/Final/src/main/webapp/member.accdb
+//Users/chenzujun/Desktop/final-pg/NewNew/src/main/webapp/member.accdb
