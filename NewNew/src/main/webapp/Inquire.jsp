@@ -120,7 +120,8 @@ table td a{
 <form action="Homepage-e.jsp" method="post"> 
 
        
-  <%if (pp.next()){ 
+<%
+  if (pp.next()){ 
       int count=0 ;
       while (pp.next()){ 
     	count =count+1;  
