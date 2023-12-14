@@ -20,7 +20,7 @@
 	//String sql;
 	//sql="INSERT INTO member VALUES('"+memberid+"','"+memberpwd+"')";
 	try{
-	smt.execute("INSERT INTO member (name, id, phone, memberid, memberpwd,CK) VALUES('"+name+"','"+id+"','"+phone+"','"+memberid+"','"+memberpwd+"','')");
+	smt.execute("INSERT INTO member (name, id, phone, memberid, memberpwd,CK) VALUES('"+name+"','"+id+"','"+phone+"','"+memberid+"','"+memberpwd+"','0')");
 	con.close();
 	//response.sendRedirect("loginCheck-Select.jsp");
 	//response.sendRedirect("<script>alert('註冊成功，請登入！！'); window.open('loginCheck-Select.jsp')</script>");
