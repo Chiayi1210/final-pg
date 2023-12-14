@@ -200,41 +200,43 @@ background-color:#fff;
 	String date =request.getParameter("date");
 	String time =request.getParameter("time");
 	String cnumber1 =request.getParameter("cnumber1");
-	String cnumber2 =request.getParameter("cnumber2");
-	String cnumber3 =request.getParameter("cnumber3");
-	String sql1 = "SELECT * FROM prescription WHERE id='"+session.getAttribute("numberid")+"'";
-	
+	String sql1 = "SELECT * FROM prescription WHERE id='"+session.getAttribute("numberid")+"'";	
     ResultSet pp = smt.executeQuery(sql1);
     
 	pp.next();
 	%>
-<br>
+
 
 <center>      
 
 <form action="remove.jsp?id=<%=session.getAttribute("numberid")%>" method="post" name="form" >
-      <table style="border:2px #111 solid;" width="20%"><br>
-             <tr>
-                 <td align="center">病人姓名：<%out.print(session.getAttribute("membername"));%></td>             
-             </tr>
-      <tr>
-           <td align="center">身分證字號：<%out.print(session.getAttribute("numberid"));%></td>    
-             </tr>
-      <tr>
-           <td align="center">領藥日期為：<%=pp.getString("date")%></td>
-             </tr>
-             <tr>
-           <td align="center">領藥時段為：<%=pp.getString("time")%></td>
-             </tr>
-      <tr>
-           <td align="center">慢箋卡號為：
-                 <%=pp.getString("cnumber1")%><br><%=pp.getString("cnumber2")%><br><%=pp.getString("cnumber3")%></td>
-             </tr>
-      
-      </table>
+            
+  <%if (pp.next()){ 
+      int count=0 ;
+      while (pp.next()){ 
+    	count =count+1;  
+     
+        if (count == 1 ){%>
+           <br><br><table style="padding:30px;"><tr align="center"><th>慢箋號碼</th><th>日期</th><th>時間</th></tr>
+           <tr>        
+      <%}else{ %>
+          </tr><tr>
+      <%}%>
+     
+       <td><%=pp.getString("cnumber1")%></td><td><%=pp.getString("date")%></td><td><%=pp.getString("time")%></td>
+       
+     <%}%>
+        </tr></table>    
+  <br>
+   <button type="submit"  onclick="document.location='Homepage-e.jsp'" >確認取消</button>
+  <%}else{out.println("查無預約資料，請先預約!!"); %>
+   <button type="button" onclick="window.location='prescription.jsp'">預約</button>
+<%} %>
+     
+     
   
-        <br>
-        <button type="submit"  onclick="document.location='Homepage-e.jsp'" >確認取消</button>
+       
+       
         
       
       </form></center>
