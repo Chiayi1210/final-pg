@@ -346,13 +346,13 @@
 
   <!-- client section -->
   <section class="client_section layout_padding">
-    <div class="container">
+    <div class="container" id="222">
       <div class="heading_container">
         <h2>
           <span>最新消息</span>
         </h2>
       </div>
-    </div>
+    
     <div class="container px-0">
       <div id="customCarousel2" class="carousel  carousel-fade" data-ride="carousel">
         <div class="carousel-inner">
@@ -361,13 +361,13 @@
               <div class="client_info">
                 <div class="client_name">
                   <h5>
-                    急性心肌梗塞併發心因性休克之處理與治療<!--最新消息1標題  -->
+                   急性心肌梗塞併發心因性休克之處理與治療
                   </h5>
                   <h6>
-                    邱春吉Chun-Chi Chiou1,* 、劉淑貞Shu-Chen Liu1 / 臺灣臨床藥學期刊<!-- 作者 -->
+                  邱春吉Chun-Chi Chiou1,* 、劉淑貞Shu-Chen Liu1 / 臺灣臨床藥學期刊
                   </h6>
                 </div>
-                <i class="fa fa-quote-left" aria-hidden="true"></i>
+               
               </div>
               <p>
                 心因性休克 (cardiogenic shock, CS) 是一種低心輸出狀態，主要是由於心臟功能障礙導致系統性低灌流合併組織缺氧。
@@ -376,7 +376,7 @@
                 執行立即性血管重建，處理與梗塞相關的冠狀動脈仍然是主要的治療型態，也是唯一具明顯減少急性心肌梗塞併發心因性休克 (AMI-CS) 死亡率的治療方式。
                 約有90% AMICS病人需給予血管活性劑 (vasoactive medications) 包含升壓劑 (vasopressors) 和強心劑 (inotropes) 處理其低血壓和（或）低灌流狀況。
                 各種研究顯示norepinephrine具較低心律不整發生風險，比dopamine 或epinephrine 更安全。臨床治療指引推薦norepinephrine 是CS 病人維持灌流壓的首選升壓劑 (IIb/B)。機械式循環輔助(mechanical circulatory support, MCS) 被使用於對升壓劑和強心劑難治療的AMICS病人( IIb/C)。經由文獻回顧與分析，基於目前實證和臨床治療指引，本文將討論AMI-CS 病人之流行病學與預後、定義與分類、病理生理學、處理與治療。
-              </p><!-- 最新消息 -->
+              </p>
             </div>
           </div>
           <div class="carousel-item">
@@ -384,7 +384,7 @@
               <div class="client_info">
                 <div class="client_name">
                   <h5>
-                    慢性疾病及其用藥對水肺潛水之影響<!-- 最新消息2 -->
+                   慢性疾病及其用藥對水肺潛水之影響
                   </h5>
                   <h6>
                     張中維(Chung-Wei Chang) 、 陳冠霖(Kuan-Lin Chen ) / 臺灣臨床藥學雜誌
@@ -394,23 +394,29 @@
               </div>
               <p>
                 潛水過程造成的生理變化與潛水員自身的健康狀態可能影響水肺潛水（以下簡稱潛水）的安全。本文透過文獻回顧，先彙整潛水所帶來的生理變化與可能的健康風險，再討論高血壓、糖尿病與氣喘等三種慢性疾病及其用藥對潛水員安全的影響，以及相對安全的用藥選擇。欲從事潛水的高血壓患者，除了留意血壓控制外，可優先選擇較不影響潛水安全的降血壓藥物。Angiotensin converting enzyme inhibitors（ACEIs）與angiotensin receptor blockers（ARBs）為較理想的選擇，不過服用ACEIs應留意乾咳可能影響潛水員在水下的呼吸。使用calcium channel blockers需留意姿態性低血壓的發生，而服用diuretics及β-blockers則較不建議從事潛水。患有糖尿病的潛水員，血糖控制應符合從事潛水的標準，並留意降血糖藥物可能造成低血糖事件發生。氣喘是肺氣壓傷、動脈氣體栓塞等潛水疾病的危險因子，因此控制不穩定的氣喘應視為潛水的禁忌症。氣喘患者從事潛水前應進行肺量計檢查，符合條件的潛水員也建議使用尖峰呼氣流速計追蹤峰值呼氣流量（peak expiratory flow），以確保當天身體狀況適合潛水。使用吸入型類固醇、吸入型長效乙二型交感神經刺激劑或白三烯受體拮抗劑治療並控制良好的氣喘患者，並非潛水的禁忌症。
-              </p>
+              </p> 
             </div>
-          </div>         
+          </div>
         </div>
         <div class="carousel_btn-box">
           <a class="carousel-control-prev" href="#customCarousel2" role="button" data-slide="prev">
-            <i class="fa fa-angle-left" aria-hidden="true"></i>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="carousel-control-next" href="#customCarousel2" role="button" data-slide="next">
-            <i class="fa fa-angle-right" aria-hidden="true"></i>
-            <span class="sr-only">Next</span>
-          </a>
-        </div>
+           <i class="fa fa-angle-left" aria-hidden="true"></i>
+           <span class="sr-only">Previous</span>
+         </a>
+         <a class="carousel-control-next" href="#customCarousel2" role="button" data-slide="next">
+           <i class="fa fa-angle-right" aria-hidden="true"></i>
+           <span class="sr-only">Next</span>
+         </a>
+      </div>
       </div>
     </div>
-  </section>
+    </div>
+    </div>
+  
+    </div>
+    
+      </section>
+  
   <!-- end client section -->
 
   <!-- contact section -->

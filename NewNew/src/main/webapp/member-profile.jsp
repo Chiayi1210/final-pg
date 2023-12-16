@@ -99,26 +99,29 @@ border-bottom: 1px solid rgba(0,0,0,.1);
 	IM.next();
 	%>
 <form action="MBupdate-pp.jsp?memberid=<%=request.getParameter("memberid")%>" method="post" name="form">
-<section class="slider_section" id="about">
-      <div class="container  ">
-      <div class="row">
-        <div class="col-md-4 "></div>
-                  <img src="<%=IM.getString("pic") %>" style=width:280px; height:20px">
-                  <h3>選擇要上傳的文件:</h3>
-                  <input type="file" name="theFirstFile" size="50" />
-            <input type="button" onClick="del()" name=submitButton value="上傳" />
-			<script >  
-			//點選提交按鈕觸發下面的函式
-			function del(){  
-				document.form.action="MBpic_update.jsp";//這邊要連結到更新圖片的程式
-				document.form.enctype="multipart/form-data";
-				document.form.submit();
-			}  
-			</script>         
-                  </div>
+    <section class="slider_section" id="about">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <img src="<%=IM.getString("pic") %>" style="width:280px; height:20px" alt="User Image">
+                </div>
+                <div class="col-md-8">
+                    <h5>選擇要上傳的文件:</h5>
+                    <input type="file" name="theFirstFile" size="50" />
+                    <input type="button" onClick="del()" name="submitButton" value="上傳" />
+                    <script>
+                        // 點選提交按鈕觸發下面的函式
+                        function del() {
+                            document.form.action = "MBpic_update.jsp"; // 這邊要連結到更新圖片的程式
+                            document.form.enctype = "multipart/form-data";
+                            document.form.submit();
+                        }
+                    </script>
+                </div>
+            </div>
         </div>
-        <div class="col-md-8" >
-            <div class="heading_container" >
+    </section>
+
     <!--使用 Bootstrap 設計登入表單-->
 
 <div class="panel panel-primary">

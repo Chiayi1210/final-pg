@@ -11,18 +11,43 @@
 </head>
 <body>
 <%
-	Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-	Connection con=DriverManager.getConnection("jdbc:ucanaccess://"+objDBConfig.FilePath()+";");
-	Statement smt= con.createStatement
-	(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-	String name = new String(request.getParameter("membername").getBytes("ISO-8859-1"));
-	String id = request.getParameter("numberid");
-	String phone = new String(request.getParameter("phone"));
-	String memberid = new String(request.getParameter("email"));
-	String memberpwd = new String(request.getParameter("memberpwd"));
-	//String position = new String(request.getParameter("position"));
-   smt.executeUpdate("UPDATE member SET name='" + name+"' , phone='" + phone+"' , memberid ='"+ memberid+"', memberpwd ='"+ memberpwd+"' WHERE id='"+session.getAttribute("numberid")+"'");
-   out.println("<script>alert('資料修改成功!!'); window.location='member-profile.jsp' </script>");
+Connection con = null;
+Statement smt = null;
+
+try {
+    Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+    con = DriverManager.getConnection("jdbc:ucanaccess://" + objDBConfig.FilePath() + ";");
+    smt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+    String name = new String(request.getParameter("membername").getBytes("ISO-8859-1"));
+    String id = request.getParameter("numberid");
+    String phone = new String(request.getParameter("phone"));
+    String memberid = new String(request.getParameter("email"));
+    String memberpwd = new String(request.getParameter("memberpwd"));
+
+    // 使用 PreparedStatement 防止 SQL 注入
+    String updateQuery = "UPDATE member SET name=?, phone=?, memberid=?, memberpwd=? WHERE id=?";
+    try (PreparedStatement pstmt = con.prepareStatement(updateQuery)) {
+        pstmt.setString(1, name);
+        pstmt.setString(2, phone);
+        pstmt.setString(3, memberid);
+        pstmt.setString(4, memberpwd);
+        pstmt.setString(5, (String) session.getAttribute("numberid"));
+        pstmt.executeUpdate();
+    }
+
+    out.println("<script>alert('資料修改成功!!'); window.location='member-profile.jsp' </script>");
+} catch (Exception e) {
+    e.printStackTrace();
+} finally {
+    // 关闭资源
+    try {
+        if (smt != null) smt.close();
+        if (con != null) con.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
 %>
 </body>
 </html>
