@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
     <!--連續處方簽預約網頁 -->
 <%@page import="java.sql.*"%>
 <%@include file ="menu.jsp" %>
@@ -232,6 +232,19 @@ background-color:#fff;
                   }
                   }
                 </script>
+                <%
+	Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+	Connection con=DriverManager.getConnection("jdbc:ucanaccess://"+objDBConfig.FilePath()+";");
+	//out.println("Con= "+con);
+	Statement smt= con.createStatement();
+	String sql = "SELECT prescription.Date, prescription.Time, Count(prescription.Time) AS time之筆數 FROM prescription GROUP BY prescription.Date, prescription.Time ORDER BY prescription.Time";
+	ResultSet pp = smt.executeQuery(sql);
+	
+
+	
+	%>
+                
+                
                 <br><br><label >選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly"></text>
 			</center>
 			
@@ -264,11 +277,11 @@ background-color:#fff;
     </tr></table>
 			
 			<br> <label for="cnumber1">慢性病卡號1：</label> <input type="text"
-				name="cnumber1" value="" required><br>
+				name="cnumber1" required><br>
 			<br> <label for="cnumber2">慢性病卡號2：</label> <input type="text"
-				name="cnumber2" value="" ><br>
+				name="cnumber2" ><br>
 			<br> <label for="cnumber3">慢性病卡號3：</label> <input type="text"
-				name="cnumber3"  value="" ><br>
+				name="cnumber3"   ><br>
 			<br>
 			<button type="submit">確認</button>
 	</center>

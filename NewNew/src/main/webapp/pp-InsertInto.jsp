@@ -1,5 +1,5 @@
-<%@page contentType="text/html"%>
-<%@page pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; meta charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@page import="java.sql.*"%>
 <%@page import="java.io.*,java.util.*"%>
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
@@ -28,26 +28,33 @@
 	//String sql;
 	//sql="INSERT INTO member VALUES('"+memberid+"','"+memberpwd+"')";
 	
-	if(request.getParameter("cnumber1")!=null ){
-		smt.execute("INSERT INTO prescription (name, id, phone, email,date,time, cnumber1) VALUES('"+name+"','"+session.getAttribute("numberid")+"','"+phone+"','"+memberid+"','"+date+"','"+time+"','"+cnumber1+"')");
-		con.close();
-		response.sendRedirect("success.jsp");
-	}else if(request.getParameter("cnumber1")!=null && request.getParameter("cnumber2")!=null){
-	smt.execute("INSERT INTO prescription (name, id, phone, email,date,time, cnumber1) VALUES('"+name+"','"+session.getAttribute("numberid")+"','"+phone+"','"+memberid+"','"+date+"','"+time+"','"+cnumber1+"')");
-	smt.execute("INSERT INTO prescription (name, id, phone, email,date,time, cnumber1) VALUES('"+name+"','"+session.getAttribute("numberid")+"','"+phone+"','"+memberid+"','"+date+"','"+time+"','"+cnumber2+"')");
-	con.close();
-	response.sendRedirect("success.jsp");
-	}else if (request.getParameter("cnumber1")!=null && request.getParameter("cnumber2")!=null &&  request.getParameter("cnumber3")!=null){
-		smt.execute("INSERT INTO prescription (name, id, phone, email,date,time, cnumber1) VALUES('"+name+"','"+session.getAttribute("numberid")+"','"+phone+"','"+memberid+"','"+date+"','"+time+"','"+cnumber1+"')");
-		smt.execute("INSERT INTO prescription (name, id, phone, email,date,time, cnumber1) VALUES('"+name+"','"+session.getAttribute("numberid")+"','"+phone+"','"+memberid+"','"+date+"','"+time+"','"+cnumber2+"')");
-	smt.execute("INSERT INTO prescription (name, id, phone, email,date,time, cnumber1) VALUES('"+name+"','"+session.getAttribute("numberid")+"','"+phone+"','"+memberid+"','"+date+"','"+time+"','"+cnumber3+"')");
-	//smt.execute("INSERT INTO prescription (name, id, phone, email,date,time, cnumber1) VALUES('"+name+"','"+session.getAttribute("numberid")+"','"+phone+"','"+memberid+"','"+date+"','"+time+"','"+cnumber1+"'),('"+name+"','"+session.getAttribute("numberid")+"','"+phone+"','"+memberid+"','"+date+"','"+time+"','"+cnumber2+"'),('"+name+"','"+session.getAttribute("numberid")+"','"+phone+"','"+memberid+"','"+date+"','"+time+"','"+cnumber3+"')");
-	//,'"+cnumber2+"','"+cnumber3+"'	
+if ((cnumber1 != null && !cnumber1.trim().isEmpty()) ||
+    (cnumber2 != null && !cnumber2.trim().isEmpty()) ||
+    (cnumber3 != null && !cnumber3.trim().isEmpty())) {
+    
+    // 在這裡進行寫入資料庫的操作
+    if (cnumber1 != null && !cnumber1.trim().isEmpty()) {
+        smt.execute("INSERT INTO prescription (name, id, phone, email, date, time, cnumber1) VALUES('" + name + "','" + session.getAttribute("numberid") + "','" + phone + "','" + memberid + "','" + date + "','" + time + "','" + cnumber1 + "')");
+    }
+
+    if (cnumber2 != null && !cnumber2.trim().isEmpty()) {
+        smt.execute("INSERT INTO prescription (name, id, phone, email, date, time, cnumber1) VALUES('" + name + "','" + session.getAttribute("numberid") + "','" + phone + "','" + memberid + "','" + date + "','" + time + "','" + cnumber2 + "')");
+    }
+
+    if (cnumber3 != null && !cnumber3.trim().isEmpty()) {
+        smt.execute("INSERT INTO prescription (name, id, phone, email, date, time, cnumber1) VALUES('" + name + "','" + session.getAttribute("numberid") + "','" + phone + "','" + memberid + "','" + date + "','" + time + "','" + cnumber3 + "')");
+    }
+
+    con.close();
+    response.sendRedirect("success.jsp");
+} else {
+    out.println("<script>alert('預約失敗，請重新預約'); window.location.href='prescription.jsp'</script>");
+}
 	
-	con.close();
-	response.sendRedirect("success.jsp");
-	}
-	else {out.println("<script>alert('已有預約，請至我的預約查看'); window.location.href='Homepage-e.jsp'</script>");}
+	
+
+
+	
 	
 		//con.close();
 	//out.println("<script>alert('已有預約，請至我的預約查看'); window.location.href='prescription.jsp'</script>");}

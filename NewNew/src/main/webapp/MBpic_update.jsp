@@ -1,5 +1,5 @@
-<!-- ·|­û¸ê®Æ§ó·sµ{¦¡ -->
-<%@ page language="java" contentType="text/html; charset=BIG5" pageEncoding="BIG5"%>
+<!-- æœƒå“¡è³‡æ–™æ›´æ–°ç¨‹å¼ -->
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.sql.*"%>
 <%@page import="java.io.*,java.util.*"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>

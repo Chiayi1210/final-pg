@@ -1,7 +1,7 @@
 
 <%@page import="java.security.DrbgParameters.NextBytes"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
     <%@include file ="menu.jsp" %>
     <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 <!DOCTYPE html>
@@ -107,42 +107,44 @@ table td a{
 	Connection con=DriverManager.getConnection("jdbc:ucanaccess://"+objDBConfig.FilePath()+";");
 	//out.println("Con= "+con);
 	Statement smt= con.createStatement();
-	String sql = "SELECT * FROM prescription WHERE id='"+session.getAttribute("numberid")+"'AND prescription.cnumber1 <>' ' ";
+	String sql = "SELECT * FROM prescription WHERE id='"+session.getAttribute("numberid")+"'";
 	ResultSet pp = smt.executeQuery(sql);
 	
-	pp.next();
+
 	
-	  
 	%>
 	
 	
 <center>	
 <form action="Homepage-e.jsp" method="post"> 
-
-       
+<% if (pp.next()){ 
+    int count=0 ;
+    %>
+            
+    <%
+    do {
+        count = count + 1;  
+        if (count == 1){ %>
+            <br><br><table style="padding:30px;"><tr align="center"><th>慢箋號碼</th><th>日期</th><th>時間</th></tr>
+            <tr>        
+        <% } else { %>
+            </tr><tr>
+        <% } %>
+        <td><%=pp.getString("cnumber1")%></td><td><%=pp.getString("date")%></td><td><%=pp.getString("time")%></td>
+    <% } while (pp.next()); %>
+    </tr></table>    
+    <br><button type="button" onclick="window.location='Edit.jsp'">更改預約</button>
+    <button type="button" onclick="window.location='Cancel.jsp'">取消預約</button>
+    <button type="button" onclick="window.location='index2.jsp'">確認回首頁</button>
 <%
-  if (pp.next()){ 
-      int count=0 ;
-      while (pp.next()){ 
-    	count =count+1;  
-     
-        if (count == 1 ){%>
-           <br><br><table style="padding:30px;"><tr align="center"><th>慢箋號碼</th><th>日期</th><th>時間</th></tr>
-           <tr>        
-      <%}else{ %>
-          </tr><tr>
-      <%}%>
-     
-       <td><%=pp.getString("cnumber1")%></td><td><%=pp.getString("date")%></td><td><%=pp.getString("time")%></td>
+} else {
+    out.println("查無預約資料，請先預約!!");
+%>
+    <button type="button" onclick="window.location='prescription.jsp'">預約</button>
+<%
+}
+%>
        
-     <%}%>
-        </tr></table>    
-  <br><button type="button" onclick="window.location='Edit.jsp'">更改預約</button>
-  <button type="button" onclick="window.location='Cancel.jsp'">取消預約</button>
-  <button type="button" onclick="window.location='index2.jsp'">確認回首頁</button>
-  <%}else{out.println("查無預約資料，請先預約!!"); %>
-   <button type="button" onclick="window.location='prescription.jsp'">預約</button>
-<%} %>
 
 
     
