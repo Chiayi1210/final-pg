@@ -7,7 +7,7 @@ pageEncoding="UTF-8"%>
 <html>
 <head>
   <!-- Basic -->
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <!-- Mobile Metas -->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -126,7 +126,7 @@ border-bottom: 1px solid rgba(0,0,0,.1);
     <div class="panel-body">
         <div class="form-group">
             <label>姓名</label>
-            <input type="text" name="membername" class="form-control" value="<%out.print(session.getAttribute("membername"));%>">
+            <input type="text" name="membername" id="membername" class="form-control" value="<%=IM.getString("name")%>">
         </div>
         <div class="form-group">
             <label>身分證字號</label>
@@ -143,6 +143,7 @@ border-bottom: 1px solid rgba(0,0,0,.1);
     </div>
    
 </div>
+ 
  
     <!--使用 Bootstrap 設計登入表單-->
     

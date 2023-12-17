@@ -4,7 +4,7 @@
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 <html>
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>修改資料</title>
   
@@ -22,6 +22,11 @@
 	String memberpwd = new String(request.getParameter("memberpwd"));
 	//String position = new String(request.getParameter("position"));
    smt.executeUpdate("UPDATE member SET name='" + name+"' , phone='" + phone+"' , memberid ='"+ memberid+"', memberpwd ='"+ memberpwd+"' WHERE id='"+session.getAttribute("numberid")+"'");
+   
+   session.setAttribute("membername", name);
+   session.setAttribute("memberid", memberid);
+   session.setAttribute("memberphone", phone);
+   
    out.println("<script>alert('資料修改成功!!'); window.location='member-profile.jsp' </script>");
 %>
 </body>
