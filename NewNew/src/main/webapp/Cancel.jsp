@@ -209,7 +209,11 @@ background-color:#fff;
 
 
 <center>      
-  <%
+ 
+<form action="remove.jsp?id=<%=session.getAttribute("numberid")%>" method="post" name="form">
+    <label for="appointmentId">選擇要取消的預約：</label>
+    <select name="appointmentId" id="appointmentId">
+        <%
             // 從資料庫中取得使用者的預約
             //String id = (String) session.getAttribute("numberid");
             //String sql = "SELECT * FROM prescription WHERE id='"+session.getAttribute("numberid")+ "'";
@@ -221,25 +225,18 @@ if (pp.next()){
                  String Cdate = pp.getString("date");
                  String Ctime = pp.getString("time");        
         %>
-<form action="remove.jsp?id=<%=session.getAttribute("numberid")%>" method="post" name="form">
-    <label for="appointmentId">選擇要取消的預約：</label>
-    <select name="appointmentId" id="appointmentId">
-      
                 <option value="<%= Cnumber1 %>">慢箋號碼：<%= Cnumber1 %> &nbsp; 日期：<%= Cdate %>  &nbsp;時間：<%= Ctime %></option>
-                <%}while (pp.next()); %>
+               <%}while (pp.next()); %>
        
     </select>
 
     <button type="submit">確認取消</button>
      <button type="button" onclick="window.location='index2.jsp'">回首頁</button>
 </form></center>
- <%
-} else {
+ <% }else {
     out.println("查無預約資料，請先預約!!");
 %>
     <button type="button" onclick="window.location='prescription.jsp'">預約</button>
-<%
-}
-%>    
+<%}%>    
 </body>
 </html>
