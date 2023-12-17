@@ -1,45 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%><%@page import="java.sql.*"%>
+    <%@include file ="menu2.jsp" %>
    <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 
 <!DOCTYPE html>
 <html>
-<script src="js/jquery-3.4.1.min.js"></script>
-  <!-- bootstrap js -->
-  <script src="js/bootstrap.js"></script>
-  <!-- nice select -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
-  <!-- owl slider -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-  <!-- datepicker -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-  <!-- custom js -->
-  <script src="js/custom.js"></script>
-<script>
-(function(){
-  var bsa = document.createElement('script');
-     bsa.type = 'text/javascript';
-     bsa.async = true;
-     bsa.src = '//s3.buysellads.com/ac/bsa.js';
-  (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(bsa);
-})();
-if (window != top) top.location.href = location.href;
-jQuery(document).ready(function($){ $('img').removeAttr('width height'); });
-var gaProperty = 'UA-120201777-1';
-var disableStr = 'ga-disable-' + gaProperty;if (document.cookie.indexOf(disableStr + '=true') > -1) {window[disableStr] = true;}
-function gaOptout() {document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2045 23:59:59 UTC; path=/';window[disableStr] = true;alert('Google Tracking has been deactivated');}
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-120201777-1', 'auto');ga('set', 'anonymizeIp', true);ga('send', 'pageview');
-</script>
-<head>
-  <!-- Basic -->
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Mobile Metas -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
 
    <title>北護智慧藥局線上預約平台</title>
 
@@ -106,6 +71,12 @@ function gaOptout() {document.cookie = disableStr + '=true; expires=Thu, 31 Dec 
                   <li class="nav-item">
                     <a class="nav-link" href="P-Information.jsp">預約資料</a>
                   </li> 
+                  <li class="nav-item">
+                    <a class="nav-link" href="p-Information.jsp">預約資料</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="setpermissions.jsp">權限設定</a>
+                  </li>
                   
   </ul>
                   </div> 
@@ -584,7 +555,7 @@ function gaOptout() {document.cookie = disableStr + '=true; expires=Thu, 31 Dec 
               <a href="">
                 <i class="fa fa-phone" aria-hidden="true"></i>
                 <span>
-                  電話 02 1234567890
+                  電話 02-1234567890
                 </span>
               </a>
               <a href="">

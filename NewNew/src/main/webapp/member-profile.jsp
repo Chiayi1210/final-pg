@@ -206,7 +206,7 @@ invisible.style.display = "";
               <a href="">
                 <i class="fa fa-phone" aria-hidden="true"></i>
                 <span>
-                  電話 02 1234567890
+                  電話 02-1234567890
                 </span>
               </a>
               <a href="">
@@ -267,8 +267,7 @@ invisible.style.display = "";
                   <img src="images/post3.jpg" alt="">
                 </div>
                 <p>
-                  Normal
-                  distribution
+                元旦連假營業時間<br>113/1/1暫停營業
                 </p>
               </div>
               <div class="post_box">
