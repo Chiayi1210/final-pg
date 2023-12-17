@@ -203,7 +203,7 @@ background-color:#fff;
 	
     ResultSet rs = smt.executeQuery(sql1);
     
-	rs.next();
+	
 	%>
 <form action="Edit-Update.jsp?id=<%=session.getAttribute("numberid")%>" method="post" name="form" >
 

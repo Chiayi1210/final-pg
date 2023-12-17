@@ -189,6 +189,7 @@ background-color:#fff;
 }
 </style>
 <body>
+
 <header style="padding:40px 16px">
   <center><h1 >取消預約</h1></center>
   </header>
@@ -203,43 +204,42 @@ background-color:#fff;
 	String sql1 = "SELECT * FROM prescription WHERE id='"+session.getAttribute("numberid")+"'";	
     ResultSet pp = smt.executeQuery(sql1);
     
-	pp.next();
+	
 	%>
 
 
 <center>      
-
-<form action="remove.jsp?id=<%=session.getAttribute("numberid")%>" method="post" name="form" >
-            
-  <%if (pp.next()){ 
-      int count=0 ;
-      while (pp.next()){ 
-    	count =count+1;  
-     
-        if (count == 1 ){%>
-           <br><br><table style="padding:30px;"><tr align="center"><th>慢箋號碼</th><th>日期</th><th>時間</th></tr>
-           <tr>        
-      <%}else{ %>
-          </tr><tr>
-      <%}%>
-     
-       <td><%=pp.getString("cnumber1")%></td><td><%=pp.getString("date")%></td><td><%=pp.getString("time")%></td>
-       
-     <%}%>
-        </tr></table>    
-  <br>
-   <button type="submit"  onclick="document.location='Homepage-e.jsp'" >確認取消</button>
-  <%}else{out.println("查無預約資料，請先預約!!"); %>
-   <button type="button" onclick="window.location='prescription.jsp'">預約</button>
-<%} %>
-     
-     
-  
-       
-       
-        
+  <%
+            // 從資料庫中取得使用者的預約
+            //String id = (String) session.getAttribute("numberid");
+            //String sql = "SELECT * FROM prescription WHERE id='"+session.getAttribute("numberid")+ "'";
+            //ResultSet resultSet = smt.executeQuery(sql);
+if (pp.next()){ 
+            // 生成下拉選單的選項
+           do {
+            	 String Cnumber1 = pp.getString("cnumber1");
+                 String Cdate = pp.getString("date");
+                 String Ctime = pp.getString("time");        
+        %>
+<form action="remove.jsp?id=<%=session.getAttribute("numberid")%>" method="post" name="form">
+    <label for="appointmentId">選擇要取消的預約：</label>
+    <select name="appointmentId" id="appointmentId">
       
-      </form></center>
-     
+                <option value="<%= Cnumber1 %>">慢箋號碼：<%= Cnumber1 %> &nbsp; 日期：<%= Cdate %>  &nbsp;時間：<%= Ctime %></option>
+                <%}while (pp.next()); %>
+       
+    </select>
+
+    <button type="submit">確認取消</button>
+     <button type="button" onclick="window.location='index2.jsp'">回首頁</button>
+</form></center>
+ <%
+} else {
+    out.println("查無預約資料，請先預約!!");
+%>
+    <button type="button" onclick="window.location='prescription.jsp'">預約</button>
+<%
+}
+%>    
 </body>
 </html>
