@@ -5,108 +5,7 @@
 
 <!DOCTYPE html>
 <html>
-
-   <title>北護智慧藥局線上預約平台</title>
-
-
-  <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-
-  <!-- fonts style -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-
-  <!--owl slider stylesheet -->
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-
-  <!-- font awesome style -->
-  <link href="css/font-awesome.min.css" rel="stylesheet" />
-  <!-- nice select -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
-  <!-- datepicker -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css">
-  <!-- Custom styles for this template -->
-  <link href="css/style.css" rel="stylesheet" />
-  <!-- responsive style -->
-  <link href="css/responsive.css" rel="stylesheet" />
-
-</head>
-<body>
- <div class="hero_area">
- <!-- header section strats -->
-    <header class="header_section">
-        <div class="">
-          <div class="contact_nav">
-          </div>
-          </div>
-          
-      <div class="header_bottom">
-        <div class="container-fluid">
-          <nav class="navbar navbar-expand-lg custom_nav-container ">
-            <a class="navbar-brand" href="index2.jsp">
-              <img src="images/logo.png"  alt="">
-            </a>
-            
-        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class=""> </span>
-        </button>   
-        
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <div class="d-flex mr-auto flex-column flex-lg-row align-items-center">
-                <ul class="navbar-nav  ">
-                  <li class="nav-item active">
-                    <a class="nav-link" href="index-P.jsp">首頁 <span class="sr-only">(current)</span></a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="index-P.jsp#112233"> 關於我們</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="index-P.jsp#1234">藥師簡介</a>
-                  </li>              
-                  <li class="nav-item">
-                    <a class="nav-link" href="index-P.jsp#3456">聯絡我們</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="P-prescription.jsp">慢箋預約</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="P-Information.jsp">預約資料</a>
-                  </li> 
-                  <li class="nav-item">
-                    <a class="nav-link" href="p-Information.jsp">預約資料</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="setpermissions.jsp">權限設定</a>
-                  </li>
-                  
-  </ul>
-                  </div> 
-            
-              
-              <div class="quote_btn-container">
-                <a href="member-profile.jsp"> 
-                <!-- 這邊想放會員資料 -->
-                  <i class="fa fa-user" aria-hidden="true"></i>
-                  <span>
-                    <%out.print(session.getAttribute("membername"));%>
-                  </span>
-                </a>
-               
-                <a href="logout.jsp">
-                  <i class="fa fa-user" aria-hidden="true"></i>
-                  <span>
-                    登出
-                  </span>
-                </a>
-           
-                </div>
-                </div>
-              </div>
-            </div>
-        </div>
-
-      </header>
-      
-      <%
+ <%
 	Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
 	Connection con=DriverManager.getConnection("jdbc:ucanaccess://"+objDBConfig.FilePath()+";");
 	//out.println("Con= "+con);
@@ -117,12 +16,10 @@
 	IM.next();
 	  
 	%>
-      
-      
-      
-      
+<body>
+ <div class="hero_area">
   <form method="post" action="logout.jsp" >
- 
+  <%if (session.getAttribute("access") == "y"){%>
 
 <!-- 登出頁 -->
   
@@ -163,10 +60,52 @@
     </form>
     <!-- end slider section -->
     
-   
+    <%}else{%>
+    
+    
+ <!-- 登入頁 -->
+
+    <!-- end header section -->
+    <!-- slider section -->
+  <div class="hero_area">
+   <section class="slider_section ">
+      <div class="dot_design">
+        <img src="images/dots.png" alt="">
+      </div>
+      <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="container ">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="detail-box">
+                    
+                    <h1>
+                     北護智慧藥局線上預約平台 <br>
+                       <span>
+                        NTUNHS Pharmacy
+                        </span>
+                    </h1>  
+                    <a href="index2.jsp#3456">
+                      聯絡我們
+                    </a>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="img-box">
+                    <img src="images/Pharmacy.jpg" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+   </section>
  
     <!-- end 登入頁 -->
-
+<%}%>
   <!-- book section -->
  <div class="hero_area">
   <section class="book_section layout_padding">
@@ -177,13 +116,7 @@
         </div>
       </div>
     </div>
-  </section>
-
-
-  <!-- end book section -->
-
-
-  <!-- about section -->
+  </section>  <!-- about section -->
 
 <section class="about_section">
     <div class="container  ">
