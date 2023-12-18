@@ -206,24 +206,22 @@ background-color:#fff;
 	
 	%>
 
-
-<% if (rs.next()){ 
-            // 生成下拉選單的選項
-           do {
+ <form action="Edit-Update.jsp?id=<%=session.getAttribute("numberid")%>" method="post" name="form" >	
+<% if (rs.next()){ %>
+         <label for="SappointmentId">選擇預約：</label>
+            <select name="Sappointment" for="SappointmentId" required>
+            <% do {
             	 String Cnumber1 = rs.getString("cnumber1");
                  String Cdate = rs.getString("date");
                  String Ctime = rs.getString("time");        
         %>
-  <form action="Edit-Update.jsp?id=<%=session.getAttribute("numberid")%>" method="post" name="form" >	
-            <label for='massage'>選擇預約：</label>
-            <select name="selectedAppointment" required>
                	 <option value="<%=Cnumber1%>">慢箋號碼：<%=Cnumber1%>, 日期：<%=Cdate%>, 時間：<%=Ctime%></option>
-                
+                <% }while (rs.next()); %> 
             </select>
-
+            
         <br> <br>
         
-        <label for='massage'>選擇預約日期：</label><input type="date" name="date" value="<%=rs.getString("date")%>" required>
+        <label for='massage'>重新選擇預約日期：</label><input type="date" name="date"  required>
 				<script>
                   var date = document.getElementById('massage'),
                   function noSundays(e){
@@ -237,7 +235,7 @@ background-color:#fff;
                   }
                 </script><br><br>
                 
-                <label >選擇預約時間：<input type="text" id="demo" name="time" value="<%=rs.getString("time")%>" readonly="readonly" required></label>
+                <label >選擇新的預約時間：<input type="text" id="demo" name="time" readonly="readonly" required></label>
 			
     <table width="100%"><tr>
     <td width="auto"  align="center"><button type="button" class="button" onclick='document.getElementById("demo").value= "9:30-10:00"'  for="time" >9:30-10:00</button>
@@ -266,7 +264,7 @@ background-color:#fff;
     <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "21:00-21:30"'   for="time" >21:00-21:30</button>目前已預約0人</td>  
     </tr></table>
        
-        <!--  <label for="time" >選擇時間：</label> <select required name="time" value="<%=rs.getString("ptime") %>" >
+        <!--  <label for="time" >選擇時間：</label> <select required name="time" value="" >
 
 				<option value="">請選擇</option>
 				<option >11:00~12:00</option>
@@ -283,7 +281,7 @@ background-color:#fff;
 			<br>
 	 <button type="submit"  onclick="document.location='Homepage-e.jsp'">上一步</button>
 	 <button type="submit"  onclick="document.location='index2.jsp'">確認修改</button>
-  </form><% }while (rs.next()); %>    
+  </form>   
 </center>    
 <%}else{out.println("查無預約資料，請先預約!!"); %>
    <button type="button" onclick="window.location='prescription.jsp'">預約</button>
@@ -292,7 +290,7 @@ background-color:#fff;
 
 
 
-</form>
+
 </div>
 </body>
 </html>

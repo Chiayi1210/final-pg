@@ -211,22 +211,21 @@ background-color:#fff;
 <center>      
  
 <form action="remove.jsp?id=<%=session.getAttribute("numberid")%>" method="post" name="form">
+ <%if (pp.next()){   %>        
+          
+           
+          
     <label for="appointmentId">選擇要取消的預約：</label>
+    
     <select name="appointmentId" id="appointmentId">
-        <%
-            // 從資料庫中取得使用者的預約
-            //String id = (String) session.getAttribute("numberid");
-            //String sql = "SELECT * FROM prescription WHERE id='"+session.getAttribute("numberid")+ "'";
-            //ResultSet resultSet = smt.executeQuery(sql);
-if (pp.next()){ 
-            // 生成下拉選單的選項
-           do {
+       <% do {
             	 String Cnumber1 = pp.getString("cnumber1");
                  String Cdate = pp.getString("date");
-                 String Ctime = pp.getString("time");        
+                 String Ctime = pp.getString("time");   
+                 
         %>
                 <option value="<%= Cnumber1 %>">慢箋號碼：<%= Cnumber1 %> &nbsp; 日期：<%= Cdate %>  &nbsp;時間：<%= Ctime %></option>
-               <%}while (pp.next()); %>
+               <% }while (pp.next()); %>
        
     </select>
 
