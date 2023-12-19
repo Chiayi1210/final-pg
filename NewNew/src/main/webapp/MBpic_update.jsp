@@ -1,42 +1,51 @@
 <%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*, java.io.*, java.util.*"%>
-<%@ page import="javax.servlet.annotation.MultipartConfig"%>
-<%@ page import="javax.servlet.annotation.WebServlet"%>
-<%@ page import="javax.servlet.http.HttpServlet"%>
-<%@ page import="javax.servlet.http.HttpServletRequest"%>
-<%@ page import="javax.servlet.http.HttpServletResponse"%>
-<%@ page import="javax.servlet.http.Part"%>
+<%@page import="java.sql.*"%>
+<%@page import="java.io.*,java.util.*"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
 <jsp:useBean id='objFolderConfig' scope='session' class='hitstd.group.tool.upload.FolderConfig' />
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
+
 <%
-    Collection<Part> parts = request.getParts();
-    for (Part part : parts) {
-        String fieldName = part.getName();
-        String fileName = getSubmittedFileName(part);
-        String contentType = part.getContentType();
+Connection con = null;
 
-        InputStream fileContent = part.getInputStream();
-        // 此處可以處理文件的輸入流
+try {
+    MultipartRequest theMultipartRequest = new MultipartRequest(request, objFolderConfig.FilePath(), 10 * 1024 * 1024);
+    Enumeration theEnumeration = theMultipartRequest.getFileNames();
 
-        // 其他處理邏輯
+    while (theEnumeration.hasMoreElements()) {
+        String fieldName = (String) theEnumeration.nextElement();
+        String fileName = theMultipartRequest.getFilesystemName(fieldName);
 
-        // 更新資料庫
-        Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-        Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + objDBConfig.FilePath() + ";");
-        Statement smt = con.createStatement();
-        smt.executeUpdate("UPDATE member SET pic ='" + objFolderConfig.WebsiteRelativeFilePath() + fileName + "' WHERE id ='" + session.getAttribute("numberid") + "'");
-        response.sendRedirect("member-profile.jsp?memberId=" + session.getAttribute("accessId"));
-    }
+        // Ensure fileName is not null before proceeding
+        if (fileName != null) {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+            con = DriverManager.getConnection("jdbc:ucanaccess://" + objDBConfig.FilePath() + ";");
+            Statement smt = con.createStatement();
 
-    // 獲取文件名稱的實用方法，因為Part中沒有直接提供
-    private static String getSubmittedFileName(Part part) {
-        for (String cd : part.getHeader("content-disposition").split(";")) {
-            if (cd.trim().startsWith("filename")) {
-                String fileName = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
-                return fileName.substring(fileName.lastIndexOf('/') + 1)
-                        .substring(fileName.lastIndexOf('\\') + 1);
+            // Use PreparedStatement to prevent SQL injection
+            String updateQuery = "UPDATE member SET pic = ? WHERE id = ?";
+            try (PreparedStatement pstmt = con.prepareStatement(updateQuery)) {
+                pstmt.setString(1, objFolderConfig.WebsiteRelativeFilePath() + fileName);
+                pstmt.setString(2, (String) session.getAttribute("numberid"));
+                pstmt.executeUpdate();
             }
+
+            response.sendRedirect("member-profile.jsp?id=" + session.getAttribute("numberid"));
+        } else {
+            out.println("檔案上傳失敗：未選擇文件");
         }
-        return null;
     }
+} catch (Exception e) {
+    out.println("檔案上傳失敗：" + e.getMessage());
+    e.printStackTrace();
+} finally {
+    // Close the connection in the finally block to ensure it's always closed
+    try {
+        if (con != null && !con.isClosed()) {
+            con.close();
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
 %>

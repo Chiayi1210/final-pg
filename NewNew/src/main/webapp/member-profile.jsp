@@ -79,14 +79,16 @@
         ResultSet IM = smt.executeQuery(sql);
         IM.next();
     %>
-    <form action="MBupdate-pp.jsp?memberid=<%=request.getParameter("memberid")%>" method="post" name="form">
+   
                     <div class="row">
                         <div class="col-md-6">
-                        
+                        <form action="MBpic_update.jsp" method="post" name="form" enctype="multipart/form-data">
                             <img src="<%=IM.getString("pic") %>" style="width:280px; height:200px">
                             <h3>選擇要上傳的文件:</h3>
                             <input type="file" name="theFirstFile" size="50" />
-                            <input type="button" onClick="del()" name=submitButton value="上傳" />
+                            <input type="submit" name=submitButton value="上傳" />
+                           </form>
+                            <form action="MBupdate-pp.jsp?memberid=<%=request.getParameter("memberid")%>" method="post" name="form">
                             <script>
                                 function del() {
                                     document.form.action = "MBpic_update.jsp";
