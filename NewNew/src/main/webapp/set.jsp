@@ -2,33 +2,34 @@
 <%@ page import="java.sql.*"%>
 <%@ page import="java.io.*, java.util.*"%>
 <jsp:useBean id='objDBConfig' scope='application' class='hitstd.group.tool.database.DBConfig' />
-<html>
-<body>
+
 <%
-try {
-    Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-    Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + objDBConfig.FilePath() + ";");
-    Statement smt = con.createStatement();
 
-    String id = request.getParameter("PID");
     String action = request.getParameter("action");
+    String id = request.getParameter("PID");
 
-    if (id != null && !id.isEmpty() && action != null && !action.isEmpty()) {
-        if ("1".equals(action)) {
-            // 假設 '1' 代表設定權限
-            smt.executeUpdate("UPDATE member SET CK = '1' WHERE id = '" + id + "'");
-            out.println("<script>alert('權限設定成功！！'); window.location.href='loginCheck-Select.jsp'</script>");
-        } else if ("0".equals(action)) {
-            // 假設 '0' 代表刪除權限
-            smt.executeUpdate("UPDATE member SET CK = '0' WHERE id = '" + id + "'");
-            out.println("<script>alert('權限刪除成功！！'); window.location.href='loginCheck-Select.jsp'</script>");
+    if ("設定".equals(action) || "刪除".equals(action)) {
+        // 處理設定和刪除
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+            Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + objDBConfig.FilePath() + ";");
+            Statement smt = con.createStatement();
+
+            if ("設定".equals(action)) {
+                // 處理設定
+                smt.execute("UPDATE member SET CK='1' WHERE id='" + id + "'");
+            } else if ("刪除".equals(action)) {
+                // 處理刪除
+                smt.execute("UPDATE member SET CK='0' WHERE id='" + id + "'");
+            }
+
+            con.close();
+            out.println("<script>alert('操作成功！！'); window.location='setpermissions.jsp'</script>");
+        } catch (Exception e) {
+            e.printStackTrace();
+            out.println("<script>alert('操作失敗，請再次輸入！！'); window.location='setpermissions.jsp'</script>");
         }
     }
-    con.close();
-} catch (Exception e) {
-    e.printStackTrace();
-    out.println("發生錯誤：" + e.getMessage());
-}
+
 %>
-</body>
-</html>
+

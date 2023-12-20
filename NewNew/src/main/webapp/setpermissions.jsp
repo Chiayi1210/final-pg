@@ -152,9 +152,10 @@ pageEncoding="utf-8"%>
 <form action="set.jsp" method="post" name="form">
        <a>請輸入身份證字號以設定員工權限</a>
       <br> <input type="text" name="PID" required>
-      <br> <button type="submit"  value="1">設定</button>
-      <br> <button type="submit" value="0" >刪除</button>
+      <br> <input type="submit" name="action" value="設定">
+    <br> <input type="submit" name="action" value="刪除">
       </form>
+      
 <%}else{%>
 <%out.println("<script>alert('請先登入此系統！！'); window.location='loginCheck-Select.jsp' </script>");}%>     
 </center>
