@@ -147,16 +147,13 @@ pageEncoding="utf-8"%>
         
         </style>
 <center><h1>權限設定</h1><br>
+<form action="set.jsp?id=<%=session.getAttribute("numberid")%>" method="post" name="form">
        <a>請輸入身份證字號以設定員工權限</a>
-      <br> <input type="text" >
-      <br> <button2 type="submit" onclick="set()" id="tx">設定</button2>
-      <br> <button2 type="submit" onclick="set()" id="tx">刪除</button2>
-      <script>
-        function set(){
-         if (tx==tx){
-          alert('設定成功!!'); }
-        }
-        </script>
+      <br> <input type="text" name="PID">
+      <br> <button2 type="submit"  id="tx">設定</button2>
+      <br> <button2 type="submit"  id="tx">刪除</button2>
+      </form>
+     
 </center>
 </body>
 </html>
