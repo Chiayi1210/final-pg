@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%><%@page import="java.sql.*"%>
-    <%@include file ="menu2.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%><%@page import="java.sql.*"%>
+    <%@include file ="menu.jsp" %>
    <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 
 <!DOCTYPE html>
@@ -41,7 +41,7 @@
                         NTUNHS Pharmacy
                        </span>
                     </h1>
-                    <a href="index2.jsp#3456">
+                    <a href="index-p.jsp#3456">
                       聯絡我們
                     </a>
                   </div>
