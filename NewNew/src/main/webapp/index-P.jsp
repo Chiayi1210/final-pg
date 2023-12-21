@@ -117,7 +117,7 @@
       </div>
     </div>
   </section>  <!-- about section -->
-
+<form>
 <section class="about_section">
     <div class="container  ">
       <div class="row">
@@ -145,7 +145,7 @@
     </div>
     </div> 
   </section>
- 
+ </form>
 
   <!-- end about section -->
 
