@@ -70,7 +70,7 @@
     <div class="container text-center">
         <div class="row">
             <div class="col-md-12">
-                <h1>會員基本資料</h1>
+                <br><br><h1>會員基本資料</h1>
     <%
         Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
         Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + objDBConfig.FilePath() + ";");
