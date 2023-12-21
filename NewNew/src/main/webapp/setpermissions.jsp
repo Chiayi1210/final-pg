@@ -5,6 +5,7 @@ pageEncoding="utf-8"%>
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 <!DOCTYPE html>
 <html>
+<%if (session.getAttribute("access") == "y"){%>
       <style>
         form {border: 0px solid #f1f1f1}    
         
@@ -53,19 +54,20 @@ pageEncoding="utf-8"%>
         button {
           background-color: #00c6a9;
           color: white;
-          padding: 10px 10px;
+          padding: 10px 100px;
           margin: 15px 0;
           border: none;
           cursor: pointer;
-          width: 45%%;
+          width: auto;
           border-radius:10px;
+          display: inline-block;
         }
-        
-        
-        
-        button:hover {
+         button:hover {
           opacity: 0.8;
         }
+        <!--border-radius圓角-->
+        
+       
         
         button2:hover {
           opacity: 0.8;
@@ -147,13 +149,16 @@ pageEncoding="utf-8"%>
         
         </style>
 <center><h1>權限設定</h1><br>
-<form action="set.jsp?id=<%=session.getAttribute("numberid")%>" method="post" name="form">
+<form action="set.jsp" method="post" name="form">
        <a>請輸入身份證字號以設定員工權限</a>
-      <br> <input type="text" name="PID">
-      <br> <button2 type="submit"  id="tx">設定</button2>
-      <br> <button2 type="submit"  id="tx">刪除</button2>
+      <br> <input type="text" name="PID" required>
+      <br> <input type="submit" name="action" value="設定">
+    <br> <input type="submit" name="action" value="刪除">
       </form>
-     
+      
+<%}else{%>
+<%out.println("<script>alert('請先登入此系統！！'); window.location='loginCheck-Select.jsp' </script>");}%>     
 </center>
+
 </body>
 </html>
