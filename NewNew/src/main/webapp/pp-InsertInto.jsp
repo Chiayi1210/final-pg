@@ -34,7 +34,7 @@ if ((cnumber1 != null && !cnumber1.trim().isEmpty()) ||
     
     // 在這裡進行寫入資料庫的操作
     if (cnumber1 != null && !cnumber1.trim().isEmpty()) {
-        smt.execute("INSERT INTO prescription (name, id, phone, email, date, time, cnumber1) VALUES('" + name + "','" + session.getAttribute("numberid") + "','" + phone + "','" + memberid + "','" + date + "','" + time + "','" + cnumber1 + "')");
+        smt.execute("INSERT INTO prescription (name, id, phone, email, date, time, cnumber1) VALUES(N'" + name + "','" + session.getAttribute("numberid") + "','" + phone + "','" + memberid + "','" + date + "','" + time + "','" + cnumber1 + "')");
     }
 
     if (cnumber2 != null && !cnumber2.trim().isEmpty()) {

@@ -82,20 +82,20 @@
    
                     <div class="row">
                         <div class="col-md-6">
-                        <form action="MBpic_update.jsp" method="post" enctype="multipart/form-data">
+                       
                             <img src="<%=IM.getString("pic") %>" style="width:280px; height:200px">
                             <h3>選擇要上傳的文件:</h3>
                             <input type="file" name="theFirstFile" size="50" />
-                            <input type="submit" name=submitButton value="上傳" />
-                           </form>
-                            <form action="MBupdate-pp.jsp?memberid=<%=request.getParameter("memberid")%>" method="post" name="form">
-                            <script>
+                            <input type="button" onClick="javascript:pic();" name=submitButton value="上傳"  />
+                          <script>
                                 function del() {
                                     document.form.action = "MBpic_update.jsp";
                                     document.form.enctype = "multipart/form-data";
                                     document.form.submit();
                                 }
                             </script>
+                            <form action="MBupdate-pp.jsp?memberid=<%=request.getParameter("memberid")%>" method="post" name="form">
+                           
                         </div>
 
                         <div class="col-md-6">

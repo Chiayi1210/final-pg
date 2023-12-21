@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%><%@page import="java.sql.*"%>
-    <%@include file ="menu2.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%><%@page import="java.sql.*"%>
+    <%@include file ="menu.jsp" %>
    <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 
 <!DOCTYPE html>
@@ -117,7 +117,7 @@
       </div>
     </div>
   </section>  <!-- about section -->
-
+<form>
 <section class="about_section">
     <div class="container  ">
       <div class="row">
@@ -145,7 +145,7 @@
     </div>
     </div> 
   </section>
- 
+ </form>
 
   <!-- end about section -->
 
