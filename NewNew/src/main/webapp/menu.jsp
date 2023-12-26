@@ -160,16 +160,16 @@ function gaOptout() {document.cookie = disableStr + '=true; expires=Thu, 31 Dec 
               <div class="d-flex mr-auto flex-column flex-lg-row align-items-center">
                 <ul class="navbar-nav  ">
                   <li class="nav-item active">
-                    <a class="nav-link" href="index-p.jsp">首頁 <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="index-P.jsp">首頁 <span class="sr-only">(current)</span></a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="index-p.jsp#112233"> 關於我們</a>
+                    <a class="nav-link" href="index-P.jsp#112233"> 關於我們</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="index-p.jsp#1234">藥師簡介</a>
+                    <a class="nav-link" href="index-P.jsp#1234">藥師簡介</a>
                   </li>              
                   <li class="nav-item">
-                    <a class="nav-link" href="index-p.jsp#3456">聯絡我們</a>
+                    <a class="nav-link" href="index-P.jsp#3456">聯絡我們</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="P-prescription.jsp">慢箋預約</a>
