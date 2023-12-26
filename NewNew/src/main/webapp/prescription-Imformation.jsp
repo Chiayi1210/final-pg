@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%><%@page import="java.sql.*"%>
  <%@include file ="menu.jsp" %>
+ <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 <html>
    
 <script src="js/jquery-3.4.1.min.js"></script>
@@ -264,7 +265,7 @@ table td a{
 }
 </style>
 <center><h1 class="noPrint">預約資料</h1></center>
-</body>
+
 <center>
 <a class="noPrint">查詢：</a><input type="search" class="light-table-filter && noPrint" data-table="order-table" placeholder="請輸入姓名/身分證字號"><br>
    
@@ -289,9 +290,17 @@ table td a{
   
       // 資料篩選函數，顯示包含關鍵字的列，其餘隱藏
       function _filter(row) {
-        var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
-        row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
-      }
+    	  var name = row.cells[0].textContent.toLowerCase(); // 第一欄是姓名
+    	    var id = row.cells[1].textContent.toLowerCase();   // 第二欄是身分證字號
+    	    var val = _input.value.toLowerCase();
+
+    	    // 只在姓名和身分證字號中進行查詢
+    	    if (name.indexOf(val) !== -1 || id.indexOf(val) !== -1) {
+    	        row.style.display = 'table-row';
+    	    } else {
+    	        row.style.display = 'none';
+    	    }
+    	}
   
       return {
         // 初始化函數
@@ -313,7 +322,14 @@ table td a{
   
   })(document);
 </script>
+ <%
+	Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+    Connection con=DriverManager.getConnection("jdbc:ucanaccess://"+objDBConfig.FilePath()+";");
+    Statement smt= con.createStatement();	
+	String sql1 = "SELECT * FROM prescription";	
+    ResultSet rs = smt.executeQuery(sql1);
 
+	%>
 
 <div class="main">
     
@@ -332,30 +348,20 @@ table td a{
         <th class="standard popular && noPrint"></th>
       </tr></thead>
       <tbody>
+      <% while (rs.next()) { %>   
       <tr >
-        <td>鄭家宜</td>
-        <td >A123456789</td>
-        <td>0987654321</td>
-        <td>Anni487@mail.com</td>
-        <td >2023/11/11</td>
-        <td>10:00-10:30</td>
-        <td>123456789</td>
+        <td><%= rs.getString("name") %></td>
+        <td ><%= rs.getString("id") %></td>
+        <td><%= rs.getString("phone") %></td>
+        <td><%= rs.getString("email") %></td>
+        <td ><%= rs.getString("date") %></td>
+        <td><%= rs.getString("time") %></td>
+        <td><%= rs.getString("cnumber1") %></td>
         <td class="noPrint"><a href="" class="noPrint">更改</a></td>
         <td class="noPrint"><a href="#" class="noPrint" style="background-color: magenta;">刪除</a></td>
         <td class="noPrint"><a href="send.html" class="noPrint" style="background-color :rgb(249, 56, 27)">缺藥</a2></td>
       </tr>
-      <tr>
-        <td>李美珠</td>
-        <td >K987654321</td>
-        <td>0912345678</td>
-        <td>May987@mail.com</td>
-        <td >2023/11/30</td>
-        <td>19:00-19:30</td>
-        <td>1111222333</td>
-        <td class="noPrint"><a href="" class="noPrint">更改</a></td>
-        <td class="noPrint"><a href="#" class="noPrint" style="background-color: magenta;">刪除</a></td>
-        <td class="noPrint"><a href="send.html" class="noPrint"  style="background-color :rgb(249, 56, 27)">缺藥</a></td>
-      </tr>
+       <% } %>
       </tbody>
     </table>
     </div>
@@ -367,4 +373,5 @@ table td a{
         print(text)
         }</script>
 	</center>
+	</body>
 	</html>

@@ -36,7 +36,7 @@
                   <div class="detail-box">
                     
                     <h1>
-                     <%out.print(session.getAttribute("membername"));%><br>歡迎光臨<br>北護智慧藥局<br>
+                     <%out.print(session.getAttribute("membername"));%><br>北護智慧藥局<br>員工介面<br>
                        <span>
                         NTUNHS Pharmacy
                        </span>

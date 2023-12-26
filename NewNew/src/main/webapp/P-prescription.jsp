@@ -203,7 +203,7 @@ background-color:#fff;
 <form action="Ppp-InsertInto.jsp" method="post">
 		<div>
 		  <table style="border:2px #ccc solid" width="40%">
-		  <td><label for="nmembername" >&nbsp;&nbsp;&nbsp;&nbsp;姓名：</label><br><br> 
+		  <td><label for="name" >&nbsp;&nbsp;&nbsp;&nbsp;姓名：</label><br><br> 
                <label for="numberid">&nbsp;&nbsp;&nbsp;&nbsp;身分證字號：</label><br><br> 
               <label for="memberphone"  >&nbsp;&nbsp;&nbsp;&nbsp;電話號碼：</label><br><br> 
               <label for="memberid">&nbsp;&nbsp;&nbsp;&nbsp;E-mail：</label>

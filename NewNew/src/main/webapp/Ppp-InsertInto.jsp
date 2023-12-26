@@ -11,7 +11,7 @@
 	Connection con=DriverManager.getConnection("jdbc:ucanaccess://"+objDBConfig.FilePath()+";");
 	Statement smt= con.createStatement
 			(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-	String name = request.getParameter("name").getBytes("ISO-8859-1");
+	String name = request.getParameter("name");
 	String id = request.getParameter("numberid");
 	String phone =request.getParameter("phone");
 	String memberid =request.getParameter("memberid");
@@ -34,15 +34,15 @@
 		  
 	    // 在這裡進行寫入資料庫的操作
 	    if (cnumber1 != null && !cnumber1.trim().isEmpty()) {
-	        smt.execute("INSERT INTO prescription (name, id, phone, email, date, time, cnumber1) VALUES('" + name + "','" + session.getAttribute("numberid") + "','" + phone + "','" + memberid + "','" + date + "','" + time + "','" + cnumber1 + "')");
+	        smt.execute("INSERT INTO prescription (name, id, phone, email, date, time, cnumber1) VALUES('" + name + "','" + id + "','" + phone + "','" + memberid + "','" + date + "','" + time + "','" + cnumber1 + "')");
 	    }
 
 	    if (cnumber2 != null && !cnumber2.trim().isEmpty()) {
-	        smt.execute("INSERT INTO prescription (name, id, phone, email, date, time, cnumber1) VALUES('" + name + "','" + session.getAttribute("numberid") + "','" + phone + "','" + memberid + "','" + date + "','" + time + "','" + cnumber2 + "')");
+	        smt.execute("INSERT INTO prescription (name, id, phone, email, date, time, cnumber1) VALUES('" + name + "','" + id + "','" + phone + "','" + memberid + "','" + date + "','" + time + "','" + cnumber2 + "')");
 	    }
 
 	    if (cnumber3 != null && !cnumber3.trim().isEmpty()) {
-	        smt.execute("INSERT INTO prescription (name, id, phone, email, date, time, cnumber1) VALUES('" + name + "','" + session.getAttribute("numberid") + "','" + phone + "','" + memberid + "','" + date + "','" + time + "','" + cnumber3 + "')");
+	        smt.execute("INSERT INTO prescription (name, id, phone, email, date, time, cnumber1) VALUES('" + name + "','" + id + "','" + phone + "','" + memberid + "','" + date + "','" + time + "','" + cnumber3 + "')");
 	    }
 
 	    con.close();
