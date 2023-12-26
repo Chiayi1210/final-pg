@@ -64,11 +64,11 @@ function gaOptout() {document.cookie = disableStr + '=true; expires=Thu, 31 Dec 
   <link href="css/style.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="css/responsive.css" rel="stylesheet" />
-
 </head>
+
 <body>
-<%if(session.getAttribute("CKey").equals("0")){%>
-<div class="hero_area">
+<%if(session.getAttribute("access") == "y"&& session.getAttribute("CKey").equals("0")){%>
+  <div class="hero_area">
     <!-- header section strats -->
     <header class="header_section">
         <div class="">
@@ -108,11 +108,8 @@ function gaOptout() {document.cookie = disableStr + '=true; expires=Thu, 31 Dec 
                   <li class="nav-item">
                     <a class="nav-link" href="Homepage-e.jsp">我的預約</a>
                   </li>        
-      </ul>
-
-
-         
-                <%if (session.getAttribute("access") == "y" ){%>       
+                </ul>
+               </div>
          
               <div class="quote_btn-container">
                 <a href="member-profile.jsp"> 
@@ -129,32 +126,17 @@ function gaOptout() {document.cookie = disableStr + '=true; expires=Thu, 31 Dec 
                     登出
                   </span>
                 </a>
-               <%}else{%>
-            
-            <div class="quote_btn-container">
-                <a href="loginCheck-Select.jsp">
-                  <i class="fa fa-user" aria-hidden="true"></i>
-                  <span>
-                    登入
-                  </span>
-                </a>
-            <div class="quote_btn-container">
-                <a href="signup.jsp">
-                  <i class="fa fa-user" aria-hidden="true"></i>
-                  <span>
-                   註冊
-                  </span>
-                </a>
-                <%}%>     
+           
            
                 </div>
                 </div>
               </div>
             </div>
         </div>
+        </header>
       </div> 
-      </header>
-<%} else if(session.getAttribute("CKey").equals("1")){%>         
+    
+<%} else if(session.getAttribute("access") == "y"&& session.getAttribute("CKey").equals("1")){%>         
   <div class="hero_area">
     <!-- header section strats -->
     <header class="header_section">
@@ -197,7 +179,7 @@ function gaOptout() {document.cookie = disableStr + '=true; expires=Thu, 31 Dec 
                   </li>
                 </ul>
               </div>        
-         <%if (session.getAttribute("access") == "y" ){%>       
+           
          
               <div class="quote_btn-container">
                 <a href="member-profile.jsp"> 
@@ -214,31 +196,15 @@ function gaOptout() {document.cookie = disableStr + '=true; expires=Thu, 31 Dec 
                     登出
                   </span>
                 </a>
-            <%}else{%>
-            
-            <div class="quote_btn-container">
-                <a href="loginCheck-Select.jsp">
-                  <i class="fa fa-user" aria-hidden="true"></i>
-                  <span>
-                    登入
-                  </span>
-                </a>
-            <div class="quote_btn-container">
-                <a href="signup.jsp">
-                  <i class="fa fa-user" aria-hidden="true"></i>
-                  <span>
-                   註冊
-                  </span>
-                </a>
-             <%}%>     
+           
      
                 </div>
                 </div>
               </div>
             </div>
+            </header>
         </div>
-      </div> 
-      </header>
+    
 <%}else{%>  
   <div class="hero_area">
     <!-- header section strats -->
@@ -280,27 +246,9 @@ function gaOptout() {document.cookie = disableStr + '=true; expires=Thu, 31 Dec 
                   <li class="nav-item">
                     <a class="nav-link" href="Homepage-e.jsp">我的預約</a>
                   </li>    
-  </ul>      
-         <%if (session.getAttribute("access") == "y" ){%>       
-         
-              <div class="quote_btn-container">
-                <a href="member-profile.jsp"> 
-                <!-- 這邊想放會員資料 -->
-                  <i class="fa fa-user" aria-hidden="true"></i>
-                  <span>
-                    <%out.print(session.getAttribute("membername"));%>
-                  </span>
-                </a>
-               
-                <a href="logout.jsp">
-                  <i class="fa fa-user" aria-hidden="true"></i>
-                  <span>
-                    登出
-                  </span>
-                </a>
-            <%}else{%>
-            
-            <div class="quote_btn-container">
+                 </ul>   
+               </div>   
+        <div class="quote_btn-container">
                 <a href="loginCheck-Select.jsp">
                   <i class="fa fa-user" aria-hidden="true"></i>
                   <span>
@@ -314,15 +262,18 @@ function gaOptout() {document.cookie = disableStr + '=true; expires=Thu, 31 Dec 
                    註冊
                   </span>
                 </a>
-             <%}%>     
            
-                </div>
+                 </div>
                 </div>
               </div>
             </div>
-        </div>
-      </div> 
-      </header>
+          </div>
+          </header>
+         </div>  
+    
+      
+      
+ 
  <%}%> 
 </body>
 
