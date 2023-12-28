@@ -41,7 +41,7 @@
                         NTUNHS Pharmacy
                        </span>
                     </h1>
-                    <a href="index-p.jsp#3456">
+                    <a href="index-P.jsp#3456">
                       聯絡我們
                     </a>
                   </div>
@@ -86,7 +86,7 @@
                         NTUNHS Pharmacy
                         </span>
                     </h1>  
-                    <a href="index2.jsp#3456">
+                    <a href="index-P.jsp#3456">
                       聯絡我們
                     </a>
                   </div>
