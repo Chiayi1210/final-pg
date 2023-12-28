@@ -86,7 +86,7 @@
                             <img src="<%=IM.getString("pic") %>" style="width:280px; height:200px">
                             <h3>選擇要上傳的文件:</h3>
                             <input type="file" name="theFirstFile" size="50" />
-                            <input type="button" onClick="javascript:pic();" name=submitButton value="上傳"  />
+                            <input type="button" onClick="del();" name=submitButton value="上傳"  />
                           <script>
                                 function del() {
                                     document.form.action = "MBpic_update.jsp";
