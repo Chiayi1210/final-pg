@@ -5,7 +5,7 @@
 
 <%
 try {
-    MultipartRequest theMultipartRequest = new MultipartRequest(request, objFolderConfig.FilePath(), 10 * 1024 * 1024);
+    MultipartRequest theMultipartRequest = new MultipartRequest(request, objFolderConfig.FilePath(),1024 * 1024 * 1024);
     Enumeration theEnumeration = theMultipartRequest.getFileNames();
 
     while (theEnumeration.hasMoreElements()) {

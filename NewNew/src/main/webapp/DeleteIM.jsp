@@ -16,15 +16,18 @@
     
     
     try {
-        // 使用 JDBC 連接到資料庫，執行 DELETE 操作
-        // ...
-       smt.executeUpdate("DELETE FROM prescription WHERE id='" + id + "' AND cnumber1='" + cnumber1 + "'");
-        // 刪除成功的處理
-        out.println("<script>alert('預約已取消'); window.location='Homepage-e.jsp';</script>");
+        int row = smt.executeUpdate("DELETE FROM prescription WHERE id='" + id + "' AND cnumber1='" + cnumber1 + "'");
+        
+        if (row > 0) {
+            // 返回成功信息
+            out.println("資料已成功刪除");
+        } else {
+            // 返回失敗信息
+            out.println("刪除失敗");
+        }
     } catch (Exception e) {
-        // 刪除失敗的處理
-        out.println("<script>alert('發生錯誤!!!'); window.location='Homepage-e.jsp';</script>");
+        // 返回錯誤信息
+        out.println("刪除時發生錯誤：" + e.getMessage());
     }
-    
-    
+   
 	%>

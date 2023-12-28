@@ -375,13 +375,7 @@ table td a{
     	            body: 'id=' + id + '&cnumber1=' + cnumber1, // 向後端傳遞參數
     	        })
     	        .then(response => response.json())
-    	        .then(data => {
-    	        	if (data.status === 'success') {
-                        alert("資料已成功刪除");
-                        location.reload();
-                    } else {
-                        alert("刪除失敗");
-                    }
+    	        .then(data => {     	        	
     	        })
     	        .catch((error) => {
     	            console.error('Error deleting data:', error);
