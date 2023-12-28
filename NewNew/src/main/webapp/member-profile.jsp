@@ -2,6 +2,7 @@
 <%@page import="java.sql.*"%>
 <%@include file="menu.jsp" %>
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
+<jsp:useBean id='objFolderConfig' scope='session' class='hitstd.group.tool.upload.FolderConfig' />
 
 <html>
 
