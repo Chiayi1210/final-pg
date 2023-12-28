@@ -15,19 +15,20 @@
 	Connection con=DriverManager.getConnection("jdbc:ucanaccess://"+objDBConfig.FilePath()+";");
 	Statement smt= con.createStatement
 	(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-	String name = new String(request.getParameter("membername").getBytes("ISO-8859-1"),"GBK");
+	String name = request.getParameter("membername");
 	String id = request.getParameter("numberid");
 	String phone = new String(request.getParameter("phone"));
 	String memberid = new String(request.getParameter("email"));
 	String memberpwd = new String(request.getParameter("memberpwd"));
 	//String position = new String(request.getParameter("position"));
+	//out.println(name);
    smt.executeUpdate("UPDATE member SET name= N'" + name+"' , phone='" + phone+"' , memberid ='"+ memberid+"', memberpwd ='"+ memberpwd+"' WHERE id='"+session.getAttribute("numberid")+"'");
    
    session.setAttribute("membername", name);
    session.setAttribute("memberid", memberid);
    session.setAttribute("memberphone", phone);
    
-   out.println("<script>alert('資料修改成功!!'); window.location='member-profile.jsp' </script>");
+   out.println("<script>alert('資料修改成功!!!'); window.location='member-profile.jsp' </script>");
 %>
 </body>
 </html>
