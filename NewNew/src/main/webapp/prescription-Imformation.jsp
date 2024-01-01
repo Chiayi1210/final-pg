@@ -358,33 +358,33 @@ table td a{
         <td><%= rs.getString("time") %></td>
         <td><%= rs.getString("cnumber1") %></td>
         <td class="noPrint"><a href="" class="noPrint">更改</a></td>
-        <td class="noPrint"><a href="#" class="noPrint" style="background-color: magenta;" onclick="deleteData('<%= rs.getString("id")%>', '<%= rs.getString("cnumber1") %>')">刪除</a></td>
+        <td class="noPrint"><a href="prescription-Imformation.jsp" class="noPrint" style="background-color: magenta;" onclick="deleteData('<%= rs.getString("id")%>', '<%= rs.getString("cnumber1") %>')">刪除</a></td>
         <td class="noPrint"><a href="send.html" class="noPrint" style="background-color :rgb(249, 56, 27)">缺藥</a2></td>
       </tr>
        <% } %>
       </tbody>
      <script>
-      function deleteData(id, cnumber1) {
-    	  
-    	  
-    	    if (confirm("確定要刪除這筆資料嗎？")) {
-    	        // 使用 JavaScript 的 Fetch API 向後端發送刪除請求
-    	        fetch('DeleteIM.jsp', {
-    	            method: 'POST',
-    	            headers: {
-    	                'Content-Type': 'application/x-www-form-urlencoded',
-    	            },
-    	            body: 'id=' + id + '&cnumber1=' + cnumber1, // 向後端傳遞參數
-    	        })
-    	        .then(response => response.json())
-    	        .then(data => {  
-      	        	 window.location.href = window.location.href;
-    	        })
-    	        .catch((error) => {
-    	            console.error('Error deleting data:', error);
-    	        });
-    	    }
-    	}
+    function deleteData(id, cnumber1) {
+    if (confirm("確定要刪除這筆資料嗎？")) {
+        // 使用 JavaScript 的 Fetch API 向後端發送刪除請求
+        fetch('DeleteIM.jsp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'id=' + id + '&cnumber1=' + cnumber1, // 向後端傳遞參數
+        })
+        .then(response => response.json())
+        .then(data => {  
+            alert("資料已成功刪除");
+            // 在成功刪除後重新載入頁面
+            location.reload();
+        })
+        .catch((error) => {
+            console.error('Error deleting data:', error);
+        });
+    }
+}
 </script>
 
     </table>
