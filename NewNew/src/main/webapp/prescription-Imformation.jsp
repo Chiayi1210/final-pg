@@ -363,8 +363,10 @@ table td a{
       </tr>
        <% } %>
       </tbody>
-      <script>
+     <script>
       function deleteData(id, cnumber1) {
+    	  
+    	  
     	    if (confirm("確定要刪除這筆資料嗎？")) {
     	        // 使用 JavaScript 的 Fetch API 向後端發送刪除請求
     	        fetch('DeleteIM.jsp', {
@@ -375,7 +377,8 @@ table td a{
     	            body: 'id=' + id + '&cnumber1=' + cnumber1, // 向後端傳遞參數
     	        })
     	        .then(response => response.json())
-    	        .then(data => {     	        	
+    	        .then(data => {  
+      	        	 window.location.href = window.location.href;
     	        })
     	        .catch((error) => {
     	            console.error('Error deleting data:', error);
