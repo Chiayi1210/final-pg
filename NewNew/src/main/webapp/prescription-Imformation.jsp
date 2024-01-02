@@ -1,10 +1,10 @@
-<!-- 後臺預約資料 -->
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%><%@page import="java.sql.*"%>
  <%@include file ="menu.jsp" %>
  <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 <html>
-   
+  <head> 
 <script src="js/jquery-3.4.1.min.js"></script>
     <!-- bootstrap js -->
     <script src="js/bootstrap.js"></script>
@@ -17,21 +17,27 @@
     <!-- custom js -->
     <script src="js/custom.js"></script>
   <script>
-  (function(){
-    var bsa = document.createElement('script');
-       bsa.type = 'text/javascript';
-       bsa.async = true;
-       bsa.src = '//s3.buysellads.com/ac/bsa.js';
-    (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(bsa);
-  })();
+  
+  (function() {
+	    if (document.readyState === 'complete') {
+	        var bsa = document.createElement('script');
+	        bsa.type = 'text/javascript';
+	        bsa.async = true;
+	        bsa.src = '//s3.buysellads.com/ac/bsa.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(bsa);
+	    }
+	})();
   if (window != top) top.location.href = location.href;
   jQuery(document).ready(function($){ $('img').removeAttr('width height'); });
   var gaProperty = 'UA-120201777-1';
-  var disableStr = 'ga-disable-' + gaProperty;if (document.cookie.indexOf(disableStr + '=true') > -1) {window[disableStr] = true;}
-  function gaOptout() {document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2045 23:59:59 UTC; path=/';window[disableStr] = true;alert('Google Tracking has been deactivated');}
+  var disableStr = 'ga-disable-' + gaProperty;
+  if (document.cookie.indexOf(disableStr + '=true') > -1) {window[disableStr] = true;}
+  function gaOptout() {
+	  document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2045 23:59:59 UTC; path=/';window[disableStr] = true;alert('Google Tracking has been deactivated');}
+  }
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-120201777-1', 'auto');ga('set', 'anonymizeIp', true);ga('send', 'pageview');
   </script>
-  <head>
+  
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 
   <!-- fonts style -->
@@ -54,7 +60,7 @@
 
 <title>預約資料 | 北護智慧藥局線上預約平台</title>
 
-<body> 
+ 
 <style>
 form {border: 0px solid #f1f1f1}    
 
@@ -263,7 +269,43 @@ table td a{
 
 } 
 }
+/* 簡單的彈出視窗樣式 */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
 </style>
+</head>
+<body>
 <center><h1 class="noPrint">預約資料</h1></center>
 
 <center>
@@ -357,12 +399,14 @@ table td a{
         <td ><%= rs.getString("date") %></td>
         <td><%= rs.getString("time") %></td>
         <td><%= rs.getString("cnumber1") %></td>
-        <td class="noPrint"><a href="" class="noPrint">更改</a></td>
+        <td class="noPrint"><a href="#" class="noPrint" onclick="openModal('<%= rs.getString("id") %>', '<%= rs.getString("cnumber1") %>')">更改</a></td>
         <td class="noPrint"><a href="prescription-Imformation.jsp" class="noPrint" style="background-color: magenta;" onclick="deleteData('<%= rs.getString("id")%>', '<%= rs.getString("cnumber1") %>')">刪除</a></td>
         <td class="noPrint"><a href="send.html" class="noPrint" style="background-color :rgb(249, 56, 27)">缺藥</a2></td>
       </tr>
        <% } %>
       </tbody>
+      
+      
      <script>
     function deleteData(id, cnumber1) {
     if (confirm("確定要刪除這筆資料嗎？")) {
@@ -387,6 +431,34 @@ table td a{
 }
 </script>
 
+<script>
+  // 開啟彈出視窗
+  function openModal(id, cnumber1) {
+    // 取得彈出視窗元素
+    var modal = document.getElementById('myModal');
+
+    // 顯示彈出視窗
+    modal.style.display = 'block';
+
+    // 在彈出視窗中顯示相應的內容，這裡以ID和CNumber1為例
+    document.getElementById('modalContent').innerHTML = '要修改的ID：' + id + '<br>慢箋號碼：' + cnumber1;
+  }
+
+  // 關閉彈出視窗
+  function closeModal() {
+    var modal = document.getElementById('myModal');
+    modal.style.display = 'none';
+  }
+</script>
+<!-- 簡單的彈出視窗 -->
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <div id="modalContent">
+      <!-- 這裡顯示相應的內容 -->
+    </div>
+  </div>
+</div>
     </table>
     </div>
     
@@ -397,5 +469,6 @@ table td a{
         print(text)
         }</script>
 	</center>
+	
 	</body>
 	</html>
