@@ -430,7 +430,32 @@ table td a{
     }
 }
 </script>
+<!-- 簡單的彈出視窗 -->
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <div id="modalContent">
+      <!-- 修改資料的表單 -->
+      <form id="editForm" action="EditIM.jsp" method="POST">
+        <label for="newName">姓名：</label>
+        <input type="text" id="newName" name="newName" required><br>
 
+        <label for="newId">身分證字號：</label>
+        <input type="text" id="newId" name="newId" required><br>
+
+        <label for="newPhone">電話號碼：</label>
+        <input type="text" id="newPhone" name="newPhone" required><br>
+
+        <!-- 添加其他字段 -->
+
+        <input type="hidden" id="idToEdit" name="idToEdit" value="">
+        <input type="hidden" id="cnumberToEdit" name="cnumberToEdit" value="">
+
+        <input type="submit" value="確定修改">
+      </form>
+    </div>
+  </div>
+</div>
 <script>
   // 開啟彈出視窗
   function openModal(id, cnumber1) {
@@ -442,6 +467,10 @@ table td a{
 
     // 在彈出視窗中顯示相應的內容，這裡以ID和CNumber1為例
     document.getElementById('modalContent').innerHTML = '要修改的ID：' + id + '<br>慢箋號碼：' + cnumber1;
+  
+    // 將ID和CNumber1填入表單的隱藏字段中
+    document.getElementById('idToEdit').value = id;
+    document.getElementById('cnumberToEdit').value = cnumber1;
   }
 
   // 關閉彈出視窗
