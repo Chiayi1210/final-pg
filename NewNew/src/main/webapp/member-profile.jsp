@@ -87,9 +87,9 @@
                             <img src="<%=IM.getString("pic") %>" style="width:280px; height:200px">
                             <h3>選擇要上傳的文件:</h3>
                             <input type="file" name="theFirstFile" id="pic" size="50" />
-                            <input type="submit"  name=submitButton value="上傳"  />
+                            <input type="submit"  name=submitButton onClick="del()" value="上傳"  />
                           </form>
-                        <!--   onClick="del();" <script>
+                          <script>
                           function del() {
                         	    var fileInput = document.getElementById('pic');
                         	    var selectedFile = fileInput.files[0];
@@ -103,7 +103,7 @@
                         	        alert("請選擇要上傳的文件。");
                         	    }
                         	}
-                          </script>-->
+                          </script>
                           
                             <form action="MBupdate-pp.jsp?memberid=<%=request.getParameter("memberid")%>" method="post" name="form" >
                            

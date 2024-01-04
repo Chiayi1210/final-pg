@@ -6,8 +6,8 @@
 
 <%
 try {
-    Collection<Part> parts = request.getParts();
-
+    if (!request.getParts().isEmpty()) {
+    	Collection<Part> parts = request.getParts();
     for (Part part : parts) {
         if ("theFirstFile".equals(part.getName()) && part.getSize() > 0) {
             String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
@@ -38,7 +38,9 @@ try {
             }
         }
     }
-} catch (Exception e) {
+    }
+}
+ catch (Exception e) {
     out.println("Error: " + e.getMessage() + "<br>");
     e.printStackTrace(new PrintWriter(out));
 }
