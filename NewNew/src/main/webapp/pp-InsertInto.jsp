@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" import="java.util.*" contentType="text/html;charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.sql.*"%>
 <%@page import="java.io.*,java.util.*"%>
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
-
+<%@ page import="tool.mail.JavaMail" %>
 <html>
 <body>
 	<%	
@@ -35,6 +35,7 @@ if ((cnumber1 != null && !cnumber1.trim().isEmpty()) ||
     // 在這裡進行寫入資料庫的操作
     if (cnumber1 != null && !cnumber1.trim().isEmpty()) {
         smt.execute("INSERT INTO prescription (name, id, phone, email, date, time, cnumber1) VALUES(N'" + name + "','" + session.getAttribute("numberid") + "','" + phone + "','" + memberid + "','" + date + "','" + time + "','" + cnumber1 + "')");
+      
     }
 
     if (cnumber2 != null && !cnumber2.trim().isEmpty()) {
@@ -46,7 +47,34 @@ if ((cnumber1 != null && !cnumber1.trim().isEmpty()) ||
     }
 
     con.close();
-    response.sendRedirect("success.jsp");
+    try{
+  	     String customer = request.getParameter("email");
+  	     //String code1 = String.format("%06d", new Random().nextInt(1000000));// 驗證碼6碼生成的程式碼
+  	     
+  	     JavaMail mail = new JavaMail();   
+  	     mail.setCustomer(customer);
+           //信件標題
+  	     mail.setSubject("慢箋預約成功");
+           //信件內文樣式(沒圖片版)
+  	     mail.setTxt( "<table style=\"margin: 0 auto;\">"+
+   		        "<tr><td height=\"200px\" align='center' valign='middle'><H1>慢箋號碼："+cnumber1+"</H1><br></td></tr>"+
+   		    	"</table>");
+  	   //信件內文樣式(有圖片版)
+//   	     mail.setTxt( "<table style=\"margin: 0 auto;\">"+
+//    		        "<tr><td><p><img src=\"cid:image\"></p><hr></td></tr>"+
+//    		        "<tr><td height=\"200px\" align='center' valign='middle'><H1>驗證碼："+code1+"</H1><br></td></tr>"+
+//    		    	"</table>");
+  	     //設置session     
+  	       //session.setMaxInactiveInterval(60);   // 設置 Session 過期時間為 60 秒
+  	       
+  	       session.setAttribute("email", customer);
+  	       mail.SendMail();  
+  	       response.sendRedirect("success.jsp");
+  	     	  
+  	   }catch(Exception e){
+  	      e.printStackTrace(new PrintWriter(out));
+  	   }
+    //response.sendRedirect("success.jsp");
 } else {
     out.println("<script>alert('預約失敗，請重新預約'); window.location.href='prescription.jsp'</script>");
 }

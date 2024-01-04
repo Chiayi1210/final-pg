@@ -2,24 +2,25 @@
 <%@ page import="java.sql.*, java.io.*, java.util.*, com.oreilly.servlet.MultipartRequest"%>
 <jsp:useBean id='objFolderConfig' scope='session' class='hitstd.group.tool.upload.FolderConfig' />
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
+<%@ page import="java.nio.file.Paths" %>
 
 <%
 try {
-    MultipartRequest theMultipartRequest = new MultipartRequest(request, objFolderConfig.FilePath(), 1024 * 1024 * 1024);
-    Enumeration theEnumeration = theMultipartRequest.getFileNames();
+    Collection<Part> parts = request.getParts();
 
-    if (theEnumeration.hasMoreElements()) {
-        String fieldName = (String) theEnumeration.nextElement();
-        String fileName = theMultipartRequest.getFilesystemName(fieldName);
-        String contentType = theMultipartRequest.getContentType(fieldName);
+    for (Part part : parts) {
+        if ("theFirstFile".equals(part.getName()) && part.getSize() > 0) {
+            String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+            String contentType = part.getContentType();
 
-        File theFile = theMultipartRequest.getFile(fieldName);
+            out.println("檔案名稱:" + fileName + "<br>");
+            out.println("檔案型態:" + contentType + "<br>");
 
-        out.println("檔案名稱:" + fileName + "<br>");
-        out.println("檔案型態:" + contentType + "<br>");
-        out.println("檔案路徑:" + theFile.getAbsolutePath() + "<br>");
+            // 處理檔案上傳
+            String uploadPath = objFolderConfig.FilePath() + File.separator + fileName;
+            part.write(uploadPath);
 
-        if (fileName != null) {
+            // 更新資料庫
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
             try (Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + objDBConfig.FilePath() + ";");
                  Statement smt = con.createStatement()) {
@@ -35,8 +36,6 @@ try {
                     out.println("Database update failed.");
                 }
             }
-        } else {
-            out.println("No file uploaded.");
         }
     }
 } catch (Exception e) {

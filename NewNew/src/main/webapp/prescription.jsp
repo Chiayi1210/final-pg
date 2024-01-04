@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <!--連續處方簽預約網頁 -->
+    <!--連續處方簽預約網頁 prescription.jsp-->
 <%@page import="java.sql.*"%>
+<%@ page import="java.io.*,java.util.*" %>
 <%@include file ="menu.jsp" %>
+<%@ page import="tool.mail.JavaMail" %>
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
+<html>
 <body>
 <%
 	//Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
@@ -15,7 +18,7 @@
 	//ResultSet rs2 = smt.executeQuery(option);
 	//rs.next();
 	//%>
-<html>
+
 <title>慢性病連續處方笺預約| 北護智慧藥局線上預約平台</title>
 <%if (session.getAttribute("access") == "y"){%>
 
@@ -199,6 +202,9 @@ background-color:#fff;
 }
 
 </style>
+<%  
+	  Object customer = session.getAttribute("email");  	
+  %>
 <center> <br><h1>預約資料登記</h1>
 <form action="pp-InsertInto.jsp" method="post">
 		<div>
@@ -285,7 +291,7 @@ background-color:#fff;
 			<br>
 			<button type="submit">確認</button>
 	</center>
-	</form>
+</form>
 	<%}else{%>
 	<%out.println("<script>alert('請先登入此系統！！'); window.location='loginCheck-Select.jsp' </script>");%>
 	
