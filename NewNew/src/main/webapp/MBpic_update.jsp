@@ -5,10 +5,10 @@
 
 <%
 try {
-    MultipartRequest theMultipartRequest = new MultipartRequest(request, objFolderConfig.FilePath(),1024 * 1024 * 1024);
+    MultipartRequest theMultipartRequest = new MultipartRequest(request, objFolderConfig.FilePath(), 1024 * 1024 * 1024);
     Enumeration theEnumeration = theMultipartRequest.getFileNames();
 
-    while (theEnumeration.hasMoreElements()) {
+    if (theEnumeration.hasMoreElements()) {
         String fieldName = (String) theEnumeration.nextElement();
         String fileName = theMultipartRequest.getFilesystemName(fieldName);
         String contentType = theMultipartRequest.getContentType(fieldName);
@@ -19,14 +19,28 @@ try {
         out.println("檔案型態:" + contentType + "<br>");
         out.println("檔案路徑:" + theFile.getAbsolutePath() + "<br>");
 
-        Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-        Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + objDBConfig.FilePath() + ";");
-        Statement smt = con.createStatement();
-        smt.executeUpdate("UPDATE member SET pic ='" + objFolderConfig.WebsiteRelativeFilePath() + fileName + "' WHERE id ='" + session.getAttribute("numberid") + "' ");
-        response.sendRedirect("member-profile.jsp?numberid=" + session.getAttribute("numberid"));
+        if (fileName != null) {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+            try (Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + objDBConfig.FilePath() + ";");
+                 Statement smt = con.createStatement()) {
+
+                String updateQuery = "UPDATE member SET pic ='" + objFolderConfig.WebsiteRelativeFilePath() + fileName + "' WHERE id ='" + session.getAttribute("numberid") + "'";
+                out.println("Update Query: " + updateQuery + "<br>");
+
+                int rowsUpdated = smt.executeUpdate(updateQuery);
+
+                if (rowsUpdated > 0) {
+                    response.sendRedirect("member-profile.jsp?numberid=" + session.getAttribute("numberid"));
+                } else {
+                    out.println("Database update failed.");
+                }
+            }
+        } else {
+            out.println("No file uploaded.");
+        }
     }
 } catch (Exception e) {
-    out.println("Error: " + e.getMessage());
-    e.printStackTrace(out);
+    out.println("Error: " + e.getMessage() + "<br>");
+    e.printStackTrace(new PrintWriter(out));
 }
 %>

@@ -89,12 +89,19 @@
                             <input type="file" name="theFirstFile" size="50" />
                             <input type="button" onClick="del();" name=submitButton value="上傳"  />
                           <script>
-                                function del() {
-                                    document.form.action = "MBpic_update.jsp";
+                              function uploadFile() {
+                              var fileInput = document.getElementById('fileInput');
+                              var selectedFile = fileInput.files[0];
+
+                               if (selectedFile) {
+                                   document.form.action = "MBpic_update.jsp";
                                     document.form.enctype = "multipart/form-data";
-                                    document.form.submit();
-                                }
-                            </script>
+                                     document.form.submit();
+                                       } else {
+                                        alert("請選擇要上傳的文件。");
+                                         }
+                                         }
+                          </script>
                             <form action="MBupdate-pp.jsp?memberid=<%=request.getParameter("memberid")%>" method="post" name="form">
                            
                         </div>
@@ -140,7 +147,7 @@
             <!-- Your existing content goes here -->
         </div>
     </section>
-
+    <br><br><br><br>
     <footer class="footer_section">
         <div class="container">
             <p>

@@ -15,7 +15,7 @@ public class FolderConfig {
 		   //li's 
 		//String Path="assets/images/member/";
 		   //Yujia's 
-			 String Path="/images";
+			 String Path="assets/images/member/";
 		   return Path;		
 		}
 }
