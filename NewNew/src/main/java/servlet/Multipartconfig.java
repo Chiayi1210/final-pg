@@ -68,7 +68,7 @@ public class Multipartconfig extends HttpServlet {
                     }
                 }
             }
-        } catch (IOException | ServletException e) {
+        } catch (IOException | ServletException | ClassNotFoundException e) {
             response.getWriter().println("發生錯誤: " + e.getMessage());
         }
     }
