@@ -3,12 +3,11 @@
 <%@page import="java.io.*,java.util.*"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
-<<<<<<< HEAD
 <jsp:useBean id='objFolderConfig' scope='session' class='hitstd.group.tool.upload.FolderConfig' />
 
 
 <%
- MultipartRequest theMultipartRequest = new MultipartRequest (request,objFolderConfig.FilePath(),10*1024*1024) ;
+ MultipartRequest theMultipartRequest = new MultipartRequest (request,objFolderConfig.FilePath(),1024S*1024*1024) ;
  Enumeration theEnumeration = theMultipartRequest.getFileNames() ;
  while (theEnumeration.hasMoreElements()){
  String fieldName = (String)theEnumeration.nextElement () ;
@@ -25,8 +24,7 @@
    smt.executeUpdate("UPDATE member SET pic ='"+ objFolderConfig.WebsiteRelativeFilePath()+fileName+ "' WHERE id ='" + session.getAttribute("numberid")+"' ");
    response.sendRedirect("member-profile.jsp?numberid="+ session.getAttribute("numberid")+"");
  }  
-=======
-<%@ page import="java.nio.file.Paths" %>
+
 
 <%
 try {
@@ -68,5 +66,5 @@ try {
     out.println("Error: " + e.getMessage() + "<br>");
     e.printStackTrace(new PrintWriter(out));
 }
->>>>>>> 0709bbd7a0c8b4a744efbafc630da7ca4c898962
+
 %>
