@@ -12,7 +12,7 @@
 
     <servlet-mapping>
         <servlet-name>MyServlet</servlet-name>
-        <url-pattern>/images</url-pattern>
+        <url-pattern>/Multipartconfig.java</url-pattern>
     </servlet-mapping>
 
     <!-- 其他配置，如 Filter、Listener，根據需求添加 -->
