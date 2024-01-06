@@ -36,7 +36,7 @@ public class Multipartconfig extends HttpServlet {
 
             for (Part part : parts) {
                 // 假如部分的名稱為 "theFirstFile" 且大小大於 0
-                if ("theFirstFile".equals(part.getName()) && part.getSize() > 0) {
+                if ("pic".equals(part.getName()) && part.getSize() > 0) {
                     // 獲取上傳的檔案名稱
                     String fileName = getFileName(part);
                     // 指定檔案上傳路徑為專案的 "uploads" 目錄下

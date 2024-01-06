@@ -2,12 +2,14 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="javax.servlet.http.Part" %>
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
 <%@ page import="org.apache.commons.fileupload.servlet.ServletFileUpload" %>
 <%@ page import="org.apache.commons.fileupload.disk.DiskFileItemFactory" %>
 <%@ page import="org.apache.commons.fileupload.FileItem" %>
 <%@ page import="org.apache.commons.fileupload.FileUploadException" %>
 <%@ page import="java.sql.*"%>
 <%@ page import="java.io.*,java.util.*"%>
+<%@ page import="fileItemToPart.FileItemToPart" %>
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 <jsp:useBean id='fileUploadHelper' class='fileUploadHelper.FileUploadHelper' scope='page'/>
 <jsp:useBean id='objFolderConfig' scope='session' class='hitstd.group.tool.upload.FolderConfig' />
@@ -19,7 +21,7 @@ try {
     ServletFileUpload upload = new ServletFileUpload(factory);
 
     // 解析 request
-    List<FileItem> items = upload.parseRequest((javax.servlet.http.HttpServletRequest) request);
+    List<FileItem> items = upload.parseRequest(request);
 
     for (FileItem item : items) {
         if (!item.isFormField() && "theFirstFile".equals(item.getFieldName())) {
@@ -58,6 +60,4 @@ try {
     out.println("Error: " + e.getMessage() + "<br>");
     e.printStackTrace(new PrintWriter(out));
 }
-
-
 %>

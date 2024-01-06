@@ -1,10 +1,10 @@
 package fileItemToPart;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.ArrayList;
-
 
 import javax.servlet.http.Part;
 
@@ -32,9 +32,9 @@ public class FileItemToPart implements Part {
         return fileItem.getName();
     }
 
-    @Override
+    // 使用 fileItem.getName() 代替 getSubmittedFileName()
     public String getSubmittedFileName() {
-        return fileItem.getName(); // 或者根據實際情況返回相應的值
+        return fileItem.getName();
     }
 
     @Override
@@ -67,7 +67,6 @@ public class FileItemToPart implements Part {
         }
         return headers;
     }
-
 
     @Override
     public Collection<String> getHeaderNames() {
