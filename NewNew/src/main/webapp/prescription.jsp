@@ -5,6 +5,7 @@
 <%@ page import="java.io.*,java.util.*" %>
 <%@include file ="menu.jsp" %>
 <%@ page import="tool.mail.JavaMail" %>
+<%@ page import="Reservation.Reservation" %>
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 <html>
 <body>
