@@ -1,42 +1,10 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%><%@page import="java.sql.*"%>
  <%@include file ="menu.jsp" %>
  <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 <html>
   <head> 
-<script src="js/jquery-3.4.1.min.js"></script>
-    <!-- bootstrap js -->
-    <script src="js/bootstrap.js"></script>
-    <!-- nice select -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
-    <!-- owl slider -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <!-- datepicker -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-    <!-- custom js -->
-    <script src="js/custom.js"></script>
-  <script>
-  
-  (function() {
-	    if (document.readyState === 'complete') {
-	        var bsa = document.createElement('script');
-	        bsa.type = 'text/javascript';
-	        bsa.async = true;
-	        bsa.src = '//s3.buysellads.com/ac/bsa.js';
-	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(bsa);
-	    }
-	})();
-  if (window != top) top.location.href = location.href;
-  jQuery(document).ready(function($){ $('img').removeAttr('width height'); });
-  var gaProperty = 'UA-120201777-1';
-  var disableStr = 'ga-disable-' + gaProperty;
-  if (document.cookie.indexOf(disableStr + '=true') > -1) {window[disableStr] = true;}
-  function gaOptout() {
-	  document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2045 23:59:59 UTC; path=/';window[disableStr] = true;alert('Google Tracking has been deactivated');}
-  }
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-120201777-1', 'auto');ga('set', 'anonymizeIp', true);ga('send', 'pageview');
-  </script>
+
   
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 
@@ -200,7 +168,7 @@ span {
     vertical-align: middle;
     line-height: normal;
 }
-<!--表格樣式-->
+/*表格樣式*/
 table {
   border: 0;
   border-collapse: collapse;
@@ -270,39 +238,82 @@ table td a{
 } 
 }
 /* 簡單的彈出視窗樣式 */
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.7);
-  }
+ .modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.7);
+}
 
-  .modal-content {
-    background-color: #fefefe;
-    margin: 10% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-  }
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: auto; /* 調整彈出視窗寬度 */
+  border-radius: 10px;
+}
 
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
 
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#modalContent {
+  text-align: center;
+}
+
+#editForm {
+  text-align: left;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+#editForm label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+#editForm input,
+#editForm select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+#editForm input[type="submit"] {
+  background-color: #00c6a9;
+  color:white;
+  width: 30%;
+  padding: 14px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: none;
+}
+
+
+#editForm input:hover,
+#editForm select:hover {
+  border: 1px solid #00c6a9;
+}
+  
+
+ 
 </style>
 </head>
 <body>
@@ -399,9 +410,9 @@ table td a{
         <td ><%= rs.getString("date") %></td>
         <td><%= rs.getString("time") %></td>
         <td><%= rs.getString("cnumber1") %></td>
-        <td class="noPrint"><a href="#" class="noPrint" onclick="openModal('<%= rs.getString("id") %>', '<%= rs.getString("cnumber1") %>')">更改</a></td>
+        <td class="noPrint"><a href="#" class="noPrint" onclick="openModal('<%= rs.getString("id") %>', '<%= rs.getString("cnumber1") %>', '<%= rs.getString("name") %>', '<%= rs.getString("date") %>', '<%= rs.getString("time") %>')">更改</a></td>
         <td class="noPrint"><a href="prescription-Imformation.jsp" class="noPrint" style="background-color: magenta;" onclick="deleteData('<%= rs.getString("id")%>', '<%= rs.getString("cnumber1") %>')">刪除</a></td>
-        <td class="noPrint"><a href="send.html" class="noPrint" style="background-color :rgb(249, 56, 27)">缺藥</a2></td>
+        <td class="noPrint"><a href="send.html" class="noPrint" style="background-color :rgb(249, 56, 27)">缺藥</a></td>
       </tr>
        <% } %>
       </tbody>
@@ -430,6 +441,7 @@ table td a{
     }
 }
 </script>
+
 <!-- 簡單的彈出視窗 -->
 <div id="myModal" class="modal">
   <div class="modal-content">
@@ -438,40 +450,63 @@ table td a{
       <!-- 修改資料的表單 -->
       <form id="editForm" action="EditIM.jsp" method="POST">
         <label for="newName">姓名：</label>
-        <input type="text" id="newName" name="newName" required><br>
+        <input type="text" id="newName" name="newName" readonly><br>
 
         <label for="newId">身分證字號：</label>
-        <input type="text" id="newId" name="newId" required><br>
+        <input type="text" id="newId" name="newId" readonly><br>
 
-        <label for="newPhone">電話號碼：</label>
-        <input type="text" id="newPhone" name="newPhone" required><br>
+        <label for="newdate">日期：</label>
+        <input type="date" id="newdate" name="newdate" required><br>
 
+        <label for="newtime">時間：</label>
+        <select id="newtime" name="newtime" required>
+    <option value="9:30-10:00">9:30-10:00</option>
+    <option value="10:00-10:30">10:00-10:30</option>
+    <option value="10:30-11:00">10:30-11:00</option>
+    <option value="11:30-12:00">11:30-12:00</option>
+    <option value="12:00-12:30">12:00-12:30</option>
+    <option value="13:00-13:30">13:00-13:30</option>
+    <option value="13:30-14:00">13:30-14:00</option>
+    <option value="14:30-15:00">14:30-15:00</option>
+    <option value="15:30-16:00">15:30-16:00</option>
+    <option value="16:30-17:00">16:30-17:00</option>
+    <option value="17:30-18:00">17:30-18:00</option>
+    <option value="18:00-18:30">18:00-18:30</option>
+    <option value="19:00-19:30">19:00-19:30</option>
+    <option value="19:30-20:00">19:30-20:00</option>
+    <option value="20:30-21:00">20:30-21:00</option>
+    <option value="21:00-21:30">21:00-21:30</option>
+    <!-- 添加其他时间选项 -->
+</select><br>
+        
+        <label for="newcnumber1">慢箋號碼：</label>
+        <input type="text" id="newcnumber1" name="newcnumber1" required><br>
         <!-- 添加其他字段 -->
 
-        <input type="hidden" id="idToEdit" name="idToEdit" value="">
-        <input type="hidden" id="cnumberToEdit" name="cnumberToEdit" value="">
 
         <input type="submit" value="確定修改">
       </form>
     </div>
   </div>
 </div>
+
 <script>
   // 開啟彈出視窗
-  function openModal(id, cnumber1) {
+ function openModal(id, cnumber1, name, date, time) {
     // 取得彈出視窗元素
     var modal = document.getElementById('myModal');
 
     // 顯示彈出視窗
     modal.style.display = 'block';
 
-    // 在彈出視窗中顯示相應的內容，這裡以ID和CNumber1為例
-    document.getElementById('modalContent').innerHTML = '要修改的ID：' + id + '<br>慢箋號碼：' + cnumber1;
+    // 將姓名和身分證填入表單的對應 input 元素中
+    document.getElementById('newName').value = name;
+    document.getElementById('newId').value = id;
+    document.getElementById('newdate').value = date;
+    document.getElementById('newtime').value = time;
+    document.getElementById('newcnumber1').value = cnumber1;
+}
   
-    // 將ID和CNumber1填入表單的隱藏字段中
-    document.getElementById('idToEdit').value = id;
-    document.getElementById('cnumberToEdit').value = cnumber1;
-  }
 
   // 關閉彈出視窗
   function closeModal() {
@@ -479,19 +514,11 @@ table td a{
     modal.style.display = 'none';
   }
 </script>
-<!-- 簡單的彈出視窗 -->
-<div id="myModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <div id="modalContent">
-      <!-- 這裡顯示相應的內容 -->
-    </div>
-  </div>
-</div>
+
     </table>
     </div>
     
-    <button ONCLICK="window.print()" class="noPrint">列印預約資料</button>
+    <button onclick="window.print()" class="noPrint">列印預約資料</button>
     <script>
     function varitext(text){
         text=document
@@ -499,5 +526,37 @@ table td a{
         }</script>
 	</center>
 	
+	<script src="js/jquery-3.4.1.min.js"></script>
+    <!-- bootstrap js -->
+    <script src="js/bootstrap.js"></script>
+    <!-- nice select -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
+    <!-- owl slider -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <!-- datepicker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+    <!-- custom js -->
+    <script src="js/custom.js"></script>
+  <script>
+  
+  (function() {
+	    if (document.readyState === 'complete') {
+	        var bsa = document.createElement('script');
+	        bsa.type = 'text/javascript';
+	        bsa.async = true;
+	        bsa.src = '//s3.buysellads.com/ac/bsa.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(bsa);
+	    }
+	})();
+  if (window != top) top.location.href = location.href;
+  jQuery(document).ready(function($){ $('img').removeAttr('width height'); });
+  var gaProperty = 'UA-120201777-1';
+  var disableStr = 'ga-disable-' + gaProperty;
+  if (document.cookie.indexOf(disableStr + '=true') > -1) {window[disableStr] = true;}
+  function gaOptout() {
+	  document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2045 23:59:59 UTC; path=/';window[disableStr] = true;alert('Google Tracking has been deactivated');}
+  }
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-120201777-1', 'auto');ga('set', 'anonymizeIp', true);ga('send', 'pageview');
+  </script>
 	</body>
 	</html>
