@@ -1,75 +1,63 @@
 <%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.sql.*"%>
-<%@page import="java.io.*,java.util.*"%>
+<%@ page import="java.util.List" %>
+<%@ page import="java.io.PrintWriter" %>
 <%@ page import="javax.servlet.http.Part" %>
-<%@page import="com.oreilly.servlet.MultipartRequest"%>
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
+<%@ page import="org.apache.commons.fileupload.servlet.ServletFileUpload" %>
+<%@ page import="org.apache.commons.fileupload.disk.DiskFileItemFactory" %>
+<%@ page import="org.apache.commons.fileupload.FileItem" %>
+<%@ page import="org.apache.commons.fileupload.FileUploadException" %>
+<%@ page import="java.sql.*"%>
+<%@ page import="java.io.*,java.util.*"%>
+<%@ page import="fileItemToPart.FileItemToPart" %>
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 <jsp:useBean id='fileUploadHelper' class='fileUploadHelper.FileUploadHelper' scope='page'/>
 <jsp:useBean id='objFolderConfig' scope='session' class='hitstd.group.tool.upload.FolderConfig' />
+
 <%
- MultipartRequest theMultipartRequest = new MultipartRequest (request,objFolderConfig.FilePath(),1024S*1024*1024) ;
- Enumeration theEnumeration = theMultipartRequest.getFileNames() ;
- while (theEnumeration.hasMoreElements()){
- String fieldName = (String)theEnumeration.nextElement () ;
- String fileName =theMultipartRequest.getFilesystemName (fieldName);
- String contentType = theMultipartRequest.getContentType (fieldName) ;
- 
- File theFile = theMultipartRequest.getFile(fieldName) ;
-   out.println("檔案名稱:"+fileName+"<br>") ;
-   out.println("檔案型態:"+contentType+"<br>");
-   out.println("檔案路徑:"+theFile.getAbsolutePath()+"<br>") ;
-   Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-   Connection con=DriverManager.getConnection("jdbc:ucanaccess://"+objDBConfig.FilePath()+";");
-   Statement smt= con.createStatement();
-   smt.executeUpdate("UPDATE member SET pic ='"+ objFolderConfig.WebsiteRelativeFilePath()+fileName+ "' WHERE id ='" + session.getAttribute("numberid")+"' ");
-   response.sendRedirect("member-profile.jsp?numberid="+ session.getAttribute("numberid")+"");
- }  
-
-
-
-// 建議使用 try-with-resources 管理資源
 try {
- if (!request.getParts().isEmpty()) {
-     Collection<Part> parts = request.getParts();
-     for (Part part : parts) {
-         if ("theFirstFile".equals(part.getName()) && part.getSize() > 0) {
-             String fileName = fileUploadHelper.getFileName(part);
-             String contentType = part.getContentType();
+    // 創建 DiskFileItemFactory 和 ServletFileUpload
+    DiskFileItemFactory factory = new DiskFileItemFactory();
+    ServletFileUpload upload = new ServletFileUpload(factory);
 
-             out.println("檔案名稱:" + fileName + "<br>");
-             out.println("檔案型態:" + contentType + "<br>");
+    // 解析 request
+    List<FileItem> items = upload.parseRequest(request);
 
-             // 處理檔案上傳
-             String uploadPath = objFolderConfig.FilePath() + File.separator + fileName;
-             part.write(uploadPath);
+    for (FileItem item : items) {
+        if (!item.isFormField() && "theFirstFile".equals(item.getFieldName())) {
+            // 將 FileItem 轉換為 Part
+            Part part = new FileItemToPart(item);
 
-             // 更新資料庫
-             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-             try (Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + objDBConfig.FilePath() + ";");
-                  Statement smt = con.createStatement()) {
+            String fileName = fileUploadHelper.getFileName(part);
+            String contentType = item.getContentType();
 
-                 String updateQuery = "UPDATE member SET pic ='" + objFolderConfig.WebsiteRelativeFilePath() + fileName + "' WHERE id ='" + session.getAttribute("numberid") + "'";
-                 out.println("Update Query: " + updateQuery + "<br>");
+            // 處理檔案上傳
+            String uploadPath = objFolderConfig.FilePath() + File.separator + fileName;
+            item.write(new File(uploadPath));
 
-                 int rowsUpdated = smt.executeUpdate(updateQuery);
+            // 更新資料庫
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+            try (Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + objDBConfig.FilePath() + ";");
+                 Statement smt = con.createStatement()) {
 
-                 if (rowsUpdated > 0) {
-                     response.sendRedirect("member-profile.jsp?numberid=" + session.getAttribute("numberid"));
-                 } else {
-                     out.println("Database update failed.");
-                 }
-             }
-         }
-     }
- } // 缺少這個大括號
+                String updateQuery = "UPDATE member SET pic ='" + objFolderConfig.WebsiteRelativeFilePath() + fileName + "' WHERE id ='" + session.getAttribute("numberid") + "'";
+                out.println("Update Query: " + updateQuery + "<br>");
+
+                int rowsUpdated = smt.executeUpdate(updateQuery);
+
+                if (rowsUpdated > 0) {
+                    response.sendRedirect("member-profile.jsp?numberid=" + session.getAttribute("numberid"));
+                } else {
+                    out.println("Database update failed.");
+                }
+            }
+        }
+    }
+} catch (FileUploadException e) {
+    out.println("File upload failed.");
+    e.printStackTrace(new PrintWriter(out));
 } catch (Exception e) {
- out.println("Error: " + e.getMessage() + "<br>");
- e.printStackTrace(new PrintWriter(out));
-}
-
- catch (Exception e) {
     out.println("Error: " + e.getMessage() + "<br>");
     e.printStackTrace(new PrintWriter(out));
 }
-
 %>
