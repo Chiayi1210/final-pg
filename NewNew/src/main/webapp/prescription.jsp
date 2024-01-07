@@ -18,6 +18,23 @@
 	//ResultSet rs2 = smt.executeQuery(option);
 	//rs.next();
 	//%>
+	
+   <%
+        Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+        Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + objDBConfig.FilePath() + ";");
+        Statement smt = con.createStatement();
+
+        // 使用COUNT函數計算預約人數
+        ResultSet rs = smt.executeQuery("SELECT COUNT(*) AS reservationCount FROM prescription");
+        
+        int reservationCount = 0;
+        if (rs.next()) {
+            reservationCount = rs.getInt("reservationCount");
+        }
+
+        con.close();
+    %>
+
 
 <title>慢性病連續處方笺預約| 北護智慧藥局線上預約平台</title>
 <%if (session.getAttribute("access") == "y"){%>
