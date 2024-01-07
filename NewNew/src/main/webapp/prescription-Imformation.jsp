@@ -416,7 +416,7 @@ table td a{
       </tr>
        <% } %>
       </tbody>
-      
+      </table>
       
      <script>
     function deleteData(id, cnumber1) {
@@ -448,25 +448,24 @@ table td a{
     <span class="close" onclick="closeModal()">&times;</span>
     <div id="modalContent">
       <!-- 修改資料的表單 -->
-      <form id="editForm" action="EditIM.jsp" method="POST" style="max-width: 300px; margin: 0 auto;">
-        <div style="margin-bottom: 10px;">
-          <label for="newName" style="display: inline-block; width: 80px; text-align: left;">姓名：</label>
-          <input type="text" id="newName" name="newName" readonly>
-        </div>
-
-        <div style="margin-bottom: 10px;">
-          <label for="newId" style="display: inline-block; width: 80px; text-align: left;">身分證字號：</label>
-          <input type="text" id="newId" name="newId" readonly>
-        </div>
-
-        <div style="margin-bottom: 10px;">
-          <label for="newdate" style="display: inline-block; width: 80px; text-align: left;">日期：</label>
-          <input type="date" id="newdate" name="newdate" required>
-        </div>
-
-        <div style="margin-bottom: 10px;">
-          <label for="newtime" style="display: inline-block; width: 80px; text-align: left;">時間：</label>
-          <select id="newtime" name="newtime" required>
+      <form id="editForm" action="EditIM.jsp" method="POST" style="max-width: 400px; margin: 0 auto;">
+        
+          <tr>
+            <td><label for="newName">姓名：</label></td>
+            <td><input type="text" id="newName" name="newName" readonly></td>
+          </tr>
+          <tr>
+            <td><label for="newId">身分證字號：</label></td>
+            <td><input type="text" id="newId" name="newId" readonly></td>
+          </tr>
+          <tr>
+            <td><label for="newdate">日期：</label></td>
+            <td><input type="date" id="newdate" name="newdate" required></td>
+          </tr>
+          <tr>
+            <td><label for="newtime">時間：</label></td>
+            <td>
+              <select id="newtime" name="newtime" required>
     <option value="9:30-10:00">9:30-10:00</option>
     <option value="10:00-10:30">10:00-10:30</option>
     <option value="10:30-11:00">10:30-11:00</option>
@@ -484,24 +483,36 @@ table td a{
     <option value="20:30-21:00">20:30-21:00</option>
     <option value="21:00-21:30">21:00-21:30</option>
     <!-- 添加其他时间选项 -->
-  </select>
-        </div>
+    </select>
+            </td>
+          </tr>
+          <tr>
+            <td><label for="newcnumber1">慢箋號碼：</label></td>
+            <td><input type="text" id="newcnumber1" name="newcnumber1" required></td>
+          </tr>
         
-        <div style="margin-bottom: 10px;">
-          <label for="newcnumber1">慢箋號碼：</label>
-          <input type="text" id="newcnumber1" name="newcnumber1" required>
-        </div>
-        
-        <!-- 添加其他字段 -->
+        <!-- 根據需要添加其他字段 -->
 
         <div style="text-align: center;">
-          <input type="submit" value="確定修改">
+          <input type="submit" value="確定修改" onclick="submitForm()">
         </div>
       </form>
     </div>
   </div>
 </div>
 <script>
+function submitForm() {
+    // 取得表單元素
+    var form = document.getElementById('editForm');
+
+    // 在這裡添加表單提交的邏輯
+    // 例如使用 JavaScript 的 Fetch API 或其他方法
+
+    // 之後可以關閉彈出視窗
+    closeModal();
+  }
+
+
   // 開啟彈出視窗
  function openModal(id, cnumber1, name, date, time) {
     // 取得彈出視窗元素
@@ -526,7 +537,7 @@ table td a{
   }
 </script>
 
-    </table>
+    
     </div>
     
     <button onclick="window.print()" class="noPrint">列印預約資料</button>
