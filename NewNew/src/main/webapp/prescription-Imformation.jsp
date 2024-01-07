@@ -448,18 +448,25 @@ table td a{
     <span class="close" onclick="closeModal()">&times;</span>
     <div id="modalContent">
       <!-- 修改資料的表單 -->
-      <form id="editForm" action="EditIM.jsp" method="POST">
-        <label for="newName">姓名：</label>
-        <input type="text" id="newName" name="newName" readonly><br>
+      <form id="editForm" action="EditIM.jsp" method="POST" style="max-width: 300px; margin: 0 auto;">
+        <div style="margin-bottom: 10px;">
+          <label for="newName" style="display: inline-block; width: 80px; text-align: left;">姓名：</label>
+          <input type="text" id="newName" name="newName" readonly>
+        </div>
 
-        <label for="newId">身分證字號：</label>
-        <input type="text" id="newId" name="newId" readonly><br>
+        <div style="margin-bottom: 10px;">
+          <label for="newId" style="display: inline-block; width: 80px; text-align: left;">身分證字號：</label>
+          <input type="text" id="newId" name="newId" readonly>
+        </div>
 
-        <label for="newdate">日期：</label>
-        <input type="date" id="newdate" name="newdate" required><br>
+        <div style="margin-bottom: 10px;">
+          <label for="newdate" style="display: inline-block; width: 80px; text-align: left;">日期：</label>
+          <input type="date" id="newdate" name="newdate" required>
+        </div>
 
-        <label for="newtime">時間：</label>
-        <select id="newtime" name="newtime" required>
+        <div style="margin-bottom: 10px;">
+          <label for="newtime" style="display: inline-block; width: 80px; text-align: left;">時間：</label>
+          <select id="newtime" name="newtime" required>
     <option value="9:30-10:00">9:30-10:00</option>
     <option value="10:00-10:30">10:00-10:30</option>
     <option value="10:30-11:00">10:30-11:00</option>
@@ -477,19 +484,23 @@ table td a{
     <option value="20:30-21:00">20:30-21:00</option>
     <option value="21:00-21:30">21:00-21:30</option>
     <!-- 添加其他时间选项 -->
-</select><br>
+  </select>
+        </div>
         
-        <label for="newcnumber1">慢箋號碼：</label>
-        <input type="text" id="newcnumber1" name="newcnumber1" required><br>
+        <div style="margin-bottom: 10px;">
+          <label for="newcnumber1">慢箋號碼：</label>
+          <input type="text" id="newcnumber1" name="newcnumber1" required>
+        </div>
+        
         <!-- 添加其他字段 -->
 
-
-        <input type="submit" value="確定修改">
+        <div style="text-align: center;">
+          <input type="submit" value="確定修改">
+        </div>
       </form>
     </div>
   </div>
 </div>
-
 <script>
   // 開啟彈出視窗
  function openModal(id, cnumber1, name, date, time) {
