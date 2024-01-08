@@ -412,7 +412,7 @@ table td a{
         <td><%= rs.getString("cnumber1") %></td>
         <td class="noPrint"><a href="#" class="noPrint" onclick="openModal('<%= rs.getString("id") %>', '<%= rs.getString("cnumber1") %>', '<%= rs.getString("name") %>', '<%= rs.getString("date") %>', '<%= rs.getString("time") %>')">更改</a></td>
         <td class="noPrint"><a href="prescription-Imformation.jsp" class="noPrint" style="background-color: magenta;" onclick="deleteData('<%= rs.getString("id")%>', '<%= rs.getString("cnumber1") %>')">刪除</a></td>
-        <td class="noPrint"><a href="send.jsp" class="noPrint" style="background-color :rgb(249, 56, 27)"  onclick="sendNotification('<%= rs.getString("email") %>', '<%= rs.getString("cnumber1") %>')">缺藥</a></td>
+        <td class="noPrint"><a href="send.jsp" class="noPrint" style="background-color :rgb(249, 56, 27)"  onclick="sendNotification('<%= rs.getString("email") %>', '<%= rs.getString("cnumber1") %>', '<%= rs.getString("name") %>')">缺藥</a></td>
       </tr>
        <% } %>
       </tbody>
@@ -443,10 +443,10 @@ table td a{
 </script>
 
 <script>
-function sendNotification(email, cnumber1) {
+function sendNotification(email, cnumber1,name) {
     if (confirm("確定要發送缺藥通知嗎？")) {
         // 使用 JavaScript 的 Fetch API 或其他方式向 send.jsp 發送請求
-        fetch('send.jsp?email=' + email + '&cnumber1=' + cnumber1, {
+        fetch('send.jsp?email=' + email + '&cnumber1=' + cnumber1+'&name=' + name, {
             method: 'GET',
         })
         .then(response => {

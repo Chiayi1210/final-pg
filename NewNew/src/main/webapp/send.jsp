@@ -8,7 +8,7 @@
   	try{
 	     String customer = request.getParameter("email");
 	     String cnumber1 =request.getParameter("cnumber1");
-	 	
+	     String name= request.getParameter("name");
 	     //String code1 = String.format("%06d", new Random().nextInt(1000000));// 驗證碼6碼生成的程式碼
 	     
 	     JavaMail mail = new JavaMail();   
@@ -17,7 +17,7 @@
 	     mail.setSubject("缺藥通知");
          //信件內文樣式(沒圖片版)
 	     mail.setTxt( "<table style=\"margin: 0 auto;\">"+
- 		        "<tr><td height=\"200px\" align='center' valign='middle'><H1>慢箋號碼："+cnumber1+"</H1><br><a>非常抱歉!您的藥物目前缺藥中，本次預約將取消，請重新預約!<br>有任何問題歡迎致電(02)1234-5678</a><br></td></tr>"+
+ 		        "<tr><td height=\"200px\" align='center' valign='middle'><H2>"+ name+"，您好<br>慢箋號碼："+cnumber1+"</H2><br><a>非常抱歉!您的藥物目前缺藥中，本次預約將取消，請重新預約!<br>有任何問題歡迎致電(02)1234-5678</a><br></td></tr>"+
  		    	"</table>");
 	   //信件內文樣式(有圖片版)
 // 	     mail.setTxt( "<table style=\"margin: 0 auto;\">"+
