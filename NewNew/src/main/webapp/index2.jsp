@@ -556,7 +556,7 @@
                   <img src="images/post3.jpg" alt="">
                 </div>
                 <p>
-                  !!營業時間異動!!<br>10/28週六暫停營業
+                   <%=IM.getString("P2")%>
                 </p>
               </div>
               <div class="post_box">
@@ -564,7 +564,7 @@
                   <img src="images/post4.png" alt="">
                 </div>
                 <p>
-                  元旦連假營業時間<br>113/1/1暫停營業
+                  <%=IM.getString("P3")%>
                 </p>
               </div>
             </div>
