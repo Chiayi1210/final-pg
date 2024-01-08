@@ -5,8 +5,20 @@ pageEncoding="UTF-8"%>
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 <!DOCTYPE html>
 <html>
-<%if (session.getAttribute("access") == "y"){%>
-      <style>
+ <%if (session.getAttribute("access") == "y"){%>
+<body>
+<%
+	Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+    Connection con=DriverManager.getConnection("jdbc:ucanaccess://"+objDBConfig.FilePath()+";");
+    Statement smt= con.createStatement
+	(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+	
+	String sql1 = "SELECT * FROM member WHERE CK='1'";
+	
+    ResultSet rs = smt.executeQuery(sql1);   
+	%>
+
+  <style>
         form {border: 0px solid #f1f1f1}    
         
         input[type=text], input[type=password] {
@@ -148,6 +160,7 @@ pageEncoding="UTF-8"%>
         }
         
         </style>
+       
 <center><h1>權限設定</h1><br>
 <form action="set.jsp" method="post" name="form">
        <a>請輸入身份證字號以設定員工權限</a>
@@ -155,6 +168,20 @@ pageEncoding="UTF-8"%>
       <br> <input type="submit" name="action" value="設定">
     <br> <input type="submit" name="action" value="刪除">
       </form>
+      <br>
+      <h2>成員列表</h2>
+            <table border="1">
+                <tr>
+                    <th>身分證字號</th>
+                    <th>姓名</th>
+                </tr>
+                <% while (rs.next()) { %>
+                    <tr>
+                        <td><%= rs.getString("id") %></td>
+                        <td><%= rs.getString("name") %></td>
+                    </tr>
+                <% } %>
+            </table>
       
 <%}else{%>
 <%out.println("<script>alert('請先登入此系統！！'); window.location='loginCheck-Select.jsp' </script>");}%>     
