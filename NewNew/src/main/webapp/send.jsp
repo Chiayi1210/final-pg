@@ -29,12 +29,13 @@
 	       
 	       session.setAttribute("email", customer);
 	       mail.SendMail();  
-	       response.sendRedirect("prescription-Imformation.jsp");
+	       
+	       out.println("<script>alert('郵件傳送成功成功!!'); window.location='prescription-Imformation.jsp';</script>");
 	     	  
   	} catch (Exception e) {
         e.printStackTrace(new PrintWriter(out));
         
-        // 返回 JSON 格式的錯誤訊息
+        
         response.getWriter().write("{\"status\": \"error\", \"message\": \"" + e.getMessage() + "\"}");
     }
 %>
