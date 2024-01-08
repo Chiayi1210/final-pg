@@ -8,34 +8,6 @@
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 <html>
 <body>
-<%
-	//Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-	//Connection con=DriverManager.getConnection("jdbc:ucanaccess://"+objDBConfig.FilePath()+";");
-	//Statement smt= con.createStatement();
-	//String sql = "SELECT * FROM leelab left join position on leelab.positionId=position.positionId WHERE memberId ='" +request.getParameter("memberId")+"'";
-	//String option="SELECT * FROM position";
-	//ResultSet rs = smt.executeQuery(sql);
-	//ResultSet rs2 = smt.executeQuery(option);
-	//rs.next();
-	//%>	
-	
-   <%
-        //Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-        //Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + objDBConfig.FilePath() + ";");
-        //Statement smt = con.createStatement();
-
-        // 使用COUNT函數計算預約人數
-        //ResultSet rs = smt.executeQuery("SELECT COUNT(*) AS reservationCount FROM prescription");
-        
-        //int reservationCount = 0;
-        //if (rs.next()) {
-        //reservationCount = rs.getInt("reservationCount");
-        //}
-
-        //con.close();
-    %>
-
-
 <title>慢性病連續處方笺預約| 北護智慧藥局線上預約平台</title>
 <%if (session.getAttribute("access") == "y"){%>
 
@@ -263,44 +235,53 @@ background-color:#fff;
 					Statement smt= con.createStatement();
 					String sql = "SELECT prescription.Date, prescription.Time, Count(prescription.Time) AS time之筆數 FROM prescription GROUP BY prescription.Date, prescription.Time ORDER BY prescription.Time";
 					ResultSet pp = smt.executeQuery(sql);
-	
-
-	
-	%>
+	             %>
                 
                 
-                <br><br><label >選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly"></text>
+              
 			</center>
 			
     <center>
     <table width="70%"><tr>
     <td width="auto" align="center">
     <button type="button" class="button" onclick='document.getElementById("demo").value= "9:30-10:00"' required for="time" >
-        9:30-10:00 目前已預約<%= getReservationCount(pp, "9:30-10:00") %>人
-    </button>
+        9:30-10:00</button> 目前已預約<%= getReservationCount(pp, "9:30-10:00") %>人
+    
 </td>
     <td  width="auto" align="center"><button type="button" onclick='document.getElementById("demo").value = "10:00-10:30" ' required for="time" >10:00-10:30</button>
-    目前已預約<%= getReservationCount(pp, "10:00-10:30") %>人人</td>
+    目前已預約<%= getReservationCount(pp, "10:00-10:30") %>人</td>
     <td width="auto"align="center"><button type="button" onclick='document.getElementById("demo").value = "10:30-11:00"'required  for="time" >10:30-11:00</button>
-    目前已預約<%= getReservationCount(pp, "10:30-11:00") %>人人</td>
+    目前已預約<%= getReservationCount(pp, "10:30-11:00") %>人</td>
     <td width="auto"align="center"><button type="button" onclick='document.getElementById("demo").value = "11:30-12:00"' required  for="time" >11:30-12:00</button>
-    目前已預約<%= getReservationCount(pp, "11:30-12:00") %>人人</td></tr>
+    目前已預約<%= getReservationCount(pp, "11:30-12:00") %>人</td></tr>
   <tr>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "12:00-12:30"' required  for="time" >12:00-12:30</button>目前已預約<%= getReservationCount(pp, "12:00-12:30") %>人</td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "13:00-13:30"' required for="time" >13:00-13:30</button>目前已預約<%= getReservationCount(pp, "13:00-13:30") %>人</td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "13:30-14:00"' required  for="time" >13:30-14:00</button>目前已預約<%= getReservationCount(pp, "13:30-14:00") %>人</td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value= "14:30-15:00"' required  for="time" >14:30-15:00</button>目前已預約<%= getReservationCount(pp, "14:30-15:00") %>人</td>     
+    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "12:00-12:30"' required  for="time" >12:00-12:30</button>
+    目前已預約<%= getReservationCount(pp, "12:00-12:30") %>人</td>
+    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "13:00-13:30"' required for="time" >13:00-13:30</button>
+    目前已預約<%= getReservationCount(pp, "13:00-13:30") %>人</td>
+    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "13:30-14:00"' required  for="time" >13:30-14:00</button>
+    目前已預約<%= getReservationCount(pp, "13:30-14:00") %>人</td>
+    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value= "14:30-15:00"' required  for="time" >14:30-15:00</button>
+    目前已預約<%= getReservationCount(pp, "14:30-15:00") %>人</td>     
   </tr>
   <tr>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "15:30-16:00"' required  for="time" >15:30-16:00</button>目前已預約<%= getReservationCount(pp, "15:30-16:00") %>人人</td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "16:30-17:00"' required  for="time" >16:30-17:00</button>目前已預約<%= getReservationCount(pp, "16:30-17:00") %>人</td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "17:30-18:00"' required  for="time" >17:30-18:00</button>目前已預約<%= getReservationCount(pp, "17:30-18:00") %>人</td>
-      <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "18:00-18:30"' required  for="time" >18:00-18:30</button>目前已預約<%= getReservationCount(pp, "18:00-18:30") %>人</td>     
+    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "15:30-16:00"' required  for="time" >15:30-16:00</button>
+    目前已預約<%= getReservationCount(pp, "15:30-16:00") %>人</td>
+    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "16:30-17:00"' required  for="time" >16:30-17:00</button>
+    目前已預約<%= getReservationCount(pp, "16:30-17:00") %>人</td>
+    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "17:30-18:00"' required  for="time" >17:30-18:00</button>
+    目前已預約<%= getReservationCount(pp, "17:30-18:00") %>人</td>
+      <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "18:00-18:30"' required  for="time" >18:00-18:30</button>
+    目前已預約<%= getReservationCount(pp, "18:00-18:30") %>人</td>     
    </tr>
-    <tr><td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "19:00-19:30"' required  for="time" >19:00-19:30</button>目前已預約<%= getReservationCount(pp, "19:00-19:30") %>人</td>
-   <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "19:30-20:00"' required  for="time" >19:30-20:00</button>目前已預約<%= getReservationCount(pp, "19:30-20:00") %>人</td>
-   <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "20:30-21:00"' required  for="time" >20:30-21:00</button>目前已預約<%= getReservationCount(pp, "20:30-21:00") %>人</td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "21:00-21:30"' required  for="time" >21:00-21:30</button>目前已預約<%= getReservationCount(pp, "21:00-21:30") %>人</td>  
+    <tr><td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "19:00-19:30"' required  for="time" >19:00-19:30</button>
+    目前已預約<%= getReservationCount(pp, "19:00-19:30") %>人</td>
+   <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "19:30-20:00"' required  for="time" >19:30-20:00</button>
+   目前已預約<%= getReservationCount(pp, "19:30-20:00") %>人</td>
+   <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "20:30-21:00"' required  for="time" >20:30-21:00</button>
+   目前已預約<%= getReservationCount(pp, "20:30-21:00") %>人</td>
+    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "21:00-21:30"' required  for="time" >21:00-21:30</button>
+    目前已預約<%= getReservationCount(pp, "21:00-21:30") %>人</td>  
     </tr></table>
     
 <%! // Declaration section
