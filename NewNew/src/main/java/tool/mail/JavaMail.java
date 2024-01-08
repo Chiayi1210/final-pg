@@ -1,4 +1,5 @@
 package tool.mail;
+import java.io.UnsupportedEncodingException;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -69,12 +70,20 @@ public class JavaMail {
             prop.put("mail.smtp.socketFactory.port", "465");
             prop.put("mail.debug", "true");
 
+            
+            
+            
             // 設置驗證
             Session session = Session.getDefaultInstance(prop, new Auth(userName, password));
 
             // 設置郵件格式
             MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(userName));
+            try {
+                String senderDisplayName = "北護智慧藥局";
+                message.setFrom(new InternetAddress(userName, senderDisplayName));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(customer));
             message.setSubject(subject);
             message.setContent(txt, "text/html;charset=UTF-8");
