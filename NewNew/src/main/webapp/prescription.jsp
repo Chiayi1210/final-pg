@@ -5,7 +5,6 @@
 <%@ page import="java.io.*,java.util.*" %>
 <%@include file ="menu.jsp" %>
 <%@ page import="tool.mail.JavaMail" %>
-<%@ page import="Reservation.Reservation" %>
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 <html>
 <body>
@@ -18,22 +17,22 @@
 	//ResultSet rs = smt.executeQuery(sql);
 	//ResultSet rs2 = smt.executeQuery(option);
 	//rs.next();
-	//%>
+	//%>	
 	
    <%
-        Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-        Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + objDBConfig.FilePath() + ";");
-        Statement smt = con.createStatement();
+        //Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+        //Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + objDBConfig.FilePath() + ";");
+        //Statement smt = con.createStatement();
 
         // 使用COUNT函數計算預約人數
-        ResultSet rs = smt.executeQuery("SELECT COUNT(*) AS reservationCount FROM prescription");
+        //ResultSet rs = smt.executeQuery("SELECT COUNT(*) AS reservationCount FROM prescription");
         
-        int reservationCount = 0;
-        if (rs.next()) {
-            reservationCount = rs.getInt("reservationCount");
-        }
+        //int reservationCount = 0;
+        //if (rs.next()) {
+        //reservationCount = rs.getInt("reservationCount");
+        //}
 
-        con.close();
+        //con.close();
     %>
 
 
@@ -243,7 +242,7 @@ background-color:#fff;
    </div>
 		
 	
-				<br><label for='massage'>選擇預約日期：</label><input type="date"  name="date" required>
+				<br><br><label >選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly" required></text>
 				<script>
                  var dateInput = document.getElementsByName('date')[0];
                  dateInput.addEventListener('input', noSundays);
@@ -279,7 +278,7 @@ background-color:#fff;
     <button type="button" class="button" onclick='document.getElementById("demo").value= "9:30-10:00"' required for="time" >
         9:30-10:00 目前已預約<%= getReservationCount(pp, "9:30-10:00") %>人
     </button>
-</td> 
+</td>
     <td  width="auto" align="center"><button type="button" onclick='document.getElementById("demo").value = "10:00-10:30" ' required for="time" >10:00-10:30</button>
     目前已預約<%= getReservationCount(pp, "10:00-10:30") %>人人</td>
     <td width="auto"align="center"><button type="button" onclick='document.getElementById("demo").value = "10:30-11:00"'required  for="time" >10:30-11:00</button>

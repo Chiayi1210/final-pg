@@ -8,7 +8,7 @@ public class FolderConfig {
 	   //li's 
 		//String DBPath="D:\\1NAS-Li\\coding\\JavaLearning\\leelabTemplate\\WebContent\\assets\\images\\member\\";
 	   //Yujia's 
-		 String DBPath="//Users/chenzujun/Desktop/final-pg/NewNew/src/main/webapp/member.accdb";
+		 String DBPath="//C:\\\\Users\\\\鄭嘉儀\\\\OneDrive\\\\桌面\\\\final-pg\\\\NewNew\\\\src\\\\main\\\\webapp\\\\images";
 	   return DBPath;		
 	}
 	public String WebsiteRelativeFilePath(){
