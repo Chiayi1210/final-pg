@@ -243,7 +243,7 @@ background-color:#fff;
    </div>
 		
 	
-				<br><label for='massage'>選擇預約日期：</label><input type="date"  name="date" required>
+				<br><label for='massage'>選擇預約日期：</label><input type="date"  name="date" required  min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>">
 				<script>
                  var dateInput = document.getElementsByName('date')[0];
                  dateInput.addEventListener('input', noSundays);
