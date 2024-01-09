@@ -48,16 +48,16 @@ if ((cnumber1 != null && !cnumber1.trim().isEmpty()) ||
 
     con.close();
     try{
-  	     String customer = request.getParameter("email");
+  	     String customer = request.getParameter("memberid");
   	     //String code1 = String.format("%06d", new Random().nextInt(1000000));// 驗證碼6碼生成的程式碼
   	     
   	     JavaMail mail = new JavaMail();   
   	     mail.setCustomer(customer);
            //信件標題
-  	     mail.setSubject("慢箋預約成功");
+  	     mail.setSubject("慢箋預約成功!!");
            //信件內文樣式(沒圖片版)
   	     mail.setTxt( "<table style=\"margin: 0 auto;\">"+
-   		        "<tr><td height=\"200px\" align='center' valign='middle'><H1>慢箋號碼："+cnumber1+"</H1><br></td></tr>"+
+   		        "<tr><td height=\"200px\" align='center' valign='middle'><H2>"+ name+"，您好<br>慢箋號碼："+cnumber1+"</H2><br><a>您的慢箋預約成功，以下為您預約的日期及時間<br>"+date+"<br>"+time+"<br>記得攜帶健保卡至藥局領藥喔!<br>有任何問題歡迎致電(02)1234-5678</a><br></td></tr>"+
    		    	"</table>");
   	   //信件內文樣式(有圖片版)
 //   	     mail.setTxt( "<table style=\"margin: 0 auto;\">"+

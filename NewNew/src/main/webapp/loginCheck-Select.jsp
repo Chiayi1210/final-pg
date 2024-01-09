@@ -24,10 +24,14 @@ Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
 		session.setAttribute("numberid",members.getString("id"));
 		session.setAttribute("memberphone",members.getString("phone"));
 		session.setAttribute("CKey",members.getString("CK"));
-	//這邊有問題	
+	
 		if(session.getAttribute("CKey").equals("1")){
 		session.setMaxInactiveInterval(3600);
 		response.sendRedirect("index-P.jsp");}
+		else if (session.getAttribute("CKey").equals("3")){
+			session.setMaxInactiveInterval(3600);
+			response.sendRedirect("index-P.jsp");
+		}
 		else{
 			session.setMaxInactiveInterval(3600);
 		response.sendRedirect("index2.jsp");}

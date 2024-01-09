@@ -30,7 +30,7 @@
 	       session.setAttribute("email", customer);
 	       mail.SendMail();  
 	       
-	       out.println("<script>alert('郵件傳送成功成功!!'); window.location='prescription-Imformation.jsp';</script>");
+	       out.println("<script>alert('郵件傳送成功!!'); window.location='prescription-Imformation.jsp';</script>");
 	     	  
   	} catch (Exception e) {
         e.printStackTrace(new PrintWriter(out));
