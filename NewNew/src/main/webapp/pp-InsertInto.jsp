@@ -58,17 +58,17 @@ if ((cnumber1 != null && !cnumber1.trim().isEmpty()) ||
   	   // 构造邮件内容
 	        StringBuilder mailContent = new StringBuilder();
 	        mailContent.append("<table style=\"margin: 0 auto;\">");
-	        mailContent.append("<tr><td height=\"200px\" align='center' valign='middle'><p>").append(name).append("，您好<br>慢箋號碼：<br><b>");
+	        mailContent.append("<tr><td height=\"200px\" align='center' valign='middle'><p>").append(name).append("，您好<br>慢箋號碼：<br>");
 
 	        // 根据cnumber1、cnumber2、cnumber3的有无构造邮件内容
 	        if (cnumber1 != null && !cnumber1.trim().isEmpty()) {
-	            mailContent.append(cnumber1).append("<br>");
+	            mailContent.append("<b>").append(cnumber1).append("<br></b>");
 	        }
 	        if (cnumber2 != null && !cnumber2.trim().isEmpty()) {
-	            mailContent.append(cnumber2).append("<br>");
+	            mailContent.append("<b>").append(cnumber2).append("<br></b>");
 	        }
 	        if (cnumber3 != null && !cnumber3.trim().isEmpty()) {
-	            mailContent.append(cnumber3).append("<br>").append("</b>");
+	            mailContent.append("<b>").append(cnumber3).append("<br></b>");
 	        }
 
 	        mailContent.append("您的慢箋預約成功，以下為您預約的日期及時間<br>").append("<b>").append(date).append("<br>").append(time).append("</b>").append("<br>記得攜帶健保卡至藥局領藥喔!<br>有任何問題歡迎致電(02)1234-5678</p><br></td></tr>");
