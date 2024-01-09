@@ -214,20 +214,22 @@ background-color:#fff;
    </div>
 		
 	
-				<br><br><label >選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly" required></text>
+				<br><label for='massage'>選擇預約日期：</label><input type="date"  name="date" required>
 				<script>
-                 var dateInput = document.getElementsByName('date')[0];
-                 dateInput.addEventListener('input', noSundays);
-
-                 function noSundays(e) {
-                 var day = new Date(e.target.value).getUTCDay();
-                 if (day == 0) {
-                 e.target.setCustomValidity('不可選擇週日！');
-                 } else {
-                    e.target.setCustomValidity('');
-                    }
-                 }
-                  </script>                
+                  var date = document.getElementById('massage'),
+                  function noSundays(e){
+                  var day = new Date(e.target.value).getUTCDay();
+                  if ( day == 0 ){
+                  e.target.setCustomValidity('不可選擇週日！');
+                  } else {
+                  e.target.setCustomValidity('');
+                  date.addEventListener('input',noSundays);
+                  }
+                  }
+                  </script>
+                <br><br><label >選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly"  min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"></text>
+     			</center>
+                                  
                  <%
 					Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
 					Connection con=DriverManager.getConnection("jdbc:ucanaccess://"+objDBConfig.FilePath()+";");
