@@ -216,25 +216,36 @@ background-color:#fff;
 	
 				<br><label for='massage'>選擇預約日期：</label><input type="date"  name="date" required>
 				 <script>
-    var dateInput = document.getElementsByName('date')[0];
+    var dateInput = document.getElementById('appointmentDate');
     var demoInput = document.getElementById('demo');
-    
+
     dateInput.addEventListener('input', function() {
+        var selectedDate = new Date(dateInput.value);
+        var currentDate = new Date();
+
+        // 檢查是否選擇了以前的日期
+        if (selectedDate < currentDate) {
+            dateInput.setCustomValidity('不可選擇以前的日期！');
+        } else {
+            dateInput.setCustomValidity('');
+        }
+
+        // 檢查星期日
+        noSundays();
+        
+        // 更新時間檢查
         getReservationCount(dateInput.value, demoInput.value);
     });
 
-    function noSundays(e) {
-        var day = new Date(e.target.value).getUTCDay();
+    function noSundays() {
+        var day = new Date(dateInput.value).getUTCDay();
         if (day == 0) {
-            e.target.setCustomValidity('不可選擇週日！');
+            dateInput.setCustomValidity('不可選擇週日！');
         } else {
-            e.target.setCustomValidity('');
+            dateInput.setCustomValidity('');
         }
     }
-
-    dateInput.addEventListener('input', noSundays);
-</script>
-                 <br><br><label >選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly"  min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"></text>
+</script>                 <br><br><label >選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly"  min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"></text>
      			</center>
                                   
                  <%
