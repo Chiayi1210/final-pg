@@ -191,9 +191,7 @@ background-color:#fff;
 }
 
 </style>
-<%  
-	  Object customer = session.getAttribute("email");  	
-  %>
+
 <center> <br><h1>預約資料登記</h1>
 <form action="pp-InsertInto.jsp" method="post">
 		<div>
