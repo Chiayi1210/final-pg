@@ -219,22 +219,38 @@ background-color:#fff;
    </div>
 		
 	
-				<br><label for='massage'>選擇預約日期：</label><input type="date"  name="date" required>
-				<script>
-                  var date = document.getElementById('massage'),
-                  function noSundays(e){
-                  var day = new Date(e.target.value).getUTCDay();
-                  if ( day == 0 ){
-                  e.target.setCustomValidity('不可選擇週日！');
-                  } else {
-                  e.target.setCustomValidity('');
-                  date.addEventListener('input',noSundays);
-                  }
-                  }
-                </script>
-                <br><br><label >選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly"  min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"></text>
-			</center>
-			
+				<br><label for='massage'>選擇預約日期：</label>
+<input type="date" name="date" id="appointmentDate" required>
+<script>
+    var dateInput = document.getElementById('appointmentDate');
+    dateInput.addEventListener('input', function(e) {
+        noSundays(e);
+        checkPastDate(e);
+    });
+
+    function noSundays(e) {
+        var day = new Date(e.target.value).getUTCDay();
+        if (day == 0) {
+            e.target.setCustomValidity('不可選擇週日！');
+        } else {
+            e.target.setCustomValidity('');
+        }
+    }
+
+    function checkPastDate(e) {
+        var selectedDate = new Date(e.target.value);
+        var currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0); // 忽略時間，僅比較日期部分
+
+        if (selectedDate < currentDate) {
+            e.target.setCustomValidity('不可選擇今日以前的日期！');
+        } else {
+            e.target.setCustomValidity('');
+        }
+    }
+</script>
+<br><br><label>選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly" min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"></label>
+</center>			
     <center>
     <table width="70%"><tr>
     <td width="auto"  align="center"><button   type="button" class="button" onclick='document.getElementById("demo").value= "9:30-10:00"' required  for="time" >9:30-10:00</button>

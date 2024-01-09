@@ -191,9 +191,7 @@ background-color:#fff;
 }
 
 </style>
-<%  
-	  Object customer = session.getAttribute("email");  	
-  %>
+
 <center> <br><h1>預約資料登記</h1>
 <form action="pp-InsertInto.jsp" method="post">
 		<div>
@@ -214,8 +212,9 @@ background-color:#fff;
    </div>
 		
 	
-				<br><label for='massage'>選擇預約日期：</label><input type="date"  name="date" required>
-				 <script>
+<br><label for='massage'>選擇預約日期：</label>
+<input type="date"  name="date" id="appointmentDate" required>
+<script>
     var dateInput = document.getElementById('appointmentDate');
     var demoInput = document.getElementById('demo');
 
@@ -245,9 +244,9 @@ background-color:#fff;
             dateInput.setCustomValidity('');
         }
     }
-</script>                 <br><br><label >選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly"  min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"></text>
-     			</center>
-                                  
+</script>                 
+<br><br><label>選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly"  min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"></label>
+</center>                                  
                  <%
 					Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
 					Connection con=DriverManager.getConnection("jdbc:ucanaccess://"+objDBConfig.FilePath()+";");
