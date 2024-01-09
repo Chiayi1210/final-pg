@@ -191,9 +191,7 @@ background-color:#fff;
 }
 
 </style>
-<%  
-	  Object customer = session.getAttribute("email");  	
-  %>
+
 <center> <br><h1>預約資料登記</h1>
 <form action="pp-InsertInto.jsp" method="post">
 		<div>
@@ -300,7 +298,7 @@ background-color:#fff;
         return 0; // 若找不到對應日期和時間的預約人數，預設為0
     }
 %>
-%>    
+ 
 			
 			<br> <label for="cnumber1">慢性病卡號1：</label> <input type="text"
 				name="cnumber1" required><br>

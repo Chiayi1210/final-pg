@@ -55,17 +55,26 @@ if ((cnumber1 != null && !cnumber1.trim().isEmpty()) ||
   	     mail.setCustomer(customer);
            //信件標題
   	     mail.setSubject("慢箋預約成功!!");
-           //信件內文樣式(沒圖片版)
-  	     mail.setTxt( "<table style=\"margin: 0 auto;\">"+
-   		        "<tr><td height=\"200px\" align='center' valign='middle'><H2>"+ name+"，您好<br>慢箋號碼："+cnumber1+"</H2><br><a>您的慢箋預約成功，以下為您預約的日期及時間<br>"+date+"<br>"+time+"<br>記得攜帶健保卡至藥局領藥喔!<br>有任何問題歡迎致電(02)1234-5678</a><br></td></tr>"+
-   		    	"</table>");
-  	   //信件內文樣式(有圖片版)
-//   	     mail.setTxt( "<table style=\"margin: 0 auto;\">"+
-//    		        "<tr><td><p><img src=\"cid:image\"></p><hr></td></tr>"+
-//    		        "<tr><td height=\"200px\" align='center' valign='middle'><H1>驗證碼："+code1+"</H1><br></td></tr>"+
-//    		    	"</table>");
-  	     //設置session     
-  	       //session.setMaxInactiveInterval(60);   // 設置 Session 過期時間為 60 秒
+  	   // 构造邮件内容
+	        StringBuilder mailContent = new StringBuilder();
+	        mailContent.append("<table style=\"margin: 0 auto;\">");
+	        mailContent.append("<tr><td height=\"200px\" align='center' valign='middle'><p>").append(name).append("，您好<br>慢箋號碼：<br><b>");
+
+	        // 根据cnumber1、cnumber2、cnumber3的有无构造邮件内容
+	        if (cnumber1 != null && !cnumber1.trim().isEmpty()) {
+	            mailContent.append(cnumber1).append("<br>");
+	        }
+	        if (cnumber2 != null && !cnumber2.trim().isEmpty()) {
+	            mailContent.append(cnumber2).append("<br>");
+	        }
+	        if (cnumber3 != null && !cnumber3.trim().isEmpty()) {
+	            mailContent.append(cnumber3).append("<br>").append("</b>");
+	        }
+
+	        mailContent.append("您的慢箋預約成功，以下為您預約的日期及時間<br>").append("<b>").append(date).append("<br>").append(time).append("</b>").append("<br>記得攜帶健保卡至藥局領藥喔!<br>有任何問題歡迎致電(02)1234-5678</p><br></td></tr>");
+	        mailContent.append("</table>");
+
+	        mail.setTxt(mailContent.toString());
   	       
   	       session.setAttribute("email", customer);
   	       mail.SendMail();  
