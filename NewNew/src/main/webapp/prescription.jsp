@@ -216,17 +216,24 @@ background-color:#fff;
 	
 				<br><label for='massage'>選擇預約日期：</label><input type="date"  name="date" required>
 				 <script>
-                 var date = document.getElementById('massage');
-                 function noSundays(e) {
-                  var day = new Date(e.target.value).getUTCDay();
-                 if (day == 0) {
-                 e.target.setCustomValidity('不可選擇週日！');
-                 } else {
-                  e.target.setCustomValidity(''); 
-                   date.addEventListener('input', noSundays);
-                   }
-                   }
-                 </script>                
+    var dateInput = document.getElementsByName('date')[0];
+    var demoInput = document.getElementById('demo');
+    
+    dateInput.addEventListener('input', function() {
+        getReservationCount(dateInput.value, demoInput.value);
+    });
+
+    function noSundays(e) {
+        var day = new Date(e.target.value).getUTCDay();
+        if (day == 0) {
+            e.target.setCustomValidity('不可選擇週日！');
+        } else {
+            e.target.setCustomValidity('');
+        }
+    }
+
+    dateInput.addEventListener('input', noSundays);
+</script>
                  <br><br><label >選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly"  min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"></text>
      			</center>
                                   
@@ -238,6 +245,7 @@ background-color:#fff;
 					String sql = "SELECT prescription.Date, prescription.Time, Count(prescription.Time) AS time之筆數 FROM prescription GROUP BY prescription.Date, prescription.Time ORDER BY prescription.Time";
 					ResultSet pp = smt.executeQuery(sql);
 	             %>
+	             
                 
                 
               
@@ -285,8 +293,7 @@ background-color:#fff;
     <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "21:00-21:30"' required  for="time" >21:00-21:30</button>
     目前已預約<%= getReservationCount(pp, "預約日期","21:00-21:30") %>人</td>  
     </tr></table>
-    
-<%! // Declaration section
+    <%! // Declaration section
     int getReservationCount(ResultSet resultSet, String date, String timeSlot) throws SQLException {
         while (resultSet.next()) {
             String reservationDate = resultSet.getString("Date");
@@ -300,8 +307,7 @@ background-color:#fff;
         return 0; // 若找不到對應日期和時間的預約人數，預設為0
     }
 %>
-%>    
-			
+    
 			<br> <label for="cnumber1">慢性病卡號1：</label> <input type="text"
 				name="cnumber1" required><br>
 			<br> <label for="cnumber2">慢性病卡號2：</label> <input type="text"
