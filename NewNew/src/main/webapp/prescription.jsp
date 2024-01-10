@@ -217,6 +217,7 @@ background-color:#fff;
 	
 <br><label for='massage'>選擇預約日期：</label>
 <input type="date" name="date" id="appointmentDate" required min="<%= LocalDate.now() %>">
+<div id="reservationCountDisplay"></div>
 <script>
     var dateInput = document.getElementById('appointmentDate');
     var demoInput = document.getElementById('demo');
@@ -251,8 +252,10 @@ background-color:#fff;
     }
 
 </script>  
-      <script>
+     <script>
     var dateInput = document.getElementById('appointmentDate');
+    var reservationCountDisplay = document.getElementById('reservationCountDisplay');
+
     dateInput.addEventListener('input', function() {
         // 獲取選擇的日期
         var selectedDate = dateInput.value;
@@ -262,27 +265,25 @@ background-color:#fff;
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 // 更新顯示已預約人數的區域
-                updateReservationCounts(JSON.parse(xhr.responseText));
+                reservationCountDisplay.innerHTML = "選擇日期：" + selectedDate + "<br>目前已預約人數：" + xhr.responseText + "人";
+                
+                // 更新相應的按鈕，這裡假設有一個按鈕的data-time屬性為"9:30-10:00"
+                updateButtonCount("9:30-10:00", xhr.responseText);
             }
         };
         xhr.open("GET", "getReservationCounts.jsp?date=" + selectedDate, true);
         xhr.send();
     });
 
-    function updateReservationCounts(reservationCounts) {
-        // 更新每個按鈕上顯示的已預約人數
-        // 這裡的 reservationCounts 是一個包含時間和對應預約數的物件
-        // 例如: { "9:30-10:00": 5, "10:00-10:30": 3, ... }
-        for (var timeSlot in reservationCounts) {
-            var count = reservationCounts[timeSlot];
-            // 在相應的按鈕上顯示預約數量
-            var button = document.querySelector('[data-time="' + timeSlot + '"]');
-            if (button) {
-                button.innerHTML = timeSlot + "<br>目前已預約" + count + "人";
-            }
+    // 更新按鈕上的預約人數
+    function updateButtonCount(timeSlot, count) {
+        var button = document.querySelector('[data-time="' + timeSlot + '"]');
+        if (button) {
+            button.innerHTML = timeSlot + "<br>目前已預約" + count + "人";
         }
     }
-</script>    
+</script>
+
 <br><br><label>選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly"  min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"></label>
         </center>
         
@@ -331,7 +332,7 @@ background-color:#fff;
     <table width="70%"><tr>
     <td width="auto" align="center">
     <button type="button" class="button" onclick='document.getElementById("demo").value = "9:30-10:00" '  required for="time" >
-        9:30-10:00</button> 目前已預約<%= getReservationCount(pp,"預約日期", "10:00-10:30") %>人
+        9:30-10:00</button> 目前已預約<%= getReservationCount(pp,"預約日期", "9:30-10:00") %>人
     
 </td>
     <td  width="auto" align="center"><button type="button" onclick='document.getElementById("demo").value = "10:00-10:30" ' required for="time" >10:00-10:30</button>
