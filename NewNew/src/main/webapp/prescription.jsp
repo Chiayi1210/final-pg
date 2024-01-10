@@ -4,6 +4,7 @@
 <%@page import="java.sql.*"%>
 <%@ page import="java.io.*,java.util.*" %>
 <%@include file ="menu.jsp" %>
+<%@ page import="java.time.LocalDate" %>
 <%@ page import="tool.mail.JavaMail" %>
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 <html>
@@ -213,7 +214,7 @@ background-color:#fff;
 		
 	
 <br><label for='massage'>選擇預約日期：</label>
-<input type="date"  name="date" id="appointmentDate" required>
+<input type="date"  name="date" id="appointmentDate" required min="<%= LocalDate.now() %>">
 <script>
     var dateInput = document.getElementById('appointmentDate');
     var demoInput = document.getElementById('demo');
@@ -237,7 +238,8 @@ background-color:#fff;
     });
 
     function noSundays() {
-        var day = new Date(dateInput.value).getUTCDay();
+    	var selectedDate = new Date(dateInput.value);
+    	 var day = selectedDate.getUTCDay();
         if (day == 0) {
             dateInput.setCustomValidity('不可選擇週日！');
         } else {
