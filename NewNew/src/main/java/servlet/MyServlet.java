@@ -10,21 +10,23 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.Collection;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.IOException;
 
 @WebServlet("/Multipartconfig.java")
 @MultipartConfig(
-    fileSizeThreshold = 1024 * 1024 * 1,  // 1 MB
-    maxFileSize = 1024 * 1024 * 10,       // 10 MB
-    maxRequestSize = 1024 * 1024 * 50      // 50 MB
+        location = "/tmp",
+        fileSizeThreshold = 1024 * 1024,
+        maxFileSize = 1024 * 1024 * 5,  // 5 MB
+        maxRequestSize = 1024 * 1024 * 5 * 5  // 25 MB
 )
-public class Multipartconfig extends HttpServlet {
+public class MyServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

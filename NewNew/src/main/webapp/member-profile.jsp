@@ -85,7 +85,7 @@
    
                     <div class="row">
                         <div class="col-md-6">
-                       <form action="MBpic_update.jsp" method="post" enctype="multipart/form-data" id="uploadForm">
+                       <form action="MBpic_update.jsp" method="post" enctype="multipart/form-data"id="uploadForm">
                             <img src="<%=IM.getString("pic") %>" style="width:280px; height:200px">
                             <h3>選擇要上傳的文件:</h3>
                             <input type="file" name="theFirstFile" id="pic" size="50" />
@@ -100,9 +100,10 @@
                         	        var form = document.getElementById('uploadForm');
                         	        form.action = "MBpic_update.jsp";
                         	        form.enctype = "multipart/form-data";
-                        	        form.submit();
+                        	        return true;
                         	    } else {
                         	        alert("請選擇要上傳的文件。");
+                        	        return false; // 阻止表單提交
                         	    }
                         	}
                           </script>

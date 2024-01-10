@@ -6,15 +6,16 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.ArrayList;
 
-import javax.servlet.http.Part;
+import jakarta.servlet.http.Part;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItem;
 
 public class FileItemToPart implements Part {
     private FileItem fileItem;
 
-    public FileItemToPart(FileItem fileItem) {
-        this.fileItem = fileItem;
+    public FileItemToPart(Part part) {
+        this.fileItem = new DiskFileItem(part.getName(), part.getContentType(), false, part.getName(), 0, null);
     }
 
     @Override
@@ -32,7 +33,6 @@ public class FileItemToPart implements Part {
         return fileItem.getName();
     }
 
-    // 使用 fileItem.getName() 代替 getSubmittedFileName()
     public String getSubmittedFileName() {
         return fileItem.getName();
     }
@@ -71,8 +71,7 @@ public class FileItemToPart implements Part {
     @Override
     public Collection<String> getHeaderNames() {
         Iterator<String> iterator = fileItem.getHeaders().getHeaderNames();
-        // 將 Iterator 轉換為 Collection
-        Collection<String> headerNames = new java.util.ArrayList<>();
+        Collection<String> headerNames = new ArrayList<>();
         while (iterator.hasNext()) {
             headerNames.add(iterator.next());
         }

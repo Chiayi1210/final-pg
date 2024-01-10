@@ -8,11 +8,17 @@
     <servlet>
         <servlet-name>MyServlet</servlet-name>
         <servlet-class>servlet.MyServlet</servlet-class>
+        <multipart-config>
+            <location>/images</location>
+            <max-file-size>1073741824</max-file-size>
+            <max-request-size>1073741824</max-request-size>
+            <file-size-threshold>1073741824</file-size-threshold>
+        </multipart-config>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>MyServlet</servlet-name>
-        <url-pattern>/Multipartconfig.java</url-pattern>
+        <url-pattern>/MyServlet.java</url-pattern>
     </servlet-mapping>
 
     <!-- 其他配置，如 Filter、Listener，根據需求添加 -->

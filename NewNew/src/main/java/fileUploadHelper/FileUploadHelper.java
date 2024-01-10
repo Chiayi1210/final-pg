@@ -1,6 +1,7 @@
 package fileUploadHelper;
 
-import javax.servlet.http.Part;
+import jakarta.servlet.http.Part;
+
 
 public class FileUploadHelper {
     public static String getFileName(Part part) {
