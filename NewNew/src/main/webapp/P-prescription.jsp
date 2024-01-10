@@ -3,6 +3,8 @@
     <!--後台連續處方簽預約網頁 -->
 <%@page import="java.sql.*"%>
 <%@include file ="menu.jsp" %>
+<%@ page import="java.time.LocalDate" %>
+
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 <body>
 <%
@@ -220,7 +222,7 @@ background-color:#fff;
 		
 	
 				<br><label for='massage'>選擇預約日期：</label>
-<input type="date" name="date" id="appointmentDate" required>
+<input type="date" name="date" id="appointmentDate" required min="<%= LocalDate.now() %>">
 <script>
     var dateInput = document.getElementById('appointmentDate');
     dateInput.addEventListener('input', function(e) {
