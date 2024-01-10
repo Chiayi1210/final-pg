@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%><%@page import="java.sql.*"%>
  <%@include file ="menu.jsp" %>
+ <%@ page import="java.time.LocalDate" %>
+ 
  <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 <html>
   <head> 
@@ -482,7 +484,39 @@ function sendNotification(email, cnumber1,name) {
           </tr>
           <tr>
             <td><label for="newdate">日期：</label></td>
-            <td><input type="date" id="newdate" name="newdate" required></td>
+            <td><input type="date" id="newdate" name="newdate" required  min="<%= LocalDate.now() %>"></td>
+         <script>
+    var dateInput = document.getElementById('appointmentDate');
+    var demoInput = document.getElementById('demo');
+
+    dateInput.addEventListener('input', function() {
+        var selectedDate = new Date(dateInput.value);
+        var currentDate = new Date();
+
+        // 檢查是否選擇了以前的日期
+        if (selectedDate < currentDate) {
+            dateInput.setCustomValidity('不可選擇以前的日期！');
+        } else {
+            dateInput.setCustomValidity('');
+        }
+
+        // 檢查星期日
+        noSundays();
+        
+        // 更新時間檢查
+        getReservationCount(dateInput.value, demoInput.value);
+    });
+
+    function noSundays() {
+    	var selectedDate = new Date(dateInput.value);
+    	 var day = selectedDate.getUTCDay();
+        if (day == 0) {
+            dateInput.setCustomValidity('不可選擇週日！');
+        } else {
+            dateInput.setCustomValidity('');
+        }
+    }
+</script>          
           </tr>
           <tr>
             <td><label for="newtime">時間：</label></td>
