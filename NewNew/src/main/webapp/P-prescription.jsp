@@ -3,6 +3,7 @@
     <!--後台連續處方簽預約網頁 -->
 <%@page import="java.sql.*"%>
 <%@include file ="menu.jsp" %>
+<%@ page import="java.time.LocalDate" %>
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 <body>
 <%
@@ -220,35 +221,39 @@ background-color:#fff;
 		
 	
 				<br><label for='massage'>選擇預約日期：</label>
-<input type="date" name="date" id="appointmentDate" required>
+<input type="date"  name="date" id="appointmentDate" required min="<%= LocalDate.now() %>">
 <script>
     var dateInput = document.getElementById('appointmentDate');
-    dateInput.addEventListener('input', function(e) {
-        noSundays(e);
-        checkPastDate(e);
+    var demoInput = document.getElementById('demo');
+
+    dateInput.addEventListener('input', function() {
+        var selectedDate = new Date(dateInput.value);
+        var currentDate = new Date();
+
+        // 檢查是否選擇了以前的日期
+        if (selectedDate < currentDate) {
+            dateInput.setCustomValidity('不可選擇以前的日期！');
+        } else {
+            dateInput.setCustomValidity('');
+        }
+
+        // 檢查星期日
+        noSundays();
+        
+        // 更新時間檢查
+        getReservationCount(dateInput.value, demoInput.value);
     });
 
-    function noSundays(e) {
-        var day = new Date(e.target.value).getUTCDay();
+    function noSundays() {
+    	var selectedDate = new Date(dateInput.value);
+    	 var day = selectedDate.getUTCDay();
         if (day == 0) {
-            e.target.setCustomValidity('不可選擇週日！');
+            dateInput.setCustomValidity('不可選擇週日！');
         } else {
-            e.target.setCustomValidity('');
+            dateInput.setCustomValidity('');
         }
     }
-
-    function checkPastDate(e) {
-        var selectedDate = new Date(e.target.value);
-        var currentDate = new Date();
-        currentDate.setHours(0, 0, 0, 0); // 忽略時間，僅比較日期部分
-
-        if (selectedDate < currentDate) {
-            e.target.setCustomValidity('不可選擇今日以前的日期！');
-        } else {
-            e.target.setCustomValidity('');
-        }
-    }
-</script>
+</script>    
 <br><br><label>選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly" min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"></label>
 </center>			
     <center>

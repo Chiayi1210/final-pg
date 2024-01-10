@@ -6,6 +6,7 @@
 <%@include file ="menu.jsp" %>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="tool.mail.JavaMail" %>
+<%@ page import="Reservation.ReservationBean" %>
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 <html>
 <body>
@@ -214,7 +215,7 @@ background-color:#fff;
 		
 	
 <br><label for='massage'>選擇預約日期：</label>
-<input type="date"  name="date" id="appointmentDate" required min="<%= LocalDate.now() %>">
+<input type="date" name="date" id="appointmentDate" required min="<%= LocalDate.now() %>">
 <script>
     var dateInput = document.getElementById('appointmentDate');
     var demoInput = document.getElementById('demo');
@@ -232,23 +233,66 @@ background-color:#fff;
 
         // 檢查星期日
         noSundays();
-        
+
         // 更新時間檢查
         getReservationCount(dateInput.value, demoInput.value);
+        updateButtons(selectedDate);
     });
 
     function noSundays() {
-    	var selectedDate = new Date(dateInput.value);
-    	 var day = selectedDate.getUTCDay();
+        var selectedDate = new Date(dateInput.value);
+        var day = selectedDate.getUTCDay();
         if (day == 0) {
             dateInput.setCustomValidity('不可選擇週日！');
         } else {
             dateInput.setCustomValidity('');
         }
     }
-</script>                 
+
+    function updateButtons(selectedDate) {
+        // 根據選擇的日期更新按鈕資訊
+        var buttons = document.querySelectorAll('.button');
+        buttons.forEach(function(button) {
+            var timeSlot = button.getAttribute('data-time');
+            var reservationCount = getReservationCount(selectedDate, timeSlot);
+            button.innerHTML = timeSlot + '<br>目前已預約' + reservationCount + '人';
+        });
+    }
+</script>            
 <br><br><label>選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly"  min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"></label>
-</center>                                  
+        </center>
+        <script>
+    var dateInput = document.getElementById('appointmentDate');
+    dateInput.addEventListener('input', function() {
+        // 獲取選擇的日期
+        var selectedDate = dateInput.value;
+
+        // 使用AJAX請求獲取每個時段的預約數量
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                // 更新顯示已預約人數的區域
+                updateReservationCounts(JSON.parse(xhr.responseText));
+            }
+        };
+        xhr.open("GET", "getReservationCounts.jsp?date=" + selectedDate, true);
+        xhr.send();
+    });
+
+    function updateReservationCounts(reservationCounts) {
+        // 更新每個按鈕上顯示的已預約人數
+        // 這裡的 reservationCounts 是一個包含時間和對應預約數的物件
+        // 例如: { "9:30-10:00": 5, "10:00-10:30": 3, ... }
+        for (var timeSlot in reservationCounts) {
+            var count = reservationCounts[timeSlot];
+            // 在相應的按鈕上顯示預約數量
+            var button = document.querySelector('[data-time="' + timeSlot + '"]');
+            if (button) {
+                button.innerHTML = timeSlot + "<br>目前已預約" + count + "人";
+            }
+        }
+    }
+    </script>
                  <%
 					Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
 					Connection con=DriverManager.getConnection("jdbc:ucanaccess://"+objDBConfig.FilePath()+";");
@@ -257,11 +301,6 @@ background-color:#fff;
 					String sql = "SELECT prescription.Date, prescription.Time, Count(prescription.Time) AS time之筆數 FROM prescription GROUP BY prescription.Date, prescription.Time ORDER BY prescription.Time";
 					ResultSet pp = smt.executeQuery(sql);
 	             %>
-	             
-                
-                
-              
-			</center>
 			
     <center>
     <table width="70%"><tr>
@@ -319,6 +358,7 @@ background-color:#fff;
         return 0; // 若找不到對應日期和時間的預約人數，預設為0
     }
 %>
+
     
 			<br> <label for="cnumber1">慢性病卡號1：</label> <input type="text"
 				name="cnumber1" required><br>
