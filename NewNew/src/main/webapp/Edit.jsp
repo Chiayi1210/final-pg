@@ -41,8 +41,8 @@ button {
   margin: 0px 0px 10px;
   border: 1px solid #00c6a9;
   cursor: pointer;
-  width: 15%;
-  font-size: 18px;
+  width: 50%;
+  font-size: 16px;
   font-weight: 300;
    -webkit-box-pack: center;
     justify-content: center;
@@ -51,7 +51,7 @@ button {
   display: flex;    
   align-items: center;
   box-sizing: border-box;
-     height: 50px;
+     height: 45px;
     
 }
  
@@ -187,6 +187,7 @@ background-color:#fff;
 }
 
 </style>
+
 <center>
 <header >
   <h1>更改預約</h1>
@@ -237,32 +238,48 @@ background-color:#fff;
                 
                 <label >選擇新的預約時間：<input type="text" id="demo" name="time" readonly="readonly" required></label>
 			
-    <table width="100%"><tr>
-    <td width="auto"  align="center"><button type="button" class="button" onclick='document.getElementById("demo").value= "9:30-10:00"'  for="time" >9:30-10:00</button>
-    目前已預約<% %>人</td> 
-    <td  width="auto" align="center"><button type="button" onclick='document.getElementById("demo").value = "10:00-10:30" ' for="time" >10:00-10:30</button>
-    目前已預約0人</td>
-    <td width="auto"align="center"><button type="button" onclick='document.getElementById("demo").value = "10:30-11:00"'  for="time" >10:30-11:00</button>
-    目前已預約0人</td>
-    <td width="auto"align="center"><button type="button" onclick='document.getElementById("demo").value = "11:30-12:00"'   for="time" >11:30-12:00</button>
-    目前已預約0人</td></tr>
+    <table width="200%"><tr>
+     <center>
+    <table width="70%"><tr>
+    <td width="auto" align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "9:30-10:00"; updateReservationCount();' required for="time" data-time="9:30-10:00">9:30-10:00
+    </button>
+    </td>
+    <td width="auto" align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "10:00-10:30"; updateReservationCount();' required for="time" data-time="10:00-10:30">10:00-10:30</button>
+    </td>
+    <td width="auto" align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "10:30-11:00; updateReservationCount();' required for="time" data-time="10:30-11:00" >10:30-11:00</button>
+    </td>
+    <td width="auto" align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "11:30-12:00"; updateReservationCount();' required for="time" data-time= "11:30-12:00">11:30-12:00</button>
+    </td></tr>
   <tr>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "12:00-12:30"'   for="time" >12:00-12:30</button>目前已預約0人</td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "13:00-13:30"'  for="time" >13:00-13:30</button>目前已預約0人</td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "13:30-14:00"'  for="time" >13:30-14:00</button>目前已預約0人</td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value= "14:30-15:00"'   for="time" >14:30-15:00</button>目前已預約0人</td>     
+    <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "12:00-12:30"; updateReservationCount();' required for="time" data-time="12:00-12:30">12:00-12:30</button>
+    </td>
+    <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "13:00-13:30"; updateReservationCount();' required for="time" data-time="13:00-13:30" >13:00-13:30</button>
+   </td>
+    <td width="200"align="center"><button type="button" id="time" class="button"onclick='document.getElementById("demo").value = "13:30-14:00"; updateReservationCount();' required for="time" data-time= "13:30-14:00">13:30-14:00</button>
+    </td>
+    <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value= "14:30-15:00"; updateReservationCount();' required for="time" data-time= "14:30-15:00">14:30-15:00</button>
+    </td>     
   </tr>
   <tr>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "15:30-16:00"'   for="time" >15:30-16:00</button>目前已預約0人</td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "16:30-17:00"'   for="time" >16:30-17:00</button>目前已預約0人</td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "17:30-18:00"'   for="time" >17:30-18:00</button>目前已預約0人</td>
-      <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "18:00-18:30"'   for="time" >18:00-18:30</button>目前已預約0人</td>     
+    <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "15:30-16:00"; updateReservationCount();' required for="time" data-time="15:30-16:00" >15:30-16:00</button>
+    </td>
+    <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "16:30-17:00"; updateReservationCount();' required for="time" data-time="16:30-17:00" >16:30-17:00</button>
+    </td>
+    <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "17:30-18:00"; updateReservationCount();' required for="time" data-time="17:30-18:00" >17:30-18:00</button>
+   </td>
+      <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "18:00-18:30"; updateReservationCount();' required for="time" data-time="18:00-18:30" >18:00-18:30</button>
+   </td>     
    </tr>
-    <tr><td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "19:00-19:30"'   for="time" >19:00-19:30</button>目前已預約0人</td>
-   <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "19:30-20:00"'   for="time" >19:30-20:00</button>目前已預約0人</td>
-   <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "20:30-21:00"'   for="time" >20:30-21:00</button>目前已預約0人</td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "21:00-21:30"'   for="time" >21:00-21:30</button>目前已預約0人</td>  
+    <tr><td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "19:00-19:30"; updateReservationCount();' required for="time" data-time= "19:00-19:30">19:00-19:30</button>
+   </td>
+   <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "19:30-20:00"; updateReservationCount();' required for="time" data-time= "19:30-20:0">19:30-20:00</button>
+  </td>
+   <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "20:30-21:00"; updateReservationCount();' required for="time" data-time="20:30-21:00" >20:30-21:00</button>
+   </td>
+    <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "21:00-21:30"; updateReservationCount();' required for="time" data-time= "21:00-21:30">21:00-21:30</button>
+    </td>  
     </tr></table>
+
        
         <!--  <label for="time" >選擇時間：</label> <select required name="time" value="" >
 
