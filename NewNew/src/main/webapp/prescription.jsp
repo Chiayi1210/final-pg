@@ -242,7 +242,7 @@ background-color:#fff;
 <input type="date" name="date" id="appointmentDate" required min="<%= LocalDate.now() %>" onchange="updateReservationCount()">
 <br><br>
 
-<label>預約人數: <span id="reservationCount">0</span></label>
+<label>預約人數: <span id="reservationCount"></span></label>
 
 <br><br><label>選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly" min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"></label>
 </center>     
