@@ -24,6 +24,9 @@
 	
 	smt.executeUpdate("UPDATE member SET name='" + name+"' , phone='" + phone+"' , memberid ='"+ memberid+"' WHERE id='"+session.getAttribute("numberid")+"'");
 	
+	   session.setAttribute("membername", name);
+	   session.setAttribute("memberid", memberid);
+	   session.setAttribute("memberphone", phone);
 	//if(request !=null){
 	//String sql;
 	//sql="INSERT INTO member VALUES('"+memberid+"','"+memberpwd+"')";

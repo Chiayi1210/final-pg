@@ -201,13 +201,14 @@ background-color:#fff;
 <form action="pp-InsertInto.jsp" method="post">
 		<div>
 		  <table style="border:2px #ccc solid" width="40%">
-		  <td><label for="nmembername" >&nbsp;&nbsp;&nbsp;&nbsp;姓名：</label><br><br> 
+		  <td><label for="name">&nbsp;&nbsp;&nbsp;&nbsp;姓名：</label><br><br> 
                <label for="numberid">&nbsp;&nbsp;&nbsp;&nbsp;身分證字號：</label><br><br> 
-              <label for="memberphone"  >&nbsp;&nbsp;&nbsp;&nbsp;電話號碼：</label><br><br> 
+              <label for="phone" >&nbsp;&nbsp;&nbsp;&nbsp;電話號碼：</label><br><br> 
               <label for="memberid">&nbsp;&nbsp;&nbsp;&nbsp;E-mail：</label>
           </td>
           <!--  value="<%out.print(session.getAttribute("accessname"));%>"-->
           <td>
+<<<<<<< Updated upstream
           <input type="text" name="name" value="<%out.print(session.getAttribute("membername"));%>" ><br>  
           <input type="text" name="numberid" value="<%out.print(session.getAttribute("numberid"));%>"  readonly="true"><br>  
           <input type="text" name="phone" value="<%out.print(session.getAttribute("memberphone"));%>" ><br> 
@@ -222,76 +223,120 @@ background-color:#fff;
 <input type="date" name="date" id="appointmentDate" required min="<%= LocalDate.now() %>">
 <br>
  
+=======
+          <input type="text" name="name" id="name" value="<%out.print(session.getAttribute("membername"));%>" ><br>  
+          <input type="text" name="numberid" id="numberid" value="<%out.print(session.getAttribute("numberid"));%>"  readonly="true"><br>  
+          <input type="text" name="phone" id="phone" value="<%out.print(session.getAttribute("memberphone"));%>" ><br> 
+          <input type="text" name="memberid" id="memberid" value="<%out.print(session.getAttribute("email"));%>" >
+          </td>
+         </table>
+   </div>
+		<% 
+                    String selectedDate = request.getParameter("date");
+		            String selectedTimeSlot = request.getParameter("time");
+					Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+					Connection con=DriverManager.getConnection("jdbc:ucanaccess://"+objDBConfig.FilePath()+";");
+					//out.println("Con= "+con);
+					Statement smt= con.createStatement();
+					String sql = "SELECT COUNT(*) AS total FROM prescription WHERE prescription.Date = ? AND prescription.Time = ?";
+					PreparedStatement pstmt = con.prepareStatement(sql);
+					pstmt.setString(1, selectedDate);
+					pstmt.setString(2, selectedTimeSlot);
+					ResultSet XX = pstmt.executeQuery();
+					
+					int reservationCount = 0;
+				    if (XX.next()) {
+				        reservationCount = XX.getInt("total");
+				    }
+	             %>
+			
+	
+<br><label >選擇預約日期：
+<input type="date" name="date" id="appointmentDate" required min="<%= LocalDate.now() %>"  onchange="getReservationCount()"></label>
+<br><%= reservationCount %>
+>>>>>>> Stashed changes
 
 
-<br><br><label>選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly"  min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"></label>
+<br><br><label>選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly"  ></label>
         </center>
      
                  
     <center>
     <table width="70%"><tr>
     <td width="auto" align="center">
-    <button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "9:30-10:00" '  required for="time"  data-time="9:30-10:00">
+    <button type="button" id="time" class="button" onclick='selectTime("9:30-10:00")'  required for="time"  data-time="9:30-10:00">
         9:30-10:00</button> 
     
 </td>
-    <td  width="auto" align="center"><button type="button" onclick='document.getElementById("demo").value = "10:00-10:30" ' required for="time" >10:00-10:30</button>
+    <td  width="auto" align="center"><button type="button" onclick='selectTime("10:00-10:30") ' required for="time" data-time="10:00-10:30">10:00-10:30</button>
     </td>
-    <td width="auto"align="center"><button type="button" onclick='document.getElementById("demo").value = "10:30-11:00"'required  for="time" >10:30-11:00</button>
+    <td width="auto"align="center"><button type="button" onclick='selectTime("10:30-11:00")'required  for="time" data-time="10:30-11:00">10:30-11:00</button>
     </td>
-    <td width="auto"align="center"><button type="button" onclick='document.getElementById("demo").value = "11:30-12:00"' required  for="time" >11:30-12:00</button>
+    <td width="auto"align="center"><button type="button" onclick='selectTime("11:30-12:00")' required  for="time" data-time="11:30-12:00">11:30-12:00</button>
     </td></tr>
   <tr>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "12:00-12:30"' required  for="time" >12:00-12:30</button>
+    <td width="200"align="center"><button type="button" onclick='selectTime("12:00-12:30")' required  for="time" data-time="12:00-12:30">12:00-12:30</button>
     </td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "13:00-13:30"' required for="time" >13:00-13:30</button>
+    <td width="200"align="center"><button type="button" onclick='selectTime("13:00-13:30")' required for="time" data-time="13:00-13:30">13:00-13:30</button>
    </td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "13:30-14:00"' required  for="time" >13:30-14:00</button>
+    <td width="200"align="center"><button type="button" onclick='selectTime("13:30-14:00")' required  for="time" data-time="13:30-14:00">13:30-14:00</button>
     </td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value= "14:30-15:00"' required  for="time" >14:30-15:00</button>
+    <td width="200"align="center"><button type="button" onclick='selectTime("14:30-15:00")' required  for="time" data-time="14:30-15:00">14:30-15:00</button>
     </td>     
   </tr>
   <tr>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "15:30-16:00"' required  for="time" >15:30-16:00</button>
+    <td width="200"align="center"><button type="button" onclick='selectTime("15:30-16:00")' required  for="time" data-time="15:30-16:00">15:30-16:00</button>
     </td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "16:30-17:00"' required  for="time" >16:30-17:00</button>
+    <td width="200"align="center"><button type="button" onclick='selectTime("16:30-17:00")' required  for="time" data-time="16:30-17:00">16:30-17:00</button>
     </td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "17:30-18:00"' required  for="time" >17:30-18:00</button>
+    <td width="200"align="center"><button type="button" onclick='selectTime("17:30-18:00")' required  for="time" data-time="17:30-18:00">17:30-18:00</button>
    </td>
-      <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "18:00-18:30"' required  for="time" >18:00-18:30</button>
+      <td width="200"align="center"><button type="button" onclick='selectTime("18:00-18:30")' required  for="time" data-time="18:00-18:30">18:00-18:30</button>
    </td>     
    </tr>
-    <tr><td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "19:00-19:30"' required  for="time" >19:00-19:30</button>
+    <tr><td width="200"align="center"><button type="button" onclick='selectTime("19:00-19:30")' required  for="time" data-time="19:00-19:30">19:00-19:30</button>
    </td>
-   <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "19:30-20:00"' required  for="time" >19:30-20:00</button>
+   <td width="200"align="center"><button type="button" onclick='selectTime("19:30-20:00")' required  for="time" data-time="19:30-20:00">19:30-20:00</button>
   </td>
-   <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "20:30-21:00"' required  for="time" >20:30-21:00</button>
+   <td width="200"align="center"><button type="button" onclick='selectTime("20:30-21:00")' required  for="time" data-time="20:30-21:00">20:30-21:00</button>
    </td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "21:00-21:30"' required  for="time" >21:00-21:30</button>
+    <td width="200"align="center"><button type="button" onclick='selectTime("21:00-21:30")' required  for="time" data-time="21:00-21:30">21:00-21:30</button>
     </td>  
     </tr></table>
-    <%! // Declaration section
-    int getReservationCount(ResultSet resultSet, String date, String timeSlot) throws SQLException {
-        while (resultSet.next()) {
-            String reservationDate = resultSet.getString("Date");
-            String reservationTime = resultSet.getString("Time");
-            int count = resultSet.getInt("time之筆數");
+  <script>
+function getReservationCount() {
+    var selectedDate = document.getElementById("appointmentDate").value;
+    var selectedTime = document.getElementById("demo").value;
 
-            if (reservationDate.equals(date) && reservationTime.equals(timeSlot)) {
-                return count;
-            }
+    // 使用XMLHttpRequest對伺服器發送請求
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            // 伺服器回傳的預約人數
+            var reservationCount = xhr.responseText;
+            alert("目前已預約人數：" + reservationCount + " 人");
         }
-        return 0; // 若找不到對應日期和時間的預約人數，預設為0
-    }
-%>
+    };
+
+    // 設定請求方法、URL以及是否為非同步請求
+    xhr.open("GET", "getReservationCount.jsp?date=" + selectedDate + "&time=" + selectedTime, true);
+    xhr.send();
+}
+
+// 修改時間按鈕的點擊事件
+function selectTime(time) {
+    document.getElementById("demo").value = time;
+    getReservationCount(); // 選擇時間後直接觸發顯示預約人數的函數
+}
+</script>
 
     
-			<br> <label for="cnumber1">慢性病卡號1：</label> <input type="text"
-				name="cnumber1" required><br>
-			<br> <label for="cnumber2">慢性病卡號2：</label> <input type="text"
-				name="cnumber2" ><br>
-			<br> <label for="cnumber3">慢性病卡號3：</label> <input type="text"
-				name="cnumber3"   ><br>
+			<br> <label>慢性病卡號1： <input type="text"
+				name="cnumber1" required></label><br>
+			<br> <label >慢性病卡號2：<input type="text"
+				name="cnumber2" ></label> <br>
+			<br> <label >慢性病卡號3：<input type="text"
+				name="cnumber3"   ></label> <br>
 			<br>
 			<button type="submit">確認</button>
 	</center>
@@ -302,14 +347,24 @@ background-color:#fff;
 	<%}%>
 
 <script>
+<<<<<<< Updated upstream
    
-    dateInput.addEventListener('input', function() {
-        // 檢查是否選擇了以前的日期
-        checkPastDate();
+=======
+//確保document已經載入後再執行JavaScript代碼
+document.addEventListener('DOMContentLoaded', function() {
+    var dateInput = document.getElementById('appointmentDate');
 
+>>>>>>> Stashed changes
+    dateInput.addEventListener('input', function() {
         // 檢查星期日
         noSundays();
+<<<<<<< Updated upstream
 
+=======
+        // 檢查過去的日期
+        checkPastDate();
+    });
+>>>>>>> Stashed changes
 
     function checkPastDate() {
         var selectedDate = new Date(dateInput.value);
@@ -331,6 +386,11 @@ background-color:#fff;
             dateInput.setCustomValidity('');
         }
     }
+<<<<<<< Updated upstream
+=======
+});
+</script>
+>>>>>>> Stashed changes
 
 
 	</html>
