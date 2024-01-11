@@ -11,7 +11,7 @@
         // 與資料庫建立連接，根據日期查詢預約人數
         Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
         Connection con = DriverManager.getConnection("jdbc:ucanaccess://"+objDBConfig.FilePath()+";");
-        String sql = "SELECT Count(time之筆數) AS total FROM prescription WHERE prescription.Date = ?";
+        String sql = "SELECT COUNT(*) AS total FROM prescription WHERE prescription.Date = ? AND prescription.Time = ?";
         PreparedStatement pstmt = con.prepareStatement(sql);
         pstmt.setString(1, selectedDate);
         ResultSet resultSet = pstmt.executeQuery();

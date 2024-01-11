@@ -10,10 +10,12 @@
 <%@ page import="Reservation.ReservationBean" %>
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 <html>
+<head>
+
+</head>
 <body>
 <title>慢性病連續處方笺預約| 北護智慧藥局線上預約平台</title>
 <%if (session.getAttribute("access") == "y"){%>
-
 <style>
 form {border: 0px solid #f1f1f1}    
 
@@ -214,161 +216,73 @@ background-color:#fff;
          </table>
    </div>
 		
-	
-<br><label for='massage'>選擇預約日期：</label>
-<input type="date" name="date" id="appointmentDate" required min="<%= LocalDate.now() %>">
-<div id="reservationCountDisplay"></div>
-<script>
-    var dateInput = document.getElementById('appointmentDate');
-    var demoInput = document.getElementById('demo');
-
-    dateInput.addEventListener('input', function() {
-        var selectedDate = new Date(dateInput.value);
-        var currentDate = new Date();
-
-        // 檢查是否選擇了以前的日期
-        if (selectedDate < currentDate) {
-            dateInput.setCustomValidity('不可選擇以前的日期！');
-        } else {
-            dateInput.setCustomValidity('');
-        }
-
-        // 檢查星期日
-        noSundays();
-
-        // 更新時間檢查
-        getReservationCount(dateInput.value, demoInput.value);
-        updateButtons(selectedDate);
-    });
-
-    function noSundays() {
-        var selectedDate = new Date(dateInput.value);
-        var day = selectedDate.getUTCDay();
-        if (day == 0) {
-            dateInput.setCustomValidity('不可選擇週日！');
-        } else {
-            dateInput.setCustomValidity('');
-        }
-    }
-
-</script>  
-     <script>
-    var dateInput = document.getElementById('appointmentDate');
-    var reservationCountDisplay = document.getElementById('reservationCountDisplay');
-
-    dateInput.addEventListener('input', function() {
-        // 獲取選擇的日期
-        var selectedDate = dateInput.value;
-
-        // 使用AJAX請求獲取每個時段的預約數量
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                // 更新顯示已預約人數的區域
-                reservationCountDisplay.innerHTML = "選擇日期：" + selectedDate + "<br>目前已預約人數：" + xhr.responseText + "人";
-                
-                // 更新相應的按鈕，這裡假設有一個按鈕的data-time屬性為"9:30-10:00"
-                updateButtonCount("9:30-10:00", xhr.responseText);
-            }
-        };
-        xhr.open("GET", "getReservationCounts.jsp?date=" + selectedDate, true);
-        xhr.send();
-    });
-
-    // 更新按鈕上的預約人數
-    function updateButtonCount(timeSlot, count) {
-        var button = document.querySelector('[data-time="' + timeSlot + '"]');
-        if (button) {
-            button.innerHTML = timeSlot + "<br>目前已預約" + count + "人";
-        }
-    }
-</script>
-
-<br><br><label>選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly"  min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"></label>
-        </center>
-        
-        <script>
-    var dateInput = document.getElementById('appointmentDate');
-    dateInput.addEventListener('input', function() {
-        // 獲取選擇的日期
-        var selectedDate = dateInput.value;
-
-        // 使用AJAX請求獲取每個時段的預約數量
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                // 更新顯示已預約人數的區域
-                updateReservationCounts(JSON.parse(xhr.responseText));
-            }
-        };
-        xhr.open("GET", "getReservationCounts.jsp?date=" + selectedDate, true);
-        xhr.send();
-    });
-
-    function updateReservationCounts(reservationCounts) {
-        // 更新每個按鈕上顯示的已預約人數
-        // 這裡的 reservationCounts 是一個包含時間和對應預約數的物件
-        // 例如: { "9:30-10:00": 5, "10:00-10:30": 3, ... }
-        for (var timeSlot in reservationCounts) {
-            var count = reservationCounts[timeSlot];
-            // 在相應的按鈕上顯示預約數量
-            var button = document.querySelector('[data-time="' + timeSlot + '"]');
-            if (button) {
-                button.innerHTML = timeSlot + "<br>目前已預約" + count + "人";
-            }
-        }
-    }
-    </script>
-                 <%
+			<% 
+                    String selectedDate = request.getParameter("date");
+		            String selectedTimeSlot = request.getParameter("time");
 					Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
 					Connection con=DriverManager.getConnection("jdbc:ucanaccess://"+objDBConfig.FilePath()+";");
 					//out.println("Con= "+con);
 					Statement smt= con.createStatement();
-					String sql = "SELECT prescription.Date, prescription.Time, Count(prescription.Time) AS time之筆數 FROM prescription GROUP BY prescription.Date, prescription.Time ORDER BY prescription.Time";
-					ResultSet pp = smt.executeQuery(sql);
+					String sql = "SELECT COUNT(*) AS total FROM prescription WHERE prescription.Date = ? AND prescription.Time = ?";
+					PreparedStatement pstmt = con.prepareStatement(sql);
+					pstmt.setString(1, selectedDate);
+					pstmt.setString(2, selectedTimeSlot);
+					ResultSet XX = pstmt.executeQuery();
 	             %>
-			
+	
+<br><label for='massage'>選擇預約日期：</label>
+<input type="date" name="date" id="appointmentDate" required min="<%= LocalDate.now() %>">
+<br>目前已預約<%
+if (XX.next()) {
+    out.print(XX.getString("total"));}%>人
+ 
+
+
+<br><br><label>選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly"  min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"></label>
+        </center>
+     
+                 
     <center>
     <table width="70%"><tr>
     <td width="auto" align="center">
-    <button type="button" class="button" onclick='document.getElementById("demo").value = "9:30-10:00" '  required for="time" >
-        9:30-10:00</button> 目前已預約<%= getReservationCount(pp,"預約日期", "9:30-10:00") %>人
+    <button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "9:30-10:00" '  required for="time"  data-time="9:30-10:00">
+        9:30-10:00</button> 
     
 </td>
     <td  width="auto" align="center"><button type="button" onclick='document.getElementById("demo").value = "10:00-10:30" ' required for="time" >10:00-10:30</button>
-    目前已預約<%= getReservationCount(pp,"預約日期", "10:00-10:30") %>人</td>
+    </td>
     <td width="auto"align="center"><button type="button" onclick='document.getElementById("demo").value = "10:30-11:00"'required  for="time" >10:30-11:00</button>
-    目前已預約<%= getReservationCount(pp, "預約日期","10:30-11:00") %>人</td>
+    </td>
     <td width="auto"align="center"><button type="button" onclick='document.getElementById("demo").value = "11:30-12:00"' required  for="time" >11:30-12:00</button>
-    目前已預約<%= getReservationCount(pp, "預約日期","11:30-12:00") %>人</td></tr>
+    </td></tr>
   <tr>
     <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "12:00-12:30"' required  for="time" >12:00-12:30</button>
-    目前已預約<%= getReservationCount(pp, "預約日期", "12:00-12:30") %>人</td>
+    </td>
     <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "13:00-13:30"' required for="time" >13:00-13:30</button>
-    目前已預約<%= getReservationCount(pp,"預約日期", "13:00-13:30") %>人</td>
+   </td>
     <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "13:30-14:00"' required  for="time" >13:30-14:00</button>
-    目前已預約<%= getReservationCount(pp, "預約日期","13:30-14:00") %>人</td>
+    </td>
     <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value= "14:30-15:00"' required  for="time" >14:30-15:00</button>
-    目前已預約<%= getReservationCount(pp, "預約日期","14:30-15:00") %>人</td>     
+    </td>     
   </tr>
   <tr>
     <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "15:30-16:00"' required  for="time" >15:30-16:00</button>
-    目前已預約<%= getReservationCount(pp, "預約日期","15:30-16:00") %>人</td>
+    </td>
     <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "16:30-17:00"' required  for="time" >16:30-17:00</button>
-    目前已預約<%= getReservationCount(pp,"預約日期", "16:30-17:00") %>人</td>
+    </td>
     <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "17:30-18:00"' required  for="time" >17:30-18:00</button>
-    目前已預約<%= getReservationCount(pp,"預約日期", "17:30-18:00") %>人</td>
+   </td>
       <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "18:00-18:30"' required  for="time" >18:00-18:30</button>
-    目前已預約<%= getReservationCount(pp, "預約日期","18:00-18:30") %>人</td>     
+   </td>     
    </tr>
     <tr><td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "19:00-19:30"' required  for="time" >19:00-19:30</button>
-    目前已預約<%= getReservationCount(pp, "預約日期","19:00-19:30") %>人</td>
+   </td>
    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "19:30-20:00"' required  for="time" >19:30-20:00</button>
-   目前已預約<%= getReservationCount(pp,"預約日期", "19:30-20:00") %>人</td>
+  </td>
    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "20:30-21:00"' required  for="time" >20:30-21:00</button>
-   目前已預約<%= getReservationCount(pp, "預約日期","20:30-21:00") %>人</td>
+   </td>
     <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "21:00-21:30"' required  for="time" >21:00-21:30</button>
-    目前已預約<%= getReservationCount(pp, "預約日期","21:00-21:30") %>人</td>  
+    </td>  
     </tr></table>
     <%! // Declaration section
     int getReservationCount(ResultSet resultSet, String date, String timeSlot) throws SQLException {
@@ -400,24 +314,82 @@ background-color:#fff;
 	<%out.println("<script>alert('請先登入此系統！！'); window.location='loginCheck-Select.jsp' </script>");%>
 	
 	<%}%>
-	<script>
-  function customizeWindowEvent() {
-      var popup_window = document.getElementById("window-container");
 
-      popup_window.style.display = "block";
+<script>
+    var dateInput = document.getElementById('appointmentDate');
+    var demoInput = document.getElementById('demo');
+    var reservationCountDisplay = document.getElementById('reservationCountDisplay');
 
-      
-          
-      button.onclick = function close(e) {
-                if (e.target == popup_window) {
-                    popup_window.style.display = "none";
-                } 
+    dateInput.addEventListener('input', function() {
+        // 檢查是否選擇了以前的日期
+        checkPastDate();
+
+        // 檢查星期日
+        noSundays();
+
+        // 更新時間檢查
+        getReservationCount(dateInput.value, demoInput.value);
+
+        // 使用AJAX請求獲取每個時段的預約數量
+        updateReservationCounts();
+    });
+
+    function checkPastDate() {
+        var selectedDate = new Date(dateInput.value);
+        var currentDate = new Date();
+
+        if (selectedDate < currentDate) {
+            dateInput.setCustomValidity('不可選擇以前的日期！');
+        } else {
+            dateInput.setCustomValidity('');
+        }
+    }
+
+    function noSundays() {
+        var selectedDate = new Date(dateInput.value);
+        var day = selectedDate.getUTCDay();
+        if (day == 0) {
+            dateInput.setCustomValidity('不可選擇週日！');
+        } else {
+            dateInput.setCustomValidity('');
+        }
+    }
+
+    function getReservationCount(selectedDate, selectedTimeSlot) {
+        // 使用AJAX請求獲取預約數量
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                updateButtons(selectedDate, JSON.parse(xhr.responseText));
             }
-          }
-        
-  
-</script>
+        };
+        xhr.open("GET", "getReservationCounts.jsp?date=" + selectedDate, true);
+        xhr.send();
+    }
 
+
+    function updateReservationCounts() {
+        var selectedDate = dateInput.value;
+
+        // 使用AJAX請求獲取每個時段的預約數量
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                // 更新顯示已預約人數的區域
+                reservationCountDisplay.innerHTML = "選擇日期：" + selectedDate + "<br>目前已預約人數：" + xhr.responseText + "人";
+                
+                // 更新相應的按鈕，這裡假設有一個按鈕的data-time屬性為"9:30-10:00"
+                updateButtonCount("9:30-10:00", xhr.responseText);
+            }
+        };
+        xhr.open("GET", "getReservationCounts.jsp?date=" + selectedDate, true);
+        xhr.send();
+    }
+
+   
+
+    
+</script>
 	</html>
 
 	
