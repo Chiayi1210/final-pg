@@ -64,55 +64,46 @@
         }
 
     </style>
+    <script>
+        function submitForm() {
+            document.form.submit();
+        }
 
+        //點選提交按鈕觸發下面的函式
+        function pic() {  
+            document.getElementById("uploadForm").action="MBpic_update.jsp";
+            document.getElementById("uploadForm").enctype="multipart/form-data";
+            document.getElementById("uploadForm").submit();
+        }  
+    </script>
 </head>
 
 <body>
-
-
     <div class="container text-center">
         <div class="row">
             <div class="col-md-12">
                 <br><br><h1>會員基本資料</h1>
-    <%
-        Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-        Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + objDBConfig.FilePath() + ";");
-        Statement smt = con.createStatement();
-        String sql = "SELECT * FROM member WHERE id='" + session.getAttribute("numberid") + "'";
-        ResultSet IM = smt.executeQuery(sql);
-        IM.next();
-    %>
-   
-                    <div class="row">
-                        <div class="col-md-6">
-                       <form action="MBpic_update.jsp" method="post" enctype="multipart/form-data"id="uploadForm">
+                <%
+                    Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+                    Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + objDBConfig.FilePath() + ";");
+                    Statement smt = con.createStatement();
+                    String sql = "SELECT * FROM member WHERE id='" + session.getAttribute("numberid") + "'";
+                    ResultSet IM = smt.executeQuery(sql);
+                    IM.next();
+                %>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <form action="MBpic_update.jsp" method="post" enctype="multipart/form-data" id="uploadForm" name="uploadForm">
                             <img src="<%=IM.getString("pic") %>" style="width:280px; height:200px">
                             <h3>選擇要上傳的文件:</h3>
                             <input type="file" name="theFirstFile" id="pic" size="50" />
-                            <input type="submit"  name=submitButton onClick="del()" value="上傳"  />
-                          </form>
-                          <script>
-                          function del() {
-                        	    var fileInput = document.getElementById('pic');
-                        	    var selectedFile = fileInput.files[0];
+                            <input type="submit" name="submitButton" value="上傳" onclick="pic();" />
+                        </form>
+                    </div>
 
-                        	    if (selectedFile) {
-                        	        var form = document.getElementById('uploadForm');
-                        	        form.action = "MBpic_update.jsp";
-                        	        form.enctype = "multipart/form-data";
-                        	        return true;
-                        	    } else {
-                        	        alert("請選擇要上傳的文件。");
-                        	        return false; // 阻止表單提交
-                        	    }
-                        	}
-                          </script>
-                          
-                            <form action="MBupdate-pp.jsp?memberid=<%=request.getParameter("memberid")%>" method="post" name="form" >
-                           
-                        </div>
-
-                        <div class="col-md-6">
+                    <div class="col-md-6">
+                        <form action="MBupdate-pp.jsp?memberid=<%=request.getParameter("memberid")%>" method="post" name="form">
                             <div class="form-group">
                                 <label>姓名</label>
                                 <input type="text" name="membername" id="membername" class="form-control" value="<%=IM.getString("name")%>">
@@ -133,15 +124,13 @@
                                 <label>修改密碼</label>
                                 <input type="password" name="memberpwd" class="form-control" value="<%=IM.getString("memberpwd")%>">
                             </div>
-                        </div>
+                        </form>
                     </div>
+                </div>
 
-                  
-
-                    <div class="panel-footer">
-                        <button type="submit" class="btn btn-primary">修改資料</button>
-                    </div>
-                </form>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-primary" onclick="submitForm()">修改資料</button>
+                </div>
             </div>
         </div>
     </div>

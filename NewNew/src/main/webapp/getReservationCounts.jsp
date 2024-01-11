@@ -1,23 +1,32 @@
-<%@ page language="java" contentType="application/json; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/plain; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.sql.*"%>
-<%@page import="java.io.*,java.util.*"%>
-<jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
-<%@ page import="tool.mail.JavaMail" %>
+<%@ page import="java.io.*,java.util.*"%>
 
 <%
     // 獲取日期參數
     String selectedDate = request.getParameter("date");
+    int totalReservationCount = 0;
 
-    // 在這裡使用適當的數據庫連接代碼
-    // 执行查询，獲取每個時段的預約數
-    // 這裡的 reservationCounts 是一個包含時間和對應預約數的JSON對象
-    // 例如: { "9:30-10:00": 5, "10:00-10:30": 3, ... }
+    try {
+        // 與資料庫建立連接，根據日期查詢預約人數
+        Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+        Connection con = DriverManager.getConnection("jdbc:ucanaccess://your_database_path.accdb");
+        String sql = "SELECT SUM(time之筆數) AS total FROM prescription WHERE prescription.Date = ?";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, selectedDate);
+        ResultSet resultSet = pstmt.executeQuery();
 
-    // 將 reservationCounts 轉換為JSON字符串
-    String reservationCountsJson = "{ \"9:30-10:00\": 5, \"10:00-10:30\": 3 }"; // 替換為實際數據
+        if (resultSet.next()) {
+            totalReservationCount = resultSet.getInt("total");
+        }
 
-    // 將JSON字符串發送回客戶端
-    response.setContentType("application/json");
-    response.setCharacterEncoding("UTF-8");
-    response.getWriter().write(reservationCountsJson);
+        pstmt.close();
+        resultSet.close();
+        con.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    // 將預約人數回傳給前端
+    response.getWriter().write(String.valueOf(totalReservationCount));
 %>
