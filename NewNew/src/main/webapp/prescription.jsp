@@ -232,14 +232,11 @@ background-color:#fff;
 	
 <br><label for='massage'>選擇預約日期：</label>
 <input type="date" name="date" id="appointmentDate" required min="<%= LocalDate.now() %>">
-<br>目前已預約<%
-if (XX.next()) {
-    out.print(XX.getString("total"));}%>人
- 
-
-
 <br><br><label>選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly"  min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"></label>
-        </center>
+       <br>目前已預約<%
+if (XX.next()) {
+    out.print(XX.getString("total"));}%>人 <br><br>
+    </center>
      
                  
     <center>
