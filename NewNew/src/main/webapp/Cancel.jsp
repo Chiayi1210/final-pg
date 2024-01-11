@@ -234,7 +234,7 @@ background-color:#fff;
    <!-- 隱藏字段 -->
         <input type="hidden" id="selectedDate" name="selectedDate" value="">
         <input type="hidden" id="selectedTime" name="selectedTime" value="">
-        <input type="hidden" id="selectedName" name="selectedName" value="<%= session.getAttribute("name") %>">
+        <input type="hidden" id="selectedName" name="selectedName" value="<%= session.getAttribute("membername") %>">
     <button type="submit">確認取消</button>
      <button type="button" onclick="window.location='index2.jsp'">回首頁</button>
       <!-- JavaScript 函數以設置隱藏字段 -->
