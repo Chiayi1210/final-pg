@@ -208,19 +208,47 @@ background-color:#fff;
           </td>
           <!--  value="<%out.print(session.getAttribute("accessname"));%>"-->
           <td>
+
           <input type="text" name="name" value="<%out.print(session.getAttribute("membername"));%>" ><br>  
           <input type="text" name="numberid" value="<%out.print(session.getAttribute("numberid"));%>"  readonly="true"><br>  
           <input type="text" name="phone" value="<%out.print(session.getAttribute("memberphone"));%>" ><br> 
-          <input type="text" name="memberid" value="<%out.print(session.getAttribute("memberid"));%>" >
+          <input type="text" name="memberid" value="<%out.print(session.getAttribute("email"));%>" >
           </td>
          </table>
    </div>
 		
 	
+
 	<script>
 	function updateReservationCount() {
 	    var selectedDate = document.getElementById("appointmentDate").value;
 	    var selectedTime = document.getElementById("demo").value;
+
+
+		<% 
+                    String selectedDate = request.getParameter("date");
+		            String selectedTimeSlot = request.getParameter("time");
+					Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+					Connection con=DriverManager.getConnection("jdbc:ucanaccess://"+objDBConfig.FilePath()+";");
+					//out.println("Con= "+con);
+					Statement smt= con.createStatement();
+					String sql = "SELECT COUNT(*) AS total FROM prescription WHERE prescription.Date = ? AND prescription.Time = ?";
+					PreparedStatement pstmt = con.prepareStatement(sql);
+					pstmt.setString(1, selectedDate);
+					pstmt.setString(2, selectedTimeSlot);
+					ResultSet XX = pstmt.executeQuery();
+					
+					int reservationCount = 0;
+				    if (XX.next()) {
+				        reservationCount = XX.getInt("total");
+				    }
+	             %>
+			
+	
+<br><label >選擇預約日期：
+<input type="date" name="date" id="appointmentDate" required min="<%= LocalDate.now() %>"  onchange="getReservationCount()"></label>
+<br><%= reservationCount %>
+
 
 	    // 使用Ajax向後端發送請求，取得預約人數
 	    var xhr = new XMLHttpRequest();
@@ -337,7 +365,7 @@ background-color:#fff;
         }
     }
 
-
+</script>
 	</html>
 
 	
