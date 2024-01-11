@@ -211,7 +211,7 @@ background-color:#fff;
           <input type="text" name="name" value="<%out.print(session.getAttribute("membername"));%>" ><br>  
           <input type="text" name="numberid" value="<%out.print(session.getAttribute("numberid"));%>"  readonly="true"><br>  
           <input type="text" name="phone" value="<%out.print(session.getAttribute("memberphone"));%>" ><br> 
-          <input type="text" name="memberid" value="<%out.print(session.getAttribute("email"));%>" >
+          <input type="text" name="memberid" value="<%out.print(session.getAttribute("memberid"));%>" >
           </td>
          </table>
    </div>
