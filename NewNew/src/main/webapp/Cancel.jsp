@@ -210,27 +210,48 @@ background-color:#fff;
 
 <center>      
  
-<form action="remove.jsp?id=<%=session.getAttribute("numberid")%>" method="post" name="form">
+<form action="remove.jsp?id=<%=session.getAttribute("numberid")%>" method="post" name="form" onsubmit="setHiddenFields()">
+ 
  <%if (pp.next()){   %>        
           
            
           
     <label for="appointmentId">選擇要取消的預約：</label>
     
-    <select name="appointmentId" id="appointmentId">
+    <select name="appointmentId" id="appointmentId" >
        <% do {
             	 String Cnumber1 = pp.getString("cnumber1");
                  String Cdate = pp.getString("date");
                  String Ctime = pp.getString("time");   
                  
         %>
-                <option value="<%= Cnumber1 %>">慢箋號碼：<%= Cnumber1 %> &nbsp; 日期：<%= Cdate %>  &nbsp;時間：<%= Ctime %></option>
+                <option value="<%= Cnumber1 %>" data-date="<%= Cdate %>" data-time="<%= Ctime %>">
+        慢箋號碼：<%= Cnumber1 %> &nbsp; 日期：<%= Cdate %> &nbsp;時間：<%= Ctime %>
+    </option>
                <% }while (pp.next()); %>
        
     </select>
-
+   <!-- 隱藏字段 -->
+        <input type="hidden" id="selectedDate" name="selectedDate" value="">
+        <input type="hidden" id="selectedTime" name="selectedTime" value="">
+        <input type="hidden" id="selectedName" name="selectedName" value="<%= session.getAttribute("name") %>">
     <button type="submit">確認取消</button>
      <button type="button" onclick="window.location='index2.jsp'">回首頁</button>
+      <!-- JavaScript 函數以設置隱藏字段 -->
+        <script>
+            function setHiddenFields() {
+                var selectedOption = document.getElementById("appointmentId");
+                var selectedDate = selectedOption.options[selectedOption.selectedIndex].getAttribute("data-date");
+                var selectedTime = selectedOption.options[selectedOption.selectedIndex].getAttribute("data-time");
+
+                document.getElementById("selectedDate").value = selectedDate;
+                document.getElementById("selectedTime").value = selectedTime;}
+           
+            
+           
+            
+        </script>
+        
 </form></center>
  <% }else {
     out.println("查無預約資料，請先預約!!");
