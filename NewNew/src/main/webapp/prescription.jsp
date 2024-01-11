@@ -216,25 +216,11 @@ background-color:#fff;
          </table>
    </div>
 		
-			<% 
-                    String selectedDate = request.getParameter("date");
-		            String selectedTimeSlot = request.getParameter("time");
-					Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-					Connection con=DriverManager.getConnection("jdbc:ucanaccess://"+objDBConfig.FilePath()+";");
-					//out.println("Con= "+con);
-					Statement smt= con.createStatement();
-					String sql = "SELECT COUNT(*) AS total FROM prescription WHERE prescription.Date = ? AND prescription.Time = ?";
-					PreparedStatement pstmt = con.prepareStatement(sql);
-					pstmt.setString(1, selectedDate);
-					pstmt.setString(2, selectedTimeSlot);
-					ResultSet XX = pstmt.executeQuery();
-	             %>
+	
 	
 <br><label for='massage'>選擇預約日期：</label>
 <input type="date" name="date" id="appointmentDate" required min="<%= LocalDate.now() %>">
-<br>目前已預約<%
-if (XX.next()) {
-    out.print(XX.getString("total"));}%>人
+<br>
  
 
 
@@ -316,10 +302,7 @@ if (XX.next()) {
 	<%}%>
 
 <script>
-    var dateInput = document.getElementById('appointmentDate');
-    var demoInput = document.getElementById('demo');
-    var reservationCountDisplay = document.getElementById('reservationCountDisplay');
-
+   
     dateInput.addEventListener('input', function() {
         // 檢查是否選擇了以前的日期
         checkPastDate();
@@ -327,12 +310,6 @@ if (XX.next()) {
         // 檢查星期日
         noSundays();
 
-        // 更新時間檢查
-        getReservationCount(dateInput.value, demoInput.value);
-
-        // 使用AJAX請求獲取每個時段的預約數量
-        updateReservationCounts();
-    });
 
     function checkPastDate() {
         var selectedDate = new Date(dateInput.value);
@@ -355,41 +332,7 @@ if (XX.next()) {
         }
     }
 
-    function getReservationCount(selectedDate, selectedTimeSlot) {
-        // 使用AJAX請求獲取預約數量
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                updateButtons(selectedDate, JSON.parse(xhr.responseText));
-            }
-        };
-        xhr.open("GET", "getReservationCounts.jsp?date=" + selectedDate, true);
-        xhr.send();
-    }
 
-
-    function updateReservationCounts() {
-        var selectedDate = dateInput.value;
-
-        // 使用AJAX請求獲取每個時段的預約數量
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                // 更新顯示已預約人數的區域
-                reservationCountDisplay.innerHTML = "選擇日期：" + selectedDate + "<br>目前已預約人數：" + xhr.responseText + "人";
-                
-                // 更新相應的按鈕，這裡假設有一個按鈕的data-time屬性為"9:30-10:00"
-                updateButtonCount("9:30-10:00", xhr.responseText);
-            }
-        };
-        xhr.open("GET", "getReservationCounts.jsp?date=" + selectedDate, true);
-        xhr.send();
-    }
-
-   
-
-    
-</script>
 	</html>
 
 	
