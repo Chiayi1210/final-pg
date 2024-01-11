@@ -5,11 +5,12 @@
 <%@ page import="java.nio.file.Paths" %>
 <%@ page import="java.nio.file.StandardCopyOption" %>
 <%@ page import="jakarta.servlet.http.Part" %>
+<%@ page import="com.oreilly.servlet.MultipartRequest" %>
 <jsp:useBean id='objFolderConfig' scope='session' class='hitstd.group.tool.upload.FolderConfig' />
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 
 <%
- MultipartRequest theMultipartRequest = new MultipartRequest (request,objFolderConfig.FilePath(),1024*1024*1024) ;
+ MultipartRequest theMultipartRequest = new MultipartRequest (request,objFolderConfig.FilePath(),1024 * 1024 * 1024 * 5) ;
  Enumeration theEnumeration = theMultipartRequest.getFileNames() ;
  while (theEnumeration.hasMoreElements()){
  String fieldName = (String)theEnumeration.nextElement () ;

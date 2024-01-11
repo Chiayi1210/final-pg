@@ -95,9 +95,9 @@
                 <div class="row">
                     <div class="col-md-6">
                         <form action="MBpic_update.jsp" method="post" enctype="multipart/form-data" id="uploadForm" name="uploadForm">
-                            <img src="<%=IM.getString("pic") %>" style="width:280px; height:200px">
+                            <img src="<%=IM.getString("pic") %>" style="width:280px; height:200px"><br><br>
                             <h3>選擇要上傳的文件:</h3>
-                            <input type="file" name="theFirstFile" id="pic" size="50" />
+                            <br><br><input type="file" name="theFirstFile" id="pic" size="50" />
                             <input type="submit" name="submitButton" value="上傳" onclick="pic();" />
                         </form>
                     </div>

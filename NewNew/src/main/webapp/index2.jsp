@@ -35,7 +35,7 @@
                   <div class="detail-box">
                     
                     <h1>
-                     <%out.print(session.getAttribute("membername"));%><br>歡迎光臨<br>北護智慧藥局<br>
+                     <%out.print(session.getAttribute("membername"));%><br>歡迎光臨<br>北護智慧藥局線上預約平台<br>
                        <span>
                         NTUNHS Pharmacy
                        </span>
@@ -80,8 +80,8 @@
                   <div class="detail-box">
                     
                     <h1>
-                     北護智慧藥局線上預約平台 <br>
-                       <span>
+                     北護智慧藥局線上預約平台<br>                       
+                        <span>
                         NTUNHS Pharmacy
                         </span>
                     </h1>  
