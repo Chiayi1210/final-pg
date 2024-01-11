@@ -24,7 +24,7 @@ import java.io.IOException;
         location = "/tmp",
         fileSizeThreshold = 1024 * 1024,
         maxFileSize = 1024 * 1024 * 5,  // 5 MB
-        maxRequestSize = 1024 * 1024 * 5 * 5  // 25 MB
+        maxRequestSize = 1024 * 1024 * 1024 * 5  // 25 MB
 )
 public class MyServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -52,11 +52,11 @@ public class MyServlet extends HttpServlet {
                     // 更新資料庫（這僅是示例，實際上應該使用連接池等更好的資料庫訪問方法）
                     // 註：應該根據實際的資料庫配置更改以下參數
                     Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-                    try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/yourdb", "name", "pwd");
+                    try (Connection con = DriverManager.getConnection(" jdbc:ucanaccess://" + objDBConfig.FilePath(), "name", "pwd");
                             Statement smt = con.createStatement()) {
 
                         // 更新資料庫中的檔案路徑
-                        String updateQuery = "UPDATE member SET pic ='" + "uploads" + File.separator + fileName + "' WHERE id = 1";
+                    	String updateQuery = "UPDATE member SET pic ='" + "uploads" + File.separator + fileName + "' WHERE id = 1";
                         int rowsUpdated = smt.executeUpdate(updateQuery);
 
                         // 根據更新的行數判斷是否成功
