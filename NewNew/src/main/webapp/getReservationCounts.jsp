@@ -1,7 +1,7 @@
 <%@ page import="java.sql.*" %>
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 <%
-<<<<<<< Updated upstream
+
     // 獲取日期參數
     String selectedDate = request.getParameter("date");
             String selectedTimeSlot = request.getParameter("time");
@@ -53,5 +53,5 @@ if (rs.next()) {
 rs.close();
 pstmt.close();
 con.close();
->>>>>>> Stashed changes
+
 %>
