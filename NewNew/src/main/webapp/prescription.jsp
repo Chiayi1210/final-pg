@@ -217,73 +217,78 @@ background-color:#fff;
    </div>
 		
 	
-	
-<br><label for='massage'>選擇預約日期：</label>
-<input type="date" name="date" id="appointmentDate" required min="<%= LocalDate.now() %>">
-<br>
- 
+	<script>
+	function updateReservationCount() {
+	    var selectedDate = document.getElementById("appointmentDate").value;
+	    var selectedTime = document.getElementById("demo").value;
 
+	    // 使用Ajax向後端發送請求，取得預約人數
+	    var xhr = new XMLHttpRequest();
+	    xhr.onreadystatechange = function () {
+	        if (xhr.readyState == 4) {
+	            if (xhr.status == 200) {
+	                document.getElementById("reservationCount").innerHTML = xhr.responseText;
+	            } else {
+	                console.log("Ajax request failed with status: " + xhr.status);
+	            }
+	        }
+	    };
+	    console.log("Sending request for date: " + selectedDate + " and time: " + selectedTime);
+	    xhr.open("GET", "getReservationCounts.jsp?date=" + selectedDate + "&time=" + selectedTime, true);
+	    xhr.send();
+	}
+</script><br>
+<label for='massage'>選擇預約日期：</label>
+<input type="date" name="date" id="appointmentDate" required min="<%= LocalDate.now() %>" onchange="updateReservationCount()">
+<br><br>
 
-<br><br><label>選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly"  min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"></label>
-        </center>
-     
+<label>預約人數: <span id="reservationCount">0</span></label>
+
+<br><br><label>選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly" min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"></label>
+</center>     
                  
     <center>
     <table width="70%"><tr>
     <td width="auto" align="center">
-    <button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "9:30-10:00" '  required for="time"  data-time="9:30-10:00">
-        9:30-10:00</button> 
-    
-</td>
-    <td  width="auto" align="center"><button type="button" onclick='document.getElementById("demo").value = "10:00-10:30" ' required for="time" >10:00-10:30</button>
+    <button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "9:30-10:00"; updateReservationCount();' required for="time" data-time="9:30-10:00">
+    9:30-10:00
+    </button>
     </td>
-    <td width="auto"align="center"><button type="button" onclick='document.getElementById("demo").value = "10:30-11:00"'required  for="time" >10:30-11:00</button>
+    <td  width="auto" align="center"><button type="button" onclick='document.getElementById("demo").value = "10:00-10:30"; updateReservationCount();' required for="time" data-time="10:00-10:30">10:00-10:30</button>
     </td>
-    <td width="auto"align="center"><button type="button" onclick='document.getElementById("demo").value = "11:30-12:00"' required  for="time" >11:30-12:00</button>
+    <td width="auto"align="center"><button type="button" onclick='document.getElementById("demo").value = "10:30-11:00; updateReservationCount();' required for="time" data-time="10:30-11:00" >10:30-11:00</button>
+    </td>
+    <td width="auto"align="center"><button type="button" onclick='document.getElementById("demo").value = "11:30-12:00"; updateReservationCount();' required for="time" data-time= "11:30-12:00">11:30-12:00</button>
     </td></tr>
   <tr>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "12:00-12:30"' required  for="time" >12:00-12:30</button>
+    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "12:00-12:30"; updateReservationCount();' required for="time" data-time="12:00-12:30">12:00-12:30</button>
     </td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "13:00-13:30"' required for="time" >13:00-13:30</button>
+    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "13:00-13:30"; updateReservationCount();' required for="time" data-time="13:00-13:30" >13:00-13:30</button>
    </td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "13:30-14:00"' required  for="time" >13:30-14:00</button>
+    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "13:30-14:00"; updateReservationCount();' required for="time" data-time= >13:30-14:00</button>
     </td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value= "14:30-15:00"' required  for="time" >14:30-15:00</button>
+    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value= "14:30-15:00"; updateReservationCount();' required for="time" data-time= >14:30-15:00</button>
     </td>     
   </tr>
   <tr>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "15:30-16:00"' required  for="time" >15:30-16:00</button>
+    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "15:30-16:00"; updateReservationCount();' required for="time" data-time= >15:30-16:00</button>
     </td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "16:30-17:00"' required  for="time" >16:30-17:00</button>
+    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "16:30-17:00"; updateReservationCount();' required for="time" data-time= >16:30-17:00</button>
     </td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "17:30-18:00"' required  for="time" >17:30-18:00</button>
+    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "17:30-18:00"; updateReservationCount();' required for="time" data-time= >17:30-18:00</button>
    </td>
-      <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "18:00-18:30"' required  for="time" >18:00-18:30</button>
+      <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "18:00-18:30"; updateReservationCount();' required for="time" data-time= >18:00-18:30</button>
    </td>     
    </tr>
-    <tr><td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "19:00-19:30"' required  for="time" >19:00-19:30</button>
+    <tr><td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "19:00-19:30"; updateReservationCount();' required for="time" data-time= >19:00-19:30</button>
    </td>
-   <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "19:30-20:00"' required  for="time" >19:30-20:00</button>
+   <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "19:30-20:00"; updateReservationCount();' required for="time" data-time= >19:30-20:00</button>
   </td>
-   <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "20:30-21:00"' required  for="time" >20:30-21:00</button>
+   <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "20:30-21:00"; updateReservationCount();' required for="time" data-time= >20:30-21:00</button>
    </td>
-    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "21:00-21:30"' required  for="time" >21:00-21:30</button>
+    <td width="200"align="center"><button type="button" onclick='document.getElementById("demo").value = "21:00-21:30"; updateReservationCount();' required for="time" data-time= >21:00-21:30</button>
     </td>  
     </tr></table>
-    <%! // Declaration section
-    int getReservationCount(ResultSet resultSet, String date, String timeSlot) throws SQLException {
-        while (resultSet.next()) {
-            String reservationDate = resultSet.getString("Date");
-            String reservationTime = resultSet.getString("Time");
-            int count = resultSet.getInt("time之筆數");
-
-            if (reservationDate.equals(date) && reservationTime.equals(timeSlot)) {
-                return count;
-            }
-        }
-        return 0; // 若找不到對應日期和時間的預約人數，預設為0
-    }
-%>
 
     
 			<br> <label for="cnumber1">慢性病卡號1：</label> <input type="text"
