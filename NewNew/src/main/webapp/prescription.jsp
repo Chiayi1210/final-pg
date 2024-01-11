@@ -11,11 +11,6 @@
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
 <html>
 <head>
-
-</head>
-<body>
-<title>慢性病連續處方笺預約| 北護智慧藥局線上預約平台</title>
-<%if (session.getAttribute("access") == "y"){%>
 <style>
 form {border: 0px solid #f1f1f1}    
 
@@ -196,6 +191,17 @@ background-color:#fff;
 }
 
 </style>
+</head>
+<body>
+<div class="loading-container">
+  <div class="loadingio-spinner-spin-9xznk29ajn">
+    <!-- 这里放你的loading动画代码 -->
+    <!-- ... -->
+  </div>
+</div>
+<title>慢性病連續處方笺預約| 北護智慧藥局線上預約平台</title>
+<%if (session.getAttribute("access") == "y"){%>
+
 
 <center> <br><h1>預約資料登記</h1>
 <form action="pp-InsertInto.jsp" method="post">
