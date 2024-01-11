@@ -2,7 +2,6 @@
 <%@page import="java.sql.*"%>
 <%@include file="menu.jsp" %>
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
-<jsp:useBean id='objFolderConfig' scope='session' class='hitstd.group.tool.upload.FolderConfig' />
 
 <html>
 
@@ -40,6 +39,35 @@
     <link href="css/responsive.css" rel="stylesheet" />
 
     <style>
+        button {
+            background-color: #00c6a9;
+            color: white;
+            padding: 10px 18px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 40%;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        input[type=text],
+        input[type=password],
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type=text],
+        input[type=password] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
         .btn-primary {
             color: #fff;
             background-color: #00c6a9;
@@ -54,35 +82,50 @@
             /* Add your button:active styles here */
         }
 
-        .input_block {
-            border-bottom: 1px solid rgba(0, 0, 0, .1);
-        }
-
-        /* Add your additional styles here */
-         .container {
+        body {
             text-align: center;
         }
 
+        .container {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            text-align: left;
+            width: 70%;
+        }
+         .footer_section {
+            padding: 0px 5px; /* 調整上下 padding，減小高度 */
+            background-color: #252525; /* 附加的：設定背景色 */
+        }
+
+        .footer_section p {
+            margin-bottom: 5px; /* 調整段落內容的下邊距，使其更加緊湊 */
+        }
+
+        .footer_section a {
+            margin-left: 5px; /* 給超連結之間添加一點間距 */
+        }
     </style>
+
     <script>
         function submitForm() {
             document.form.submit();
         }
-
-        //點選提交按鈕觸發下面的函式
-        function pic() {  
-            document.getElementById("uploadForm").action="MBpic_update.jsp";
-            document.getElementById("uploadForm").enctype="multipart/form-data";
-            document.getElementById("uploadForm").submit();
-        }  
+       
     </script>
 </head>
 
 <body>
-    <div class="container text-center">
+    <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <br><br><h1>會員基本資料</h1>
+                <br><br>
+                <h1>會員基本資料</h1>
                 <%
                     Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
                     Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + objDBConfig.FilePath() + ";");
@@ -93,35 +136,26 @@
                 %>
 
                 <div class="row">
-                    <div class="col-md-6">
-                        <form action="MBpic_update.jsp" method="post" enctype="multipart/form-data" id="uploadForm" name="uploadForm">
-                            <img src="<%=IM.getString("pic") %>" style="width:280px; height:200px"><br><br>
-                            <h3>選擇要上傳的文件:</h3>
-                            <br><br><input type="file" name="theFirstFile" id="pic" size="50" />
-                            <input type="submit" name="submitButton" value="上傳" onclick="pic();" />
-                        </form>
-                    </div>
-
-                    <div class="col-md-6">
+                    <div class="col-md-12 form-container">
                         <form action="MBupdate-pp.jsp?memberid=<%=request.getParameter("memberid")%>" method="post" name="form">
                             <div class="form-group">
-                                <label>姓名</label>
+                                <label for="membername">姓名</label>
                                 <input type="text" name="membername" id="membername" class="form-control" value="<%=IM.getString("name")%>">
                             </div>
                             <div class="form-group">
-                                <label>身分證字號</label>
+                                <label for="numberid">身分證字號</label>
                                 <input type="text" class="form-control" value="<%out.print(session.getAttribute("numberid"));%>" readonly="true">
                             </div>
                             <div class="form-group">
-                                <label>電話:</label>
+                                <label for="phone">電話:</label>
                                 <input type="text" name="phone" class="form-control" value="<%=IM.getString("phone")%>">
                             </div>
                             <div class="form-group">
-                                <label>Email</label>
+                                <label for="email">Email</label>
                                 <input type="text" name="email" class="form-control" value="<%=IM.getString("memberid")%>">
                             </div>
                             <div class="form-group">
-                                <label>修改密碼</label>
+                                <label for="memberpwd">修改密碼</label>
                                 <input type="password" name="memberpwd" class="form-control" value="<%=IM.getString("memberpwd")%>">
                             </div>
                         </form>
@@ -129,19 +163,12 @@
                 </div>
 
                 <div class="panel-footer">
-                    <button type="button" class="btn btn-primary" onclick="submitForm()">修改資料</button>
+                    <button type="button" class="button" onclick="submitForm()">修改資料</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Your existing sections go here -->
-
-    <section class="info_section ">
-        <div class="container">
-            <!-- Your existing content goes here -->
-        </div>
-    </section>
     <br><br><br><br>
     <footer class="footer_section">
         <div class="container">
