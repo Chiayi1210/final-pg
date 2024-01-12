@@ -228,7 +228,7 @@ background-color:#fff;
 	<script>
     function updateReservationCount() {
         var selectedDate = document.getElementById("appointmentDate").value;
-        var selectedTime = document.getElementById("time").value;
+        var selectedTime = document.getElementById("demo").value;
 
         // 使用Ajax向後端發送請求，取得預約人數
         var xhr = new XMLHttpRequest();
@@ -263,42 +263,42 @@ background-color:#fff;
                  
     <center>
     <table width="70%"><tr>
-    <td width="auto" align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "9:30-10:00"; updateReservationCount();' required for="time" data-time="9:30-10:00">9:30-10:00
+    <td width="auto" align="center"><button type="button" id="time1" class="button" onclick='document.getElementById("demo").value = "9:30-10:00"; updateReservationCount();' required for="time" data-time="9:30-10:00">9:30-10:00
     </button>
     </td>
-    <td width="auto" align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "10:00-10:30"; updateReservationCount();' required for="time" data-time="10:00-10:30">10:00-10:30</button>
+    <td width="auto" align="center"><button type="button" id="time2" class="button" onclick='document.getElementById("demo").value = "10:00-10:30"; updateReservationCount();' required for="time" data-time="10:00-10:30">10:00-10:30</button>
     </td>
-    <td width="auto" align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "10:30-11:00; updateReservationCount();' required for="time" data-time="10:30-11:00" >10:30-11:00</button>
+    <td width="auto" align="center"><button type="button" id="time3" class="button" onclick='document.getElementById("demo").value = "10:30-11:00; updateReservationCount();' required for="time" data-time="10:30-11:00" >10:30-11:00</button>
     </td>
-    <td width="auto" align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "11:30-12:00"; updateReservationCount();' required for="time" data-time= "11:30-12:00">11:30-12:00</button>
+    <td width="auto" align="center"><button type="button" id="time4" class="button" onclick='document.getElementById("demo").value = "11:30-12:00"; updateReservationCount();' required for="time" data-time= "11:30-12:00">11:30-12:00</button>
     </td></tr>
   <tr>
-    <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "12:00-12:30"; updateReservationCount();' required for="time" data-time="12:00-12:30">12:00-12:30</button>
+    <td width="200"align="center"><button type="button" id="time5" class="button" onclick='document.getElementById("demo").value = "12:00-12:30"; updateReservationCount();' required for="time" data-time="12:00-12:30">12:00-12:30</button>
     </td>
-    <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "13:00-13:30"; updateReservationCount();' required for="time" data-time="13:00-13:30" >13:00-13:30</button>
+    <td width="200"align="center"><button type="button" id="time6" class="button" onclick='document.getElementById("demo").value = "13:00-13:30"; updateReservationCount();' required for="time" data-time="13:00-13:30" >13:00-13:30</button>
    </td>
-    <td width="200"align="center"><button type="button" id="time" class="button"onclick='document.getElementById("demo").value = "13:30-14:00"; updateReservationCount();' required for="time" data-time= "13:30-14:00">13:30-14:00</button>
+    <td width="200"align="center"><button type="button" id="time7" class="button"onclick='document.getElementById("demo").value = "13:30-14:00"; updateReservationCount();' required for="time" data-time= "13:30-14:00">13:30-14:00</button>
     </td>
-    <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value= "14:30-15:00"; updateReservationCount();' required for="time" data-time= "14:30-15:00">14:30-15:00</button>
+    <td width="200"align="center"><button type="button" id="time8" class="button" onclick='document.getElementById("demo").value= "14:30-15:00"; updateReservationCount();' required for="time" data-time= "14:30-15:00">14:30-15:00</button>
     </td>     
   </tr>
   <tr>
-    <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "15:30-16:00"; updateReservationCount();' required for="time" data-time="15:30-16:00" >15:30-16:00</button>
+    <td width="200"align="center"><button type="button" id="time9" class="button" onclick='document.getElementById("demo").value = "15:30-16:00"; updateReservationCount();' required for="time" data-time="15:30-16:00" >15:30-16:00</button>
     </td>
-    <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "16:30-17:00"; updateReservationCount();' required for="time" data-time="16:30-17:00" >16:30-17:00</button>
+    <td width="200"align="center"><button type="button" id="time10" class="button" onclick='document.getElementById("demo").value = "16:30-17:00"; updateReservationCount();' required for="time" data-time="16:30-17:00" >16:30-17:00</button>
     </td>
-    <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "17:30-18:00"; updateReservationCount();' required for="time" data-time="17:30-18:00" >17:30-18:00</button>
+    <td width="200"align="center"><button type="button" id="time11" class="button" onclick='document.getElementById("demo").value = "17:30-18:00"; updateReservationCount();' required for="time" data-time="17:30-18:00" >17:30-18:00</button>
    </td>
-      <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "18:00-18:30"; updateReservationCount();' required for="time" data-time="18:00-18:30" >18:00-18:30</button>
+      <td width="200"align="center"><button type="button" id="time12" class="button" onclick='document.getElementById("demo").value = "18:00-18:30"; updateReservationCount();' required for="time" data-time="18:00-18:30" >18:00-18:30</button>
    </td>     
    </tr>
-    <tr><td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "19:00-19:30"; updateReservationCount();' required for="time" data-time= "19:00-19:30">19:00-19:30</button>
+    <tr><td width="200"align="center"><button type="button" id="time13" class="button" onclick='document.getElementById("demo").value = "19:00-19:30"; updateReservationCount();' required for="time" data-time= "19:00-19:30">19:00-19:30</button>
    </td>
-   <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "19:30-20:00"; updateReservationCount();' required for="time" data-time= "19:30-20:0">19:30-20:00</button>
+   <td width="200"align="center"><button type="button" id="time14" class="button" onclick='document.getElementById("demo").value = "19:30-20:00"; updateReservationCount();' required for="time" data-time= "19:30-20:0">19:30-20:00</button>
   </td>
-   <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "20:30-21:00"; updateReservationCount();' required for="time" data-time="20:30-21:00" >20:30-21:00</button>
+   <td width="200"align="center"><button type="button" id="time15" class="button" onclick='document.getElementById("demo").value = "20:30-21:00"; updateReservationCount();' required for="time" data-time="20:30-21:00" >20:30-21:00</button>
    </td>
-    <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "21:00-21:30"; updateReservationCount();' required for="time" data-time= "21:00-21:30">21:00-21:30</button>
+    <td width="200"align="center"><button type="button" id="time16" class="button" onclick='document.getElementById("demo").value = "21:00-21:30"; updateReservationCount();' required for="time" data-time= "21:00-21:30">21:00-21:30</button>
     </td>  
     </tr></table>
 

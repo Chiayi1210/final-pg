@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <!--連續處方簽預約網頁 prescription.jsp-->
 <%@page import="java.sql.*"%>
-<%@page import="java.io.*,java.util.*"%>
+<%@ page import="java.io.*,java.util.*" %>
+<%@ page import="java.sql.ResultSet" %>
 <%@include file ="menu.jsp" %>
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="tool.mail.JavaMail" %>
+<%@ page import="Reservation.ReservationBean" %>
 <jsp:useBean id='objDBConfig' scope='session' class='hitstd.group.tool.database.DBConfig' />
  <!--更改預約網頁 -->
 <html>
@@ -189,7 +194,7 @@ background-color:#fff;
 </style>
 
 <center>
-<header >
+<header ><br><br>
   <h1>更改預約</h1>
   </header>
    <%
@@ -222,79 +227,112 @@ background-color:#fff;
             
         <br> <br>
         
-        <label for='massage'>重新選擇預約日期：</label><input type="date" name="date"  required>
+        <label for='massage'>重新選擇預約日期：</label><input type="date" name="date" id="appointmentDate" required min="<%= LocalDate.now() %>" onchange="updateReservationCount()">
 				<script>
-                  var date = document.getElementById('massage'),
-                  function noSundays(e){
-                  var day = new Date(e.target.value).getUTCDay();
-                  if ( day == 0 ){
-                  e.target.setCustomValidity('不可選擇週日！');
-                  } else {
-                  e.target.setCustomValidity('');
-                  date.addEventListener('input',noSundays);
-                  }
-                  }
-                </script><br><br>
-                
-                <label >選擇新的預約時間：<input type="text" id="demo" name="time" readonly="readonly" required></label>
-			
-    <table width="200%"><tr>
-     <center>
+    function updateReservationCount() {
+        var selectedDate = document.getElementById("appointmentDate").value;
+        var selectedTime = document.getElementById("demo").value;
+
+        // 使用Ajax向後端發送請求，取得預約人數
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    document.getElementById("reservationCount").innerHTML = xhr.responseText;
+                } else {
+                    console.log("Ajax request failed with status: " + xhr.status);
+                }
+            }
+        };
+        console.log("Sending request for date: " + selectedDate + " and time: " + selectedTime);
+        xhr.open("GET", "getReservationCounts.jsp?date=" + selectedDate + "&time=" + selectedTime, true);
+        xhr.send();
+    }
+
+    // 在頁面載入時獲取初始預約人數
+    window.onload = function () {
+        updateReservationCount();
+    };
+</script>
+<br><br>
+
+<label>預約人數： <span id="reservationCount"></span></label>
+
+<br><br><label>選擇預約時間：<input type="text" id="demo" name="time" value="" readonly="readonly" min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"></label>
+</center>     
+                 
+    <center>
     <table width="70%"><tr>
-    <td width="auto" align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "9:30-10:00"; updateReservationCount();' required for="time" data-time="9:30-10:00">9:30-10:00
+    <td width="auto" align="center"><button type="button" id="time1" class="button" onclick='document.getElementById("demo").value = "9:30-10:00"; updateReservationCount();' required for="time" data-time="9:30-10:00">9:30-10:00
     </button>
     </td>
-    <td width="auto" align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "10:00-10:30"; updateReservationCount();' required for="time" data-time="10:00-10:30">10:00-10:30</button>
+    <td width="auto" align="center"><button type="button" id="time2" class="button" onclick='document.getElementById("demo").value = "10:00-10:30"; updateReservationCount();' required for="time" data-time="10:00-10:30">10:00-10:30</button>
     </td>
-    <td width="auto" align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "10:30-11:00; updateReservationCount();' required for="time" data-time="10:30-11:00" >10:30-11:00</button>
+    <td width="auto" align="center"><button type="button" id="time3" class="button" onclick='document.getElementById("demo").value = "10:30-11:00; updateReservationCount();' required for="time" data-time="10:30-11:00" >10:30-11:00</button>
     </td>
-    <td width="auto" align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "11:30-12:00"; updateReservationCount();' required for="time" data-time= "11:30-12:00">11:30-12:00</button>
+    <td width="auto" align="center"><button type="button" id="time4" class="button" onclick='document.getElementById("demo").value = "11:30-12:00"; updateReservationCount();' required for="time" data-time= "11:30-12:00">11:30-12:00</button>
     </td></tr>
   <tr>
-    <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "12:00-12:30"; updateReservationCount();' required for="time" data-time="12:00-12:30">12:00-12:30</button>
+    <td width="200"align="center"><button type="button" id="time5" class="button" onclick='document.getElementById("demo").value = "12:00-12:30"; updateReservationCount();' required for="time" data-time="12:00-12:30">12:00-12:30</button>
     </td>
-    <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "13:00-13:30"; updateReservationCount();' required for="time" data-time="13:00-13:30" >13:00-13:30</button>
+    <td width="200"align="center"><button type="button" id="time6" class="button" onclick='document.getElementById("demo").value = "13:00-13:30"; updateReservationCount();' required for="time" data-time="13:00-13:30" >13:00-13:30</button>
    </td>
-    <td width="200"align="center"><button type="button" id="time" class="button"onclick='document.getElementById("demo").value = "13:30-14:00"; updateReservationCount();' required for="time" data-time= "13:30-14:00">13:30-14:00</button>
+    <td width="200"align="center"><button type="button" id="time7" class="button"onclick='document.getElementById("demo").value = "13:30-14:00"; updateReservationCount();' required for="time" data-time= "13:30-14:00">13:30-14:00</button>
     </td>
-    <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value= "14:30-15:00"; updateReservationCount();' required for="time" data-time= "14:30-15:00">14:30-15:00</button>
+    <td width="200"align="center"><button type="button" id="time8" class="button" onclick='document.getElementById("demo").value= "14:30-15:00"; updateReservationCount();' required for="time" data-time= "14:30-15:00">14:30-15:00</button>
     </td>     
   </tr>
   <tr>
-    <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "15:30-16:00"; updateReservationCount();' required for="time" data-time="15:30-16:00" >15:30-16:00</button>
+    <td width="200"align="center"><button type="button" id="time9" class="button" onclick='document.getElementById("demo").value = "15:30-16:00"; updateReservationCount();' required for="time" data-time="15:30-16:00" >15:30-16:00</button>
     </td>
-    <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "16:30-17:00"; updateReservationCount();' required for="time" data-time="16:30-17:00" >16:30-17:00</button>
+    <td width="200"align="center"><button type="button" id="time10" class="button" onclick='document.getElementById("demo").value = "16:30-17:00"; updateReservationCount();' required for="time" data-time="16:30-17:00" >16:30-17:00</button>
     </td>
-    <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "17:30-18:00"; updateReservationCount();' required for="time" data-time="17:30-18:00" >17:30-18:00</button>
+    <td width="200"align="center"><button type="button" id="time11" class="button" onclick='document.getElementById("demo").value = "17:30-18:00"; updateReservationCount();' required for="time" data-time="17:30-18:00" >17:30-18:00</button>
    </td>
-      <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "18:00-18:30"; updateReservationCount();' required for="time" data-time="18:00-18:30" >18:00-18:30</button>
+      <td width="200"align="center"><button type="button" id="time12" class="button" onclick='document.getElementById("demo").value = "18:00-18:30"; updateReservationCount();' required for="time" data-time="18:00-18:30" >18:00-18:30</button>
    </td>     
    </tr>
-    <tr><td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "19:00-19:30"; updateReservationCount();' required for="time" data-time= "19:00-19:30">19:00-19:30</button>
+    <tr><td width="200"align="center"><button type="button" id="time13" class="button" onclick='document.getElementById("demo").value = "19:00-19:30"; updateReservationCount();' required for="time" data-time= "19:00-19:30">19:00-19:30</button>
    </td>
-   <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "19:30-20:00"; updateReservationCount();' required for="time" data-time= "19:30-20:0">19:30-20:00</button>
+   <td width="200"align="center"><button type="button" id="time14" class="button" onclick='document.getElementById("demo").value = "19:30-20:00"; updateReservationCount();' required for="time" data-time= "19:30-20:0">19:30-20:00</button>
   </td>
-   <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "20:30-21:00"; updateReservationCount();' required for="time" data-time="20:30-21:00" >20:30-21:00</button>
+   <td width="200"align="center"><button type="button" id="time15" class="button" onclick='document.getElementById("demo").value = "20:30-21:00"; updateReservationCount();' required for="time" data-time="20:30-21:00" >20:30-21:00</button>
    </td>
-    <td width="200"align="center"><button type="button" id="time" class="button" onclick='document.getElementById("demo").value = "21:00-21:30"; updateReservationCount();' required for="time" data-time= "21:00-21:30">21:00-21:30</button>
+    <td width="200"align="center"><button type="button" id="time16" class="button" onclick='document.getElementById("demo").value = "21:00-21:30"; updateReservationCount();' required for="time" data-time= "21:00-21:30">21:00-21:30</button>
     </td>  
     </tr></table>
+    <script>
+   
+    dateInput.addEventListener('input', function() {
+        // 檢查是否選擇了以前的日期
+        checkPastDate();
 
-       
-        <!--  <label for="time" >選擇時間：</label> <select required name="time" value="" >
+        // 檢查星期日
+        noSundays();
 
-				<option value="">請選擇</option>
-				<option >11:00~12:00</option>
-				<option >12:00~13:00</option>
-				<option >14:00~15:00</option>
-				<option >15:00~16:00</option>
-				<option >16:00~17:00</option>
-				<option >17:00~18:00</option>
-				<option >19:00~20:00</option>
-				<option >20:00~21:00</option>
-				<option >21:00~22:00</option>
-				<option >22:00~23:00</option>
-			</select>-->
+
+    function checkPastDate() {
+        var selectedDate = new Date(dateInput.value);
+        var currentDate = new Date();
+
+        if (selectedDate < currentDate) {
+            dateInput.setCustomValidity('不可選擇以前的日期！');
+        } else {
+            dateInput.setCustomValidity('');
+        }
+    }
+
+    function noSundays() {
+        var selectedDate = new Date(dateInput.value);
+        var day = selectedDate.getUTCDay();
+        if (day == 0) {
+            dateInput.setCustomValidity('不可選擇週日！');
+        } else {
+            dateInput.setCustomValidity('');
+        }
+    }
+
+</script>
 			<br>
 	 <button type="submit"  onclick="document.location='Homepage-e.jsp'">上一步</button>
 	 <button type="submit"  onclick="document.location='index2.jsp'">確認修改</button>
